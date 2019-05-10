@@ -4,17 +4,18 @@ import slug from 'slug';
 
 const { Schema } = mongoose;
 
-const MuseumSchema = new Schema(
+const ExhibitionSchema = new Schema(
     {
-        title: { type: String, required: true, max: 128 },
-        // image
-        body: { type: String, required: false },
+        name: { type: String, required: true, max: 128 },
+        //image
+        info: { type: String, required: false },
+        // gallery
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
-        categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
+        museumId: { type: Schema.Types.ObjectId, ref: 'Museum', required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -25,24 +26,25 @@ const MuseumSchema = new Schema(
     },
 );
 
-MuseumSchema.methods.slugify = function () {
-    this.slug = slug(this.title);
+ExhibitionSchema.methods.slugify = function () {
+    this.slug = slug(this.name);
 };
 
-MuseumSchema.pre('validate', function (next) {
+ExhibitionSchema.pre('validate', function (next) {
     if (!this.slug) {
         this.slugify();
     }
     return next();
 });
 
-MuseumSchema.virtual('id').get(function () { return this._id; });
-MuseumSchema.virtual('category', {
-    ref: 'Category',
-    localField: 'categoryId',
+ExhibitionSchema.virtual('id').get(function () { return this._id; });
+
+ExhibitionSchema.virtual('museum', {
+    ref: 'Museum',
+    localField: 'museumId',
     foreignField: '_id',
     justOne: true,
 });
 
-MuseumSchema.plugin(mongoosePaginate);
-export default mongoose.model('Museum', MuseumSchema);
+ExhibitionSchema.plugin(mongoosePaginate);
+export default mongoose.model('Exhibition', ExhibitionSchema);

@@ -11,9 +11,11 @@ Import the internal libraries:
 - Category
 - Post
 - User
+- Museum
+- Exhibition
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Museum } from './schemas';
+import { Blog, Category, Post, User, Museum, Exhibition } from './schemas';
 
 class Seeder {
     constructor() {
@@ -22,6 +24,7 @@ class Seeder {
         this.posts = [];
         this.users = [];
         this.museums = [];
+        this.exhibitions = [];
     }
 
     blogCreate = async (title, description) => {
@@ -29,7 +32,6 @@ class Seeder {
             title,
             description,
             categoryId: this.getRandomCategory(),
-            posts: this.getRandomPosts(),
         };
         const blog = new Blog(blogDetail);
 
@@ -67,6 +69,7 @@ class Seeder {
             synopsis,
             body,
             categoryId: this.getRandomCategory(),
+            blogId: '5cd580b0e3d6d3fe3744ed74'
         };
         const post = new Post(postDetail);
 
@@ -114,6 +117,24 @@ class Seeder {
             logger.log({ level: 'info', message: `Museum created with id: ${newMuseum.id}!` });
         } catch (err) {
             logger.log({ level: 'info', message: `An error occurred when creating a museum: ${err}!` });
+        }
+    }
+
+    exhibitionCreate = async (name, info) => {
+        const exhibitionDetail = {
+            name,
+            info,
+            museumId: this.getRandomMuseum(),
+        };
+        const exhibition = new Exhibition(exhibitionDetail);
+
+        try {
+            const newExhibition = await exhibition.save();
+            this.exhibitions.push(newExhibition);
+
+            logger.log({ level: 'info', message: `Exhibition created with id: ${ewExhibition.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a exhibition: ${err}!` });
         }
     }
 
@@ -166,6 +187,17 @@ class Seeder {
         ])
     }
 
+    createExhibitions = async() =>{
+        await Promise.all([
+            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+        ])
+    }
+    
+
     getRandomCategory = () => {
         let category = null;
         if (this.categories && this.categories.length > 0) {
@@ -174,16 +206,12 @@ class Seeder {
         return category;
     }
 
-    getRandomPosts = () => {
-        let cPosts = null;
-        if (this.posts && this.posts.length > 0) {
-            const nPosts = Math.round(Math.random() * (this.posts.length - 1));
-            cPosts = this.posts.slice(0, this.posts.length);
-            while (cPosts.length > nPosts) {
-                cPosts.splice(Math.round(Math.random() * (this.posts.length - 1)), 1);
-            }
+    getRandomMuseum = () => {
+        let museum = null;
+        if (this.museums && this.museums.length > 0) {
+            museum = this.categories[Math.round(Math.random() * (this.museums.length - 1))];
         }
-        return cPosts;
+        return museum;
     }
 
     seed = async () => {
@@ -220,6 +248,13 @@ class Seeder {
                 await this.createMuseums();
             }
             return Museum.find().exec();
+        });
+
+        this.exhibitions = await Exhibition.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createExhibitions();
+            }
+            return Exhibition.find().exec();
         });
     }
 }

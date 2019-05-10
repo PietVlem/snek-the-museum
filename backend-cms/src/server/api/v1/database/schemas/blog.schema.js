@@ -13,7 +13,6 @@ const BlogSchema = new Schema(
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
         categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
-        posts: [{ type: Schema.Types.ObjectId, ref: 'Post', required: false }],
     },
     {
         toJSON: { virtuals: true },

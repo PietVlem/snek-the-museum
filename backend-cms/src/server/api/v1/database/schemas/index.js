@@ -6,11 +6,13 @@ import User from './user.schema';
 
 //custom 
 import Museum from './museum.schema';
+import Exhibition from './exhibitions.schema';
 
 export {
     Blog,
     Category,
     Post,
     User,
-    Museum
+    Museum,
+    Exhibition
 };

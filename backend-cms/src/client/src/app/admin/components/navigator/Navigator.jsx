@@ -31,10 +31,10 @@ const categories = [
     children: [
       { id: 'Blogs', icon: <PermMediaOutlinedIcon />, link: '/admin/blogs' },
       { id: 'Categories', icon: <DnsRoundedIcon />, link: '/admin/categories' },
-      { id: 'Disabilities', icon: <School />, link: '/admin/disabilities' },
       { id: 'Posts', icon: <PeopleIcon />, link: '/admin/posts' },
       { id: 'Museums', icon: <School />, link: '/admin/museums' },
       { id: 'Exhibitions', icon: <School />, link: '/admin/exhibitions' },
+      { id: 'Disabilities', icon: <School />, link: '/admin/disabilities' },
       { id: 'Assignments', icon: <School />, link: '/admin/assignments' },
     ],
   },

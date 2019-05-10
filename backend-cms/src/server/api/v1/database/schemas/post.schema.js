@@ -15,6 +15,8 @@ const PostSchema = new Schema(
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
         categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
+        blogId: { type: Schema.Types.ObjectId, ref: 'Blog', required: false },
+        museumId: { type: Schema.Types.ObjectId, ref: 'Museum', required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -37,9 +39,24 @@ PostSchema.pre('validate', function (next) {
 });
 
 PostSchema.virtual('id').get(function () { return this._id; });
+
 PostSchema.virtual('category', {
     ref: 'Category',
     localField: 'categoryId',
+    foreignField: '_id',
+    justOne: true,
+});
+
+PostSchema.virtual('blog', {
+    ref: 'Blog',
+    localField: 'blogId',
+    foreignField: '_id',
+    justOne: true,
+});
+
+PostSchema.virtual('museum', {
+    ref: 'Museum',
+    localField: 'museumId',
     foreignField: '_id',
     justOne: true,
 });
