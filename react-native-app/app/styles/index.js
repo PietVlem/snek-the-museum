@@ -9,9 +9,19 @@ var styles = StyleSheet.create({
     container:{
         flex: 1,
         justifyContent:"center",
-        padding:20
     },
-
+    imageWelcome:{
+        width: 120,
+        height: 120,
+        alignSelf: 'center',
+        marginBottom: '30%',
+        resizeMode: 'contain'
+    },
+    WelcomeBox:{
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: "25%"
+    },
     welcomeText:{
         fontWeight: "700",
         fontSize: 22,
@@ -19,41 +29,33 @@ var styles = StyleSheet.create({
         color:"rgb(10,39,106)",
         textAlign: "center"
     },
-
-    subText:{
-        fontWeight: "400",
-        fontSize: 15,
-        marginTop: 8,
-        marginBottom: 8,
-        color:"#a4a4a4",
-        textAlign: "center"
-    },
-
     btnContainer:{
-        borderRadius:4,
+        borderRadius: 50,
         marginTop: 10,
     },
 
     button:{
-        height: 45,
-        backgroundColor: "rgb(83,182,249)",
+        height: 44,
+        backgroundColor: '#E7B164',
         justifyContent: "center",
-        alignItems: "center",
-        borderRadius:4,
+        alignSelf: 'center',
+        borderRadius:50,
+        width: '60%',
+        shadowColor: "#C7D0F8",
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        shadowOffset: {
+          height: 3,
+          width: 0
+        }
     },
 
     buttonText:{
-        fontFamily: 'Helvetica Neue',
-        fontSize: 15,
+        fontFamily: 'RobotoBold',
+        fontSize: 16,
         color: "#fff",
+        textAlign: "center"
     },
-
-    bordered:{
-        borderWidth:1,
-        borderColor:"rgb(83,182,249)",
-        backgroundColor: "#fff",
-    },
-
     mainColor:{
         color:"rgb(83,182,249)",
     }
