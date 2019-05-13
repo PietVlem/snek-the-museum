@@ -58,7 +58,15 @@ var styles = StyleSheet.create({
     },
     mainColor:{
         color:"rgb(83,182,249)",
-    }
+    },
+
+    ///////////////////////////////////////////// LOGIN
+
+    HeaderTitle:{
+        fontSize: 45,
+        color: '#6FA29B',
+        fontFamily: "RobotoBold"
+    },
 });
 
 module.exports = styles;

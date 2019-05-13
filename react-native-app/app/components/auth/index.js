@@ -27,15 +27,12 @@ export class Authentication extends Component {
     render() {
 
         var title = "Register";
-        if (this.props.login) title = "Login";
+        if (this.props.login) title = "LOGIN";
         else if (this.props.recover) title = "Recover Password";
 
         return (
             <View style={styles.wrapper}>
-                <NavBar/>
-
                 <View style={styles.container}>
-                    <Text style={[styles.headerText]}>{title}</Text>
                     <Text style={[styles.errorText]}>{this.state.error['general']}</Text>
 
                     {//if the container type is Register, show the
