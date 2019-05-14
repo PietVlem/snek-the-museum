@@ -104,7 +104,7 @@ export class Authentication extends Component {
                     }
 
                     <Button onPress={this.submit.bind(this)}
-                            btnText={(this.props.recover) ? "Submit" : title}/>
+                            btnText={(this.props.recover) ? "RESET PASWOORD" : title}/>
 
                 </View>
             </View>

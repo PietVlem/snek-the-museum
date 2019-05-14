@@ -19,7 +19,7 @@ var styles = StyleSheet.create({
     },
 
     errorText:{
-        color:"red",
+        color:"#EA5D33",
         marginBottom: 5,
         fontSize: 12,
     },

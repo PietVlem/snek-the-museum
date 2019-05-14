@@ -117,6 +117,20 @@ var styles = StyleSheet.create({
         bottom: "-5%",
         transform: [{ rotate: '230deg'}]
     },
+
+
+    //////////////////////////////////// PASSWORD FORGOT
+
+    SnakeRecover:{
+        width: 100,
+        resizeMode: 'contain',
+        height: 100,
+        position: "absolute",
+        right: "-20%",
+        bottom: "-50%",
+        transform: [{ rotate: '230deg'}] 
+    }
+
 });
 
 module.exports = styles;
