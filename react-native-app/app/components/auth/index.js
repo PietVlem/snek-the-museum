@@ -50,7 +50,7 @@ export class Authentication extends Component {
 
                     <AuthTextInput
                         onChangeText={(text) => this.setState({email: text})}
-                        placeholder={"Email Address"}
+                        placeholder={"Emailadres"}
                         autoFocus={false}
                         value={this.state.email}
                         error={this.state.error['email']}
@@ -61,7 +61,7 @@ export class Authentication extends Component {
                         (!this.props.recover) &&
                         <AuthTextInput
                             onChangeText={(text) => this.setState({password: text})}
-                            placeholder={"Password"}
+                            placeholder={"Paswoord"}
                             autoFocus={false}
                             value={this.state.password}
                             error={this.state.error['password']}
@@ -72,7 +72,7 @@ export class Authentication extends Component {
 
                     {//if the container type is Login, show the forgot password text
                         (this.props.login) &&
-                        <Text style={[styles.forgotText]} onPress={Actions.password}>{"Forgot Password"}</Text>
+                        <Text style={[styles.forgotText]} onPress={Actions.password}>{"paswoord vergeten?"}</Text>
                     }
 
                     <Button onPress={this.submit.bind(this)}

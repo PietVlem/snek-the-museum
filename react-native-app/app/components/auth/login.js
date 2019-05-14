@@ -16,6 +16,7 @@ class Login extends Component {
                 <NavBar/>
                 <Text style={styles.HeaderTitle}>SNEK THE MUSEUM</Text>
                 <Authentication login onPress={this.login.bind(this)}/>
+                <Text>Nog geen account? Registreer je hier</Text>
             </ScrollView>
         );
     }
