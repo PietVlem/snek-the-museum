@@ -1,7 +1,4 @@
 
-
-'use strict';
-
 var { AsyncStorage } = require('react-native');
 
 import { SERVER_ERROR, ERROR } from "../config";

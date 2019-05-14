@@ -1,17 +1,19 @@
 
 
-'use strict';
+ 
 
 import React, {Component} from 'react';
 import { View } from 'react-native';
 
-import {Router, Scene, Reducer} from 'react-native-router-flux';
+import {Router, Scene, Reducer,Stack} from 'react-native-router-flux';
 
-import Home from './components/home'
-import Welcome from './components/auth/welcome'
-import Login from './components/auth/login'
-import Register from './components/auth/register'
-import Password from './components/auth/password'
+import Home from './screens/home/home/home'
+import groupScreen from './screens/home/groupScreen/groupScreen'
+
+import Welcome from './screens/auth/welcome'
+import Login from './screens/auth/login'
+import Register from './screens/auth/register'
+import Password from './screens/auth/password'
 
 
 //Reducer for Router - See react-native-router-flux package README for more info
@@ -42,17 +44,22 @@ export default class Main extends Component {
             <View style={{flex:1}}>
                 <Router createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
                     <Scene key="root">
-                        <Scene key="home" component={Home} title="Home" initial/>
-                        <Scene key="welcome" hideNavBar={true} hideTabBar panHandlers={null}
-                               schema="modal" direction="vertical">
+                        <Stack key="auth" initial={!this.props.loggedIn}>
+                            <Scene key="welcome" hideNavBar hideTabBar panHandlers={null}
+                                schema="modal" direction="vertical">
                             <Scene key="welcome-" component={Welcome} title="Welcome" initial={true}
-                                   panHandlers={null}/>
+                                    panHandlers={null}/>
                             <Scene key="login" component={Login} title="Login" panHandlers={null}/>
                             <Scene key="register" component={Register} title="Register"
-                                   panHandlers={null}/>
+                                    panHandlers={null}/>
                             <Scene key="password" component={Password} title="Password"
-                                   panHandlers={null}/>
-                        </Scene>
+                                    panHandlers={null}/>
+                            </Scene>
+                        </Stack>
+                        <Stack key="auth" tabs hideNavBar initial={this.props.loggedIn}>
+                            <Scene key="groupScreen"  navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={groupScreen} initial/>
+                             <Scene key="home"  navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
+                        </Stack>
                     </Scene>
                 </Router>
             </View>

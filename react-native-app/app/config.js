@@ -1,4 +1,4 @@
-'use strict';
+ 
 
 export const NETWORK_ERROR = 'NETWORK_ERROR';
 export const SERVER_ERROR = 'SERVER_ERROR';

@@ -1,6 +1,6 @@
 
 
-'use strict';
+ 
 
 var { StyleSheet } = require('react-native');
 
@@ -58,7 +58,6 @@ var styles = StyleSheet.create({
           height: 3,
           width: 0
         },
-        textAlign: "center"
     },
     button:{
         height: 52,

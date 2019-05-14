@@ -1,6 +1,6 @@
 
 
-'use strict';
+ 
 
 var { NetInfo, Alert } = require('react-native');
 
