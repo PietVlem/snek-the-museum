@@ -1,6 +1,3 @@
-
-'use strict';
-
 import React, {Component} from 'react';
 var { View, Text,Image,ScrollView} = require('react-native');
 import {connect} from 'react-redux';
@@ -12,11 +9,17 @@ import { NavBar  } from '../index';
 class Login extends Component {
     render() {
         return (
-            <ScrollView>
+            <ScrollView style={{flex: 1,paddingHorizontal: 20,}}>
+                <Image
+                    style={styles.SnakeLayout}
+                    source={require('../../../assets/logo.png')}
+                />
                 <NavBar/>
                 <Text style={styles.HeaderTitle}>SNEK THE MUSEUM</Text>
+                <Text>Lorem ipsum dolor sit amet, consetetur
+                sadipscing elitr, sed diam nonumy eirmod tempor </Text>
                 <Authentication login onPress={this.login.bind(this)}/>
-                <Text>Nog geen account? Registreer je hier</Text>
+                <Text style={{textAlign: "center",marginTop: 30,}}>Nog geen account? Registreer je hier</Text>
             </ScrollView>
         );
     }

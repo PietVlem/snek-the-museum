@@ -89,11 +89,11 @@ export class Authentication extends Component {
         var errCount = 0;
 
         if (state.email.length <= 0) errCount++; //check email first
-        error["email"] = (state.email.length <= 0) ? "Your email is required!" : "";
+        error["email"] = (state.email.length <= 0) ? "Gelieve een emailadres in te geven." : "";
 
         if (!this.props.recover) {
             if (state.password.length <= 0 || state.password.length < 6) {
-                error["password"] = "Password should be Min 6 characters";
+                error["password"] = "Het paswoord moet minstens 6 tekens bevatten.";
                 errCount++;
             }else{
                 error["password"] = "";

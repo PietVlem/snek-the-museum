@@ -1,7 +1,3 @@
-
-
-'use strict';
-
 var { StyleSheet } = require('react-native');
 
 var styles = StyleSheet.create({
@@ -9,7 +5,6 @@ var styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-
     container:{
         flex: 1,
         padding: 15
@@ -32,6 +27,7 @@ var styles = StyleSheet.create({
     inputContainer:{
         borderBottomWidth: .5,
         borderColor: "#ccc",
+        marginVertical: 10,
     },
 
     textInput: {
