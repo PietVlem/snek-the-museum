@@ -16,7 +16,7 @@ import auth_styles from '../styles/auth'
 export class NavBar extends Component {
     render() {
         return (
-            <View style={[{height: 64, padding: 15, paddingTop:'20%',paddingLeft: '7%',}]}>
+            <View style={[{height: 64, padding: 15, paddingTop:'20%',}]}>
                 <TouchableOpacity
                     onPress={Actions.pop}
                     style={{height: 44, width: 44, justifyContent:"center"}}>
@@ -47,7 +47,7 @@ export class AuthTextInput extends Component {
         return (
             <View style={{borderWidth:0, marginBottom:5}}>
                 <View style={auth_styles.inputContainer}>
-                    <Text style={styles.fieldLabel}>{this.props.placeholder}:</Text>
+                    <Text style={auth_styles.fieldLabel}>{this.props.placeholder}:</Text>
                     <TextInput
                         onChangeText={this.props.onChangeText}
                         placeholder={this.props.placeholder}

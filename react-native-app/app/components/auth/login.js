@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-var { View, Text,Image,ScrollView} = require('react-native');
+var { View, Text,Image,ScrollView,Button} = require('react-native');
+import { SocialIcon } from 'react-native-elements';
 import {connect} from 'react-redux';
 import {login} from '../../actions/auth'; //Import your actions
 import styles from '../../styles/index'
@@ -16,10 +17,16 @@ class Login extends Component {
                 />
                 <NavBar/>
                 <Text style={styles.HeaderTitle}>SNEK THE MUSEUM</Text>
-                <Text>Lorem ipsum dolor sit amet, consetetur
+                <Text style={styles.Subtitle}>Lorem ipsum dolor sit amet, consetetur
                 sadipscing elitr, sed diam nonumy eirmod tempor </Text>
                 <Authentication login onPress={this.login.bind(this)}/>
-                <Text style={{textAlign: "center",marginTop: 30,}}>Nog geen account? Registreer je hier</Text>
+                <SocialIcon
+                title='LOGIN MET FACEBOOK'
+                button
+                type='facebook'
+                style={{marginHorizontal: 15,}}
+                />
+                <Text style={{textAlign: "center",marginTop: 30,fontSize: 12,fontFamily: 'RobotoRegular',color: "#5E646C",}}>Nog geen account? <Text style={{color: "#6FA29B"}}>Registreer je hier</Text></Text>
             </ScrollView>
         );
     }

@@ -16,7 +16,7 @@ var styles = StyleSheet.create({
         height: 200,
         position: "absolute",
         right: "-40%",
-        top: "15%",
+        top: "10%",
         transform: [{ rotate: '230deg'}]
     },
     imageWelcome:{
@@ -64,7 +64,7 @@ var styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: 'center',
         borderRadius:50,
-        width: '85%',
+        width: '100%',
         shadowColor: "#C7D0F8",
         shadowOpacity: 0.5,
         shadowRadius: 2,
@@ -87,11 +87,20 @@ var styles = StyleSheet.create({
     ///////////////////////////////////////////// LOGIN
 
     HeaderTitle:{
-        fontSize: 45,
-        color: '#6FA29B',
-        fontFamily: "RobotoBold",
-        marginTop: "40%",
+        fontSize: 50,
+        color: '#3E4A59',
+        fontFamily: "impact",
+        marginTop: "30%",
         marginLeft: 13,
+        marginRight: '30%',
+    },
+    Subtitle:{
+        marginTop: 20,
+        marginLeft: 15,
+        paddingRight: 40,
+        fontSize: 12,
+        color:'#5E646C',
+        fontFamily: "RobotoLight"
     },
 });
 

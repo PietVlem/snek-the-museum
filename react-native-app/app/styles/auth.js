@@ -26,8 +26,11 @@ var styles = StyleSheet.create({
 
     inputContainer:{
         borderBottomWidth: .5,
-        borderColor: "#ccc",
+        borderColor: "#EFF0F4",
         marginVertical: 10,
+    },
+    fieldLabel:{
+        color: "#3E4A59"
     },
 
     textInput: {
@@ -38,12 +41,12 @@ var styles = StyleSheet.create({
     },
 
     forgotText: {
-        fontWeight: "500",
-        fontSize: 15,
-        marginTop: 15,
-        marginBottom: 10,
-        color: "rgb(10,39,106)",
-        textAlign: "right"
+        fontFamily: "RobotoRegular",
+        fontSize: 12,
+        marginBottom: 20,
+        color: "#6FA29B",
+        textAlign: "right",
+        marginTop: 5,
     }
 });
 
