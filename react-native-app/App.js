@@ -18,10 +18,9 @@ export default class App extends React.Component {
 
     async _loadAssetsAsync() {
         const fontAssets = cacheFonts([
-            {RobotoBold: require('./assets/fonts/Roboto-Bold.ttf')},
-            {RobotoRegular: require('./assets/fonts/Roboto-Regular.ttf')},
-            {RobotoLight: require('./assets/fonts/Roboto-Light.ttf')},
-            {impact: require('./assets/fonts/impact.ttf')}
+            {impact: require('./assets/fonts/impact.ttf')},
+            {PTSansBold: require('./assets/fonts/PT_Sans-Web-Bold.ttf')},
+            {PTSansRegular: require('./assets/fonts/PT_Sans-Web-Regular.ttf')}
         ]);
         await Promise.all([...fontAssets]);
     }

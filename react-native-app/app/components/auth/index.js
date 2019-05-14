@@ -19,14 +19,16 @@ export class Authentication extends Component {
             username: "",
             email: "",
             password: "",
-            error: {username:"", email:"", password: "", general:""},
+            pass: "",
+            age: "",
+            error: {username:"", email:"", password: "", general:"",pass:"",age:""},
 
         };
     }
 
     render() {
 
-        var title = "Register";
+        var title = "REGISTREREN";
         if (this.props.login) title = "LOGIN";
         else if (this.props.recover) title = "Recover Password";
 
@@ -40,7 +42,7 @@ export class Authentication extends Component {
                         (this.props.register) &&
                         <AuthTextInput
                             onChangeText={(text) => this.setState({username: text})}
-                            placeholder={"Username"}
+                            placeholder={"Gebruikersnaam"}
                             autoFocus={true}
                             value={this.state.username}
                             error={this.state.error['username']}
@@ -66,6 +68,32 @@ export class Authentication extends Component {
                             value={this.state.password}
                             error={this.state.error['password']}
                             secureTextEntry={true}
+                        />
+                    }
+
+                    {//if the container type is Register, show the
+                        // age input
+                        (this.props.register) &&
+                        <AuthTextInput
+                            onChangeText={(text) => this.setState({age: text})}
+                            placeholder={"Leeftijd"}
+                            autoFocus={true}
+                            value={this.state.age}
+                            error={this.state.error['age']}
+                            secureTextEntry={false}
+                        />
+                    }
+
+                    {//if the container type is Register, show the
+                        // pass input
+                        (this.props.register) &&
+                        <AuthTextInput
+                            onChangeText={(text) => this.setState({pass: text})}
+                            placeholder={"Museumpas"}
+                            autoFocus={true}
+                            value={this.state.pass}
+                            error={this.state.error['pass']}
+                            secureTextEntry={false}
                         />
                     }
 
@@ -101,7 +129,12 @@ export class Authentication extends Component {
 
             if (this.props.register) {//if register, check username
                 if (state.username.length <= 0) errCount++;
-                error["username"] = (state.username.length <= 0) ? "Your username is required" : "";
+                error["username"] = (state.username.length <= 0) ? "Gelieve een gebruikersnaam in te voeren" : "";
+            }
+
+            if (this.props.register) {//if register, check username
+                if (state.age.length <= 0) errCount++;
+                error["age"] = (state.age.length <= 0) ? "Gelieve een leeftijd in te voeren" : "";
             }
         }
 
@@ -109,6 +142,8 @@ export class Authentication extends Component {
 
         if (errCount <= 0) {
             var data = {
+                age: state.age,
+                pass: state.pass,
                 username: state.username,
                 email:state.email,
                 password: state.password,
@@ -123,6 +158,7 @@ export class Authentication extends Component {
 
         if (err.username) error["username"] = err.username;
         else if (err.email) error["email"] = err.email;
+        else if (err.age) error["age"] = err.age;
         else error["general"] = err;
 
         this.setState({error: error});

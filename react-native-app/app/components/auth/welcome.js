@@ -30,7 +30,7 @@ export default class Welcome extends Component {
                     }
                     iconRight
                     title="START"
-                    titleStyle={{fontFamily: 'RobotoBold',}}
+                    titleStyle={{fontFamily: 'PTSansBold',}}
                     />
                 </View>
             </View>

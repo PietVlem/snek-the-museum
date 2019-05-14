@@ -19,6 +19,8 @@ var styles = StyleSheet.create({
         top: "10%",
         transform: [{ rotate: '230deg'}]
     },
+
+
     imageWelcome:{
         width: 120,
         height: 120,
@@ -60,6 +62,7 @@ var styles = StyleSheet.create({
     },
     button:{
         height: 52,
+        marginTop: 10,
         backgroundColor: '#E7B164',
         justifyContent: "center",
         alignSelf: 'center',
@@ -75,7 +78,7 @@ var styles = StyleSheet.create({
     },
 
     buttonText:{
-        fontFamily: 'RobotoBold',
+        fontFamily: 'PTSansBold',
         fontSize: 16,
         color: "#fff",
         textAlign: "center"
@@ -90,7 +93,7 @@ var styles = StyleSheet.create({
         fontSize: 50,
         color: '#3E4A59',
         fontFamily: "impact",
-        marginTop: "30%",
+        marginTop: "20%",
         marginLeft: 13,
         marginRight: '30%',
     },
@@ -100,7 +103,19 @@ var styles = StyleSheet.create({
         paddingRight: 40,
         fontSize: 12,
         color:'#5E646C',
-        fontFamily: "RobotoLight"
+        fontFamily: "PTSansRegular"
+    },
+
+    /////////////////////////////////////////// REGISTER
+
+    SnakeRegister:{
+        width: 100,
+        resizeMode: 'contain',
+        height: 100,
+        position: "absolute",
+        right: "-20%",
+        bottom: "-5%",
+        transform: [{ rotate: '230deg'}]
     },
 });
 

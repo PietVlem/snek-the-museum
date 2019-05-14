@@ -16,7 +16,7 @@ import auth_styles from '../styles/auth'
 export class NavBar extends Component {
     render() {
         return (
-            <View style={[{height: 64, padding: 15, paddingTop:'20%',}]}>
+            <View style={[{height: 64, padding: 15}]}>
                 <TouchableOpacity
                     onPress={Actions.pop}
                     style={{height: 44, width: 44, justifyContent:"center"}}>

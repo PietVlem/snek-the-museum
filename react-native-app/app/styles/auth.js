@@ -41,9 +41,9 @@ var styles = StyleSheet.create({
     },
 
     forgotText: {
-        fontFamily: "RobotoRegular",
+        fontFamily: "PTSansRegular",
         fontSize: 12,
-        marginBottom: 20,
+        marginBottom: 10,
         color: "#6FA29B",
         textAlign: "right",
         marginTop: 5,
