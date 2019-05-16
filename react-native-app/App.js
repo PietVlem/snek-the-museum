@@ -20,7 +20,10 @@ export default class App extends React.Component {
         const fontAssets = cacheFonts([
             {impact: require('./assets/fonts/impact.ttf')},
             {PTSansBold: require('./assets/fonts/PT_Sans-Web-Bold.ttf')},
-            {PTSansRegular: require('./assets/fonts/PT_Sans-Web-Regular.ttf')}
+            {PTSansRegular: require('./assets/fonts/PT_Sans-Web-Regular.ttf')},
+            {MontserratMedium: require('./assets/fonts/Montserrat-Medium.ttf')},
+            {MontserratRegular: require('./assets/fonts/Montserrat-Regular.ttf')},
+            {MontserratLight: require('./assets/fonts/Montserrat-Light.ttf')}
         ]);
         await Promise.all([...fontAssets]);
     }
