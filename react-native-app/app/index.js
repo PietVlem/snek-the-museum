@@ -10,6 +10,7 @@ import { Icon } from 'react-native-elements'
 
 import Home from './screens/home/home/home'
 import groupScreen from './screens/home/groupScreen/groupScreen'
+import spinPage from './screens/home/spinPage/spinPage'
 
 import Welcome from './screens/auth/welcome'
 import Login from './screens/auth/login'
@@ -62,6 +63,7 @@ export default class Main extends Component {
                                 <Scene icon={({ focused }) => (<Icon style={{ width: 30 }} type='ionicon' name={focused ? 'ios-home' : 'ios-home'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="home" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
                                     <Scene key="groupScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={groupScreen} initial/>
+                                    <Scene key="spinPage" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={spinPage} initial/>
                                 </Scene> 
                             </Scene>
                         </Stack>

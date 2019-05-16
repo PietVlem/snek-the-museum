@@ -83,7 +83,7 @@ class groupScreen extends Component {
         return (
             <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: -30,}}>
                 <View>
-                    <NavBar/>
+                <View style={{marginLeft: 5,}}><NavBar/></View>
                     <Text style={styles.GroupCreateTitle}>Snake groep maken</Text> 
                         <FlatList
                         ref='listRef'
