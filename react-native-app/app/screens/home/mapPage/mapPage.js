@@ -10,6 +10,7 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+import { MapView } from 'expo';
 class mapPage extends Component {
 
     componentDidMount() {
@@ -47,6 +48,10 @@ class mapPage extends Component {
         )
       }
 
+    static navigationOptions = {
+        header: null,
+    };  
+
     render() {
         const list = [
             {
@@ -57,14 +62,23 @@ class mapPage extends Component {
           ]
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
+                    
+            <MapView
+                style={{ flex: 1 }}
+                initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+                }}
+            />
+            <FlatList
+            ref='listRef'
+            data={list}
+            style={styles.Listbox}
+            renderItem={this.renderRow}
+            initialNumToRender={5}
+            keyExtractor={(item, index) => index.toString()}/>            
             </View>
         );
     }
