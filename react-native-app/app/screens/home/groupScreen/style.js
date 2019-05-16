@@ -4,8 +4,11 @@ var { StyleSheet } = require('react-native');
 
 var styles = StyleSheet.create({
 
-    container:{
-        flex: 1,
+    GroupCreateTitle:{
+        color: "#3E4A59",
+        fontFamily: 'PTSansBold',
+        fontSize: 17,
+        marginBottom: 20,
     },
 
 });

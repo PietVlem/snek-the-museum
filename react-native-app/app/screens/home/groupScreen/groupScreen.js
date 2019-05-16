@@ -2,18 +2,17 @@
  
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage } = require('react-native');
-
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView } = require('react-native');
+import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 
 import {Actions} from 'react-native-router-flux';
-
+import { Icon } from 'react-native-elements'
 import {setStatus, logout} from '../../../actions/auth'; //Import your actions
-
 import {Button} from '../../index'; //Import your Button
-
-import styles from './style'
-
+import styles from './style' //Import your styles
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { ListItem } from 'react-native-elements'
 class groupScreen extends Component {
 
     componentDidMount() {
@@ -25,20 +24,64 @@ class groupScreen extends Component {
         //     else _this.props.setStatus(true)
         // });
     }
+    renderRow ({ item }) {
+        return (
+        <TouchableOpacity>
+          <ListItem
+            roundAvatar
+            title={item.name}
+            subtitle={item.subtitle}
+            avatar={{uri:item.avatar_url}}
+            containerStyle={styles.Liststyle}
+            subtitleStyle={styles.subtitle}
+            titleStyle={styles.ListItemTitle}
+            rightIcon={
+                <Icon
+                name='ios-arrow-forward'
+                type='ionicon'
+                color='#6FA29B'
+                size={15}
+                iconStyle={{paddingRight: 15,}}
+                onPress={() => console.log('hello')} />
+            }
+            chevronColor="#6FA29B"
+          />
+        </TouchableOpacity>   
+        )
+      }
 
     render() {
+        const list = [
+            {
+              name: 'Amy Farha',
+              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              subtitle: 'Vice President'
+            },
+            {
+              name: 'Chris Jackson',
+              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+              subtitle: 'Vice Chairman'
+            },
+          ]
         return (
-            <View style={styles.container}>
-                {
-                    <Text>Groep !</Text>
+            <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginHorizontal: 20,}}>
+                    <Text style={styles.GroupCreateTitle}>Snake groep maken</Text> 
+                        <FlatList
+                        ref='listRef'
+                        data={list}
+                        style={styles.Listbox}
+                        renderItem={this.renderRow}
+                        initialNumToRender={5}
+                        keyExtractor={(item, index) => index.toString()}/>            
+                    {
                     // (this.props.loggedIn) &&
                     // <View>
                     //     <Text style={[styles.welcomeText]}>Welcome</Text>
                     //     <Text style={[styles.subText]}>You are logged in.</Text>
                     //     <Button btnText="Logout" onPress={this.props.logout}/>
                     // </View>
-                }
-            </View>
+                        }
+            </ScrollView>
         );
     }
 };
