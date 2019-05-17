@@ -17,12 +17,14 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 3.84,
         elevation: 1,
+        paddingLeft: 5,
+        paddingTop: 5,
     },
     Listbox:{
         position: "absolute",
         bottom: 30,
-        left: 20, right: 20,
-        paddingHorizontal: 20,
+        left: 10, right: 10,
+        paddingHorizontal: 10,
     },
     subtitle:{
         color: "#A9A9B0",
@@ -37,7 +39,25 @@ var styles = StyleSheet.create({
         fontSize: 15,
         paddingLeft: 10
     },
-
+    MapMuseaBox:{
+    paddingTop: 10,
+    paddingBottom: 15,
+    flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    },
+    distanceIcon:{
+        width: 30,
+        resizeMode: "contain",
+        height: 30,
+        marginRight: 10,
+    },
+    distanceText:{
+        fontSize: 11,
+        fontFamily: "MontserratRegular",
+        color: '#6FA29B',
+        marginTop: 8,
+    }
 });
 
 module.exports = styles;

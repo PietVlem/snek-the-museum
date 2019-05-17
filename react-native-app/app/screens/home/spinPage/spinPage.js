@@ -39,7 +39,7 @@ class spinPage extends Component {
                 color='#6FA29B'
                 size={15}
                 iconStyle={{paddingRight: 15,}}
-                onPress={() => console.log('hello')} />
+                onPress={() => Actions.mapPage()} />
             }
             chevronColor="#6FA29B"
           />
@@ -62,7 +62,7 @@ class spinPage extends Component {
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
                             <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
-                                <TouchableOpacity onPress={() => Actions.groupScreen()} style={styles.SearchBtn}>
+                                <TouchableOpacity style={styles.SearchBtn}>
                                     <Image
                                         style={styles.SearchIcon}
                                         source={require('../../../../assets/binoculars.png')}

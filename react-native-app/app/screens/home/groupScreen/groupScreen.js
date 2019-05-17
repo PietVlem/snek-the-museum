@@ -189,7 +189,7 @@ class groupScreen extends Component {
                         }}
                     />
                 </View>
-                <TouchableOpacity onPress={this.props.onPress} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>
                             GROEP BEVESTIGEN

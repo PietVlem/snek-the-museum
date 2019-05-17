@@ -24,13 +24,13 @@ class mapPage extends Component {
     }
     renderRow ({ item }) {
         return (
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.Liststyle}>
           <ListItem
             roundAvatar
             title={item.name}
             subtitle={item.subtitle}
             avatar={{uri:item.avatar_url}}
-            containerStyle={styles.Liststyle}
+            containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
             rightIcon={
@@ -44,6 +44,22 @@ class mapPage extends Component {
             }
             chevronColor="#6FA29B"
           />
+          <View style={styles.MapMuseaBox}>
+            <View style={{flex: 1,flexDirection: 'row',}}>
+                <Image
+                    style={styles.distanceIcon}
+                    source={require('../../../../assets/mountain.png')}
+                />
+                <Text style={styles.distanceText}>Fiets: 20min </Text>
+            </View>
+            <View style={{flex: 1,flexDirection: 'row',}}>
+                <Image
+                    style={styles.distanceIcon}
+                    source={require('../../../../assets/bus.png')}
+                />
+                <Text style={styles.distanceText}>Bus: Lijn 55 - 12:30u</Text>
+            </View>
+          </View>  
         </TouchableOpacity>   
         )
       }
