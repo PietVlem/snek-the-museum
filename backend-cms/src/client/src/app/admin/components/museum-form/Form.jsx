@@ -18,7 +18,7 @@ import TextField from "@material-ui/core/TextField";
 
 import RichEditor from "../rich-editor";
 
-import { FStorage, Firebase} from '../../../../firebase';
+import { FStorage, Firebase } from '../../../../firebase';
 
 const styles = {
   selectCategories: {

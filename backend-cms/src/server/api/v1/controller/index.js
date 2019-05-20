@@ -5,6 +5,9 @@ import CategoryController from './category.controller';
 import PostController from './post.controller';
 import UserController from './user.controller';
 import MuseumController from './museum.controller';
+import DisabilityController from './disability.controller';
+import ImageController from './image.controller';
+import ZipcodeController from './zipcode.controller';
 
 export {
     AuthController,
@@ -12,5 +15,8 @@ export {
     CategoryController,
     PostController,
     UserController,
-    MuseumController
+    MuseumController,
+    DisabilityController,
+    ImageController,
+    ZipcodeController
 };
