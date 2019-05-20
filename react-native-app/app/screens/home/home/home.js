@@ -26,7 +26,7 @@ class Home extends Component {
     }
     renderRow ({ item }) {
         return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => Actions.detailScreen()}>
           <ListItem
             roundAvatar
             title={item.name}
@@ -83,14 +83,15 @@ class Home extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                    <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text> 
+                     
                         <FlatList
                         ref='listRef'
                         data={list}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}/>            
+                        keyExtractor={(item, index) => index.toString()}
+                        />            
                     {
                     // (this.props.loggedIn) &&
                     // <View>
