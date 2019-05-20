@@ -52,7 +52,7 @@ class MuseumForm extends Component {
     
     state = {
         categories: [],
-        museum: { title: "", body: "", categoryId: "", },
+        museum: { title: "", file: null, body: "", categoryId: ""},
     };
 
     componentWillMount() {
@@ -118,6 +118,7 @@ class MuseumForm extends Component {
     }
 
     saveMuseum = async (museumData) => {
+        /*
         try {
             const options = {
                 method: 'POST',
@@ -138,6 +139,8 @@ class MuseumForm extends Component {
         } catch(error) {
             console.log(error);
         }
+        */
+       console.log(museumData);
     }
 
     updateMuseum = async (museumId, museumData) => {

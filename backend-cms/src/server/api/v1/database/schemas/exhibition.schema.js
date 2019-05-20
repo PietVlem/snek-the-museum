@@ -7,9 +7,9 @@ const { Schema } = mongoose;
 const ExhibitionSchema = new Schema(
     {
         name: { type: String, required: true, max: 128 },
-        //image
+        image: { type: String, required: false },
         info: { type: String, required: false },
-        // gallery
+        gallery: { type: Array, required: false } ,
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },

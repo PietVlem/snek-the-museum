@@ -9,6 +9,7 @@ Import Main application
 */
 import Main from './app/Main';
 
+
 class App extends Component {
   render() {
     return (

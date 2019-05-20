@@ -6,7 +6,10 @@ import User from './user.schema';
 
 //custom 
 import Museum from './museum.schema';
-import Exhibition from './exhibitions.schema';
+import Exhibition from './exhibition.schema';
+import Disability from './disability.shema';
+import Zipcode from './zipcode.schema';
+import Image from './image.schema';
 
 export {
     Blog,
@@ -14,5 +17,8 @@ export {
     Post,
     User,
     Museum,
-    Exhibition
+    Exhibition,
+    Disability,
+    Zipcode,
+    Image
 };
