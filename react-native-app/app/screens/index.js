@@ -20,8 +20,8 @@ export class NavBar extends Component {
                 <TouchableOpacity
                     onPress={Actions.pop}
                     style={{height: 44, width: 44, justifyContent:"center"}}>
-                    <Ionicons name={ "md-arrow-back"}
-                              size={24} style={{height: 24}} color={"#6FA29B"}/>
+                    <Ionicons name={ "ios-arrow-round-back"}
+                              size={35} style={{height: 24}} color={"#6FA29B"}/>
                 </TouchableOpacity>
             </View>
         );

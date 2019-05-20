@@ -16,8 +16,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import School from '@material-ui/icons/School';
+import LocationCity from '@material-ui/icons/LocationCity';
+import Create from '@material-ui/icons/Create';
+import Ballot from '@material-ui/icons/Ballot';
+import ColorLens from '@material-ui/icons/ColorLens';
+import AccessibleForward from '@material-ui/icons/AccessibleForward';
+import GolfCourse from '@material-ui/icons/GolfCourse';
 import PublicIcon from '@material-ui/icons/Public';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
@@ -29,13 +34,15 @@ const categories = [
   {
     id: 'Menu',
     children: [
-      { id: 'Blogs', icon: <PermMediaOutlinedIcon />, link: '/admin/blogs' },
+      { id: 'users', icon: <PeopleIcon />, link: '/admin/users' },
+      { id: 'zipcodes', icon: <LocationCity />, link: '/admin/zipcodes' },
+      { id: 'Blogs', icon: <Ballot />, link: '/admin/blogs' },
       { id: 'Categories', icon: <DnsRoundedIcon />, link: '/admin/categories' },
-      { id: 'Posts', icon: <PeopleIcon />, link: '/admin/posts' },
+      { id: 'Posts', icon: <Create />, link: '/admin/posts' },
       { id: 'Museums', icon: <School />, link: '/admin/museums' },
-      { id: 'Exhibitions', icon: <School />, link: '/admin/exhibitions' },
-      { id: 'Disabilities', icon: <School />, link: '/admin/disabilities' },
-      { id: 'Assignments', icon: <School />, link: '/admin/assignments' },
+      { id: 'Exhibitions', icon: <ColorLens />, link: '/admin/exhibitions' },
+      { id: 'Disabilities', icon: <AccessibleForward />, link: '/admin/disabilities' },
+      { id: 'Assignments', icon: <GolfCourse />, link: '/admin/assignments' },
     ],
   },
 ];
