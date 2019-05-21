@@ -118,7 +118,7 @@ class groupScreen extends Component {
                     style={styles.HeaderImg}
                     source={require('../../../../assets/smak.jpg')}
                 />   
-                <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
                         MUSEUM ONTDEKKEN
