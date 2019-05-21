@@ -57,7 +57,7 @@ class spinPage extends Component {
           ]
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-            <View style={{marginLeft: 5,marginTop: "-5%",}}><NavBar/></View>
+            <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>

@@ -1,9 +1,7 @@
 
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList } = require('react-native');
-
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView,StyleSheet } = require('react-native');
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,StyleSheet,ScrollView } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 import { NavBar  } from '../../index';
@@ -13,16 +11,9 @@ import { Icon } from 'react-native-elements'
 import {setStatus, logout} from '../../../actions/auth'; //Import your actions
 
 import { ListItem } from 'react-native-elements';
-
-import { Icon } from 'react-native-elements'
-
-import { SearchBar } from 'react-native-elements';
 import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ListItem } from 'react-native-elements'
-class groupScreen extends Component {
-
 
 class groupScreen extends Component {
     state = {
@@ -119,35 +110,7 @@ class groupScreen extends Component {
               subtitle: 'Jan Hoetplein 1, 9000 Gent'
             },
           ]
-        return (
-            <View style={styles.container}>
-                <SearchBar
-                    placeholder="Type Here..."
-                    onChangeText={this.updateSearch}
-                    containerStyle={styles.ContainerSearchbox}
-                    inputStyle={styles.Input}
-                    value={search}
-                />
-                <TouchableOpacity>
-                    <Image
-                        style={styles.SearchIcon}
-                        source={require('../../../../assets/list.png')}
-                    /> 
-                </TouchableOpacity> 
-                <Image
-                    style={styles.SnakeLayout}
-                    source={require('../../../../assets/logo.png')}
-                />   
-                <FlatList
-                    ref='listRef'
-                    data={list}
-                    style={styles.Listbox}
-                    renderItem={this.renderRow}
-                    initialNumToRender={5}
-                    keyExtractor={(item, index) => index.toString()}/>
-                {
-                    
-        const list = [
+        const listPersons = [
             {
               name: 'Amy Farha',
             },
@@ -160,15 +123,15 @@ class groupScreen extends Component {
             {
                 name: 'Chris Jackson',
             },
-          ]
+          ]  
         return (
-            <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: -30,}}>
+            <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: 50,}}>
                 <View>
                 <View style={{marginLeft: 5,}}><NavBar/></View>
                     <Text style={styles.GroupCreateTitle}>Snake groep maken</Text> 
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={listPersons}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}

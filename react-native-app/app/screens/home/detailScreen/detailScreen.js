@@ -10,7 +10,8 @@ import {setStatus, logout} from '../../../actions/auth'; //Import your actions
 import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ListItem } from 'react-native-elements'
+import { ListItem,Avatar } from 'react-native-elements'
+import { NavBar  } from '../../index';
 
 class groupScreen extends Component {
 
@@ -26,54 +27,104 @@ class groupScreen extends Component {
 
     renderRow ({ item }) {
         return (
-        <TouchableOpacity >
           <ListItem
-            avatar={item.icon_url}
-            avatarStyle={{backgroundColor:'white' }}
+            avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
-            titleStyle={color="#6FA29B"}
+            titleStyle={{color:"#6FA29B",marginLeft: 20,fontSize: 13,fontFamily: "MontserratMedium",}}
             titleNumberOfLines={2}
             containerStyle={styles.Liststyle}
             hideChevron
-          />
-        </TouchableOpacity>   
+          />  
         )
       }
+
+    renderReaction ({ item }) {
+        return (
+          <View style={styles.reactionstyle}> 
+            <ListItem
+                roundAvatar
+                subtitle={item.title}
+                avatar={{uri:item.avatar_url}}
+                title={item.name}
+                containerStyle={{borderBottomWidth: 0,backgroundColor: "white",paddingLeft: 10,}}
+                titleStyle={styles.reactionName}
+                subtitleStyle={styles.reactionSubTitle}
+                rightIcon={
+                    <Text style={{marginTop: -15,marginRight: 10,fontSize:12,color:"#303E48",}}>{item.published}</Text>
+                }
+            /> 
+            <Text style={styles.reactionBody}>Dit museum was super!</Text>
+          </View>  
+        )
+    }  
 
     render() {
         const list = [
             {
               info: 'Bekijk de route',
-              icon_url: require('../../../../assets/001-destination.png'),
+              icon_url: require('../../../../assets/route.png'),
             },
             {
-                info: '€5 voor volwassenen \n €2.5 per kind',
-                icon_url: require('../../../../assets/002-money.png'),
+                info: '€5 voor volwassenen \n€2.5 per kind',
+                icon_url: require('../../../../assets/money.png'),
             },
             {
                 info: 'Tentoonstelling van 30 min',
-                icon_url: require('../../../../assets/003-clock.png'),
+                icon_url: require('../../../../assets/clock.png'),
             },
             {
-                info: 'ma - vr 9u tot 19u \n zat - zon gesloten',
-                icon_url: require('../../../../assets/004-calendar.png'),
+                info: 'ma - vr 9u tot 19u \nzat - zon gesloten',
+                icon_url: require('../../../../assets/calendar.png'),
+            },
+          ]
+
+          const listReaction = [
+            {
+              name: 'Jelena',
+              title: 'Super Museum',
+              body: 'Dit museum was super!',
+              published: "5u geleden",
+              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
             },
           ]
         return (
             <View style={styles.container}>
             <ScrollView>
-                
-                <Text style={styles.DetailTitle}>Detail Museum</Text>
+                <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
+                <View style={{flex:1,flexDirection: 'row'}}>
+                    <Text style={styles.DetailTitle}>Design Museum</Text>
+                    <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
+                    <View style={{flexDirection:'row'}}>
+
+                        <Icon
+                            name='facebook-f'
+                            containerStyle={{marginHorizontal: 5,marginTop: 3,}}
+                            type='font-awesome'
+                            color='#B4B9BE'
+                            size={20}
+                            onPress={() => console.log('hello')} />
+                        <Icon
+                            containerStyle={{marginHorizontal: 5,marginTop: 3,}}
+                            name='twitter'
+                            type='font-awesome'
+                            color='#B4B9BE'
+                            size={20}
+                            onPress={() => console.log('hello')} />
+                    </View>
+                    </View>
+                </View>
                 <Image
                     resizeMode={'cover'}
                     style={styles.HeaderImg}
                     source={require('../../../../assets/smak.jpg')}
                 />   
-                <View style={styles.CallToAction}>
-                    <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
-                    <TouchableOpacity><Text onPress={() => Actions.kortingScreen()} style={{textAlign: "center",fontSize: 24,fontFamily: 'PTSansRegular',color: "white",}}>MUSEUM ONTDEKKEN</Text></TouchableOpacity> 
-                    </Animatable.View> 
+                <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>
+                        MUSEUM ONTDEKKEN
+                    </Text>
                 </View>
+                </TouchableOpacity>
                 <Text style={styles.DetailText}>
                     Design Museum Gent is een museum in Gent met een omvangrijke collectie Belgisch en internationaal design. De verzameling omvat ontwerpen van de art nouveau van Henry Van de Velde tot de hedendaagse avantgarde- vormgeving.
                 </Text>
@@ -85,6 +136,27 @@ class groupScreen extends Component {
                     initialNumToRender={5}
                     keyExtractor={(item, index) => index.toString()}
                 />
+                <View style={styles.galleryBox}>
+                    <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
+                </View>
+                <View style={styles.reactionBox}>
+                    <Text style={styles.reactionTitle}>Reacties (1)</Text>
+                    <FlatList
+                    ref='listRef'
+                    data={listReaction}
+                    style={styles.reactionBoxList}
+                    renderItem={this.renderReaction}
+                    initialNumToRender={5}
+                    keyExtractor={(item, index) => index.toString()}/> 
+
+                    <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
+                        <View style={styles.button}>
+                            <Text style={styles.buttonText}>
+                                REACTIE PLAATSEN
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
                 {
                     // (this.props.loggedIn) &&

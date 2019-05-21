@@ -64,7 +64,7 @@ class Home extends Component {
             },
           ]
         return (
-            <View style={{flex: 1,backgroundColor: "#FFF"}}>
+            <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 80,}}>
                 
                     <Text style={styles.Pushtitle}>Duw hier voor een nieuw museum avontuur !</Text>
                         <View style={styles.SearchIconBox}>
