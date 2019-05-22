@@ -14,8 +14,11 @@ import groupScreen from './screens/home/groupScreen/groupScreen'
 import detailScreen from './screens/home/detailScreen/detailScreen'
 import spinPage from './screens/home/spinPage/spinPage'
 import mapPage from './screens/home/mapPage/mapPage'
+import searchScreen from './screens/home/searchScreen/searchScreen'
 import kortingScreen from './screens/home/kortingScreen/kortingScreen'
 import startScreen from './screens/home/StartQrcodeScreens/startScreen/startScreen'
+import startCheckScreen from './screens/home/StartQrcodeScreens/startCheckScreen/startCheckScreen'
+import endScreen from './screens/home/StartQrcodeScreens/endScreen/endScreen'
 
 import Welcome from './screens/auth/welcome'
 import Login from './screens/auth/login'
@@ -69,11 +72,14 @@ export default class Main extends Component {
                                     <Scene key="groupScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={groupScreen} initial/>
                                     <Scene key="spinPage" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={spinPage} initial/>
                                     <Scene key="kortingScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={kortingScreen} initial/>
-                                    <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
                                     <Scene key="startScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={startScreen} initial/>
+                                    <Scene key="startCheckScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={startCheckScreen} initial/>
+                                    <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={endScreen} initial/>
+                                    <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
+                                    <Scene key="searchScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={searchScreen} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'map-pin' : 'map-pin'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="mapPage" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={mapPage} initial/>
