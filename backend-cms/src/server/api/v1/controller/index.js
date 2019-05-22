@@ -8,6 +8,7 @@ import MuseumController from './museum.controller';
 import DisabilityController from './disability.controller';
 import ImageController from './image.controller';
 import ZipcodeController from './zipcode.controller';
+import ExhibitionController from './exhibition.controller';
 
 export {
     AuthController,
@@ -18,5 +19,6 @@ export {
     MuseumController,
     DisabilityController,
     ImageController,
-    ZipcodeController
+    ZipcodeController,
+    ExhibitionController
 };

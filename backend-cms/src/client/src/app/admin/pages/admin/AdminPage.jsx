@@ -13,6 +13,7 @@ import PostsOverviewPage from '../posts-overview';
 import MuseumsOverviewPage from '../museums-overview';
 import ZipcodesOverviewPage from '../zipcodes-overview';
 import DisabilitiesOverviewPage from '../disabilities-overview';
+import ExhibitionsOverviewPage from '../exhibitions-overview';
 
 class AdminPage extends Component {
   render() {
@@ -20,7 +21,6 @@ class AdminPage extends Component {
       <div className="Admin">
         {/* to be done */}
         <Route path="/admin/users" component={MuseumsOverviewPage}></Route>
-        <Route path="/admin/exhibitions" component={MuseumsOverviewPage}></Route>
         <Route path="/admin/Assignments" component={MuseumsOverviewPage}></Route>
         
         {/* done */}
@@ -30,6 +30,7 @@ class AdminPage extends Component {
         <Route path="/admin/posts" component={ PostsOverviewPage }></Route>
         <Route path="/admin/museums" component={MuseumsOverviewPage}></Route>
         <Route path="/admin/disabilities" component={DisabilitiesOverviewPage}></Route>
+        <Route path="/admin/exhibitions" component={ExhibitionsOverviewPage}></Route>
       </div>
     )
   }

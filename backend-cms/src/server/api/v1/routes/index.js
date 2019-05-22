@@ -17,6 +17,7 @@ import museumRouter from './museum.routes';
 import disabilityRouter from './disability.routes';
 import imageRouter from './image.routes';
 import zipcodeRouter from './zipcode.routes';
+import exhibtionRouter from './exhibition.routes';
 
 // Initialize the AuthService
 const authService = new AuthService();
@@ -32,6 +33,7 @@ museumRouter(apiV1Router, authService);
 disabilityRouter(apiV1Router, authService);
 imageRouter(apiV1Router, authRouter);
 zipcodeRouter(apiV1Router, authRouter);
+exhibtionRouter(apiV1Router, authRouter);
 
 
 export default apiV1Router;
