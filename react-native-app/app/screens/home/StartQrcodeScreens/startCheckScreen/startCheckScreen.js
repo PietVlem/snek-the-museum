@@ -52,7 +52,7 @@ class startCheckScreen extends Component {
                                 van de Qr-code te nemen.
                             </Text>
                             <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
-                            <TouchableOpacity onPress={() => Actions.groupScreen()}>
+                            <TouchableOpacity onPress={() => Actions.questionScreen()}>
                                 <Image
                                 style={styles.SearchIcon}
                                 source={require('../../../../../assets/binoculars2.png')}

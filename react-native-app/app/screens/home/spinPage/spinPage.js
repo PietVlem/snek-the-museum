@@ -39,7 +39,7 @@ class spinPage extends Component {
                 color='#6FA29B'
                 size={15}
                 iconStyle={{paddingRight: 15,}}
-                onPress={() => Actions.mapPage()} />
+                onPress={() => Actions.detailpage()} />
             }
             chevronColor="#6FA29B"
           />

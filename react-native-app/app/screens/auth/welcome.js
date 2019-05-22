@@ -20,15 +20,6 @@ export default class Welcome extends Component {
                         />
                     </View>
                     <Button buttonStyle={styles.buttonArrow} onPress={Actions.login}
-                    icon={
-                        <Ionicons 
-                        name={ "md-arrow-forward"}
-                        size={15}
-                        color="white"
-                        style={{paddingLeft: 20}}
-                        />
-                    }
-                    iconRight
                     title="START"
                     titleStyle={{fontFamily: 'PTSansBold',}}
                     />

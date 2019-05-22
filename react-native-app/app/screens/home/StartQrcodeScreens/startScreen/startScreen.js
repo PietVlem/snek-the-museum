@@ -55,7 +55,7 @@ class startScreen extends Component {
                                 source={require('../../../../../assets/binoculars2.png')}
                             /> 
                         </View>
-                        <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
+                        <TouchableOpacity onPress={() => Actions.startCheckScreen()} style={styles.btnContainer}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>
                                      START

@@ -56,15 +56,15 @@ export default class Main extends Component {
             <View style={{flex:1}}>
                 <Router createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
                     <Scene key="root">
-                        <Stack key="auth" initial={!this.props.loggedIn}>
+                        <Stack key="auth" hideNavBar initial={!this.props.loggedIn}>
                             <Scene key="welcome" hideNavBar hideTabBar panHandlers={null}
                                 schema="modal" direction="vertical">
-                            <Scene key="welcome-" component={Welcome} title="Welcome" initial={true}
+                            <Scene key="welcome-" hideNavBar component={Welcome} title="Welcome" initial={true}
                                     panHandlers={null}/>
-                            <Scene key="login" component={Login} title="Login" panHandlers={null}/>
-                            <Scene key="register" component={Register} title="Register"
+                            <Scene key="login" direction="vertical" component={Login} title="Login" panHandlers={null}/>
+                            <Scene key="register" direction="vertical" component={Register} title="Register"
                                     panHandlers={null}/>
-                            <Scene key="password" component={Password} title="Password"
+                            <Scene key="password" direction="vertical" component={Password} title="Password"
                                     panHandlers={null}/>
                             </Scene>
                         </Stack>
