@@ -83,7 +83,7 @@ class Home extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                     
+                        <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
                         data={list}

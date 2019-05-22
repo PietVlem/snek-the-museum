@@ -14,6 +14,7 @@ import groupScreen from './screens/home/groupScreen/groupScreen'
 import detailScreen from './screens/home/detailScreen/detailScreen'
 import spinPage from './screens/home/spinPage/spinPage'
 import mapPage from './screens/home/mapPage/mapPage'
+import profileScreen from './screens/home/profileScreen/profileScreen'
 import searchScreen from './screens/home/searchScreen/searchScreen'
 import kortingScreen from './screens/home/kortingScreen/kortingScreen'
 import startScreen from './screens/home/StartQrcodeScreens/startScreen/startScreen'
@@ -83,6 +84,9 @@ export default class Main extends Component {
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'map-pin' : 'map-pin'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="mapPage" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={mapPage} initial/>
+                                </Scene>
+                                <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'user' : 'user'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                    <Scene key="profileScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={profileScreen} initial/>
                                 </Scene>
                             </Scene>
                         </Stack>

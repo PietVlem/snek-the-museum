@@ -54,14 +54,6 @@ class kortingScreen extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                }
             </View>
         );
     }
