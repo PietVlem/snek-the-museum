@@ -20,6 +20,7 @@ import kortingScreen from './screens/home/kortingScreen/kortingScreen'
 import startScreen from './screens/home/StartQrcodeScreens/startScreen/startScreen'
 import startCheckScreen from './screens/home/StartQrcodeScreens/startCheckScreen/startCheckScreen'
 import endScreen from './screens/home/StartQrcodeScreens/endScreen/endScreen'
+import questionScreen from './screens/home/StartQrcodeScreens/questionScreen/questionScreen'
 
 import Welcome from './screens/auth/welcome'
 import Login from './screens/auth/login'
@@ -77,6 +78,7 @@ export default class Main extends Component {
                                     <Scene key="startCheckScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={startCheckScreen} initial/>
                                     <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={endScreen} initial/>
                                     <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
+                                    <Scene key="questionScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={questionScreen} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>

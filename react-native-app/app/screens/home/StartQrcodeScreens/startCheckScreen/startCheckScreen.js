@@ -38,7 +38,7 @@ class startCheckScreen extends Component {
         const barWidth = Dimensions.get('screen').width - 70;
         return (
             <View style={styles.container}>
-                <View style={{marginLeft: 20,marginTop: 50,}}><NavBar/></View>
+                <View style={{marginLeft: 20,marginTop: 50,}}></View>
                         <View style={styles.ProgressBarBox}>
                             <ProgressBarAnimated
                             width={barWidth}
