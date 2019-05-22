@@ -49,7 +49,7 @@ class DisabilityForm extends Component {
     }
     
     state = {
-        disability: { code: "", city: "", country: "" },
+        disability: { name: "", },
     };
 
     componentWillMount() {        
@@ -66,7 +66,7 @@ class DisabilityForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/disabilitys/${disabilityId}`, options);
+            const response = await fetch(`/api/v1/disabilities/${disabilityId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({ 
@@ -103,7 +103,7 @@ class DisabilityForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch('/api/v1/disabilitys', options);
+            const response = await fetch('/api/v1/disabilities', options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);
@@ -126,7 +126,7 @@ class DisabilityForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/disabilitys/${disabilityId}`, options);
+            const response = await fetch(`/api/v1/disabilities/${disabilityId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);

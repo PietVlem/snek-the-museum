@@ -25,7 +25,7 @@ class DisabilityController {
                 };
                 disabilities = await Disability.paginate({}, options);
             } else {
-                disabilities = await Disability.find().populate('category').sort({ created_at: -1 }).exec();
+                disabilities = await Disability.find().sort({ created_at: -1 }).exec();
             }
 
             if (disabilities === undefined || disabilities === null) {
