@@ -9,7 +9,7 @@ import Museum from './museum.schema';
 import Exhibition from './exhibition.schema';
 import Disability from './disability.shema';
 import Zipcode from './zipcode.schema';
-import Image from './image.schema';
+import Photo from './photo.schema';
 
 export {
     Blog,
@@ -20,5 +20,5 @@ export {
     Exhibition,
     Disability,
     Zipcode,
-    Image
+    Photo
 };

@@ -17,7 +17,7 @@ import MuseumFormPage from '../museum-form';
 
 const tabs = [
   { id: 'List', link: '/admin/museums' },
-  { id: 'Create new museums', link: '/admin/museums/create' },
+  { id: 'Create a new museum', link: '/admin/museums/create' },
 ];
 
 class MuseumsOverviewPage extends Component {

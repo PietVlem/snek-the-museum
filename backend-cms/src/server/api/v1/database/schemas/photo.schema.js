@@ -3,7 +3,7 @@ import slug from 'slug';
 
 const { Schema } = mongoose;
 
-const imageSchema = new Schema(
+const photoSchema = new Schema(
     {
         name: {type: String, required: false  },
         url: {type: String, required: true},
@@ -18,17 +18,17 @@ const imageSchema = new Schema(
     },
 );
 
-imageSchema.methods.slugify = function () {
+photoSchema.methods.slugify = function () {
     this.slug = slug(this.name);
 };
 
-imageSchema.pre('validate', function (next) {
+photoSchema.pre('validate', function (next) {
     if (!this.slug) {
         this.slugify();
     }
     return next();
 });
 
-imageSchema.virtual('id').get(function () { return this._id; });
+photoSchema.virtual('id').get(function () { return this._id; });
 
-export default mongoose.model('Image', imageSchema);
+export default mongoose.model('Photo', photoSchema);

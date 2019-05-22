@@ -63,9 +63,9 @@ class ZipcodeController {
     store = async (req, res, next) => {
         try {
             const zipcodeCreate = new Zipcode({
-                title: req.body.title,
-                body: req.body.body,
-                categoryId: req.body.categoryId
+                code: req.body.code,
+                city: req.body.city,
+                country: req.body.country
             });
             const zipcode = await zipcodeCreate.save();
             return res.status(201).json(zipcode);
