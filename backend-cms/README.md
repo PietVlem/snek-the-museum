@@ -5,6 +5,7 @@ Project consists of:
 - Node.js
 - Express
 - React
+- Firebase
 
 ## Getting Started
 
@@ -143,6 +144,7 @@ yarn client:test
 - Node.js
 - Express
 - React
+- Firebase
 
 ## Authors
 
