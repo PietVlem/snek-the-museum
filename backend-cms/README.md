@@ -148,7 +148,7 @@ yarn client:test
 
 ## Authors
 
-Pieter Vleminkckx
+Pieter Vleminckx
 
 ## License
 
