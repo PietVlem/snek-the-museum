@@ -23,7 +23,7 @@ Validation
 */
 const validationSchema = Yup.object(
 {
-    name: Yup.string("Enter a name").required("Name is required").max(128),
+    title: Yup.string("Enter a title").required("Name is required").max(128),
     description: Yup.string("Enter a description").required(true).max(512),
     slug: Yup.string("Enter a slug").required(true),
 });
@@ -45,25 +45,25 @@ const styles = theme => ({
  }
 });
 
-class CategorieForm extends Component {
+class BlogForm extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
     }
     
     state = {
-        categories: [],
-        category: { name: "", description: "", slug: "" },
+        blogs: [],
+        blog: { title: "", description: "", slug: "" },
     };
 
     componentWillMount() {
-        this.loadCategories();
+        this.loadBlogs();
         
-        if (this.props.categoryId) {            
-            this.loadCategorie(this.props.categoryId);
+        if (this.props.blogId) {            
+            this.loadBlog(this.props.blogId);
         }
     }
 
-    loadCategories = async () => {
+    loadBlogs = async () => {
         try {
             const options = {
                 method: 'GET',
@@ -71,13 +71,13 @@ class CategorieForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch('/api/v1/categories', options);
+            const response = await fetch('/api/v1/blogs', options);
             console.log(response);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({ 
                     ...prevState, 
-                    categories: responseJson 
+                    blogs: responseJson 
                 }));
             }
         } catch(error) {
@@ -85,7 +85,7 @@ class CategorieForm extends Component {
         }
     }
 
-    loadCategorie = async (categoryId) => {
+    loadBlog = async (blogId) => {
         try {
             const options = {
                 method: 'GET',
@@ -93,12 +93,12 @@ class CategorieForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/categories/${categoryId}`, options);
+            const response = await fetch(`/api/v1/blogs/${blogId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({ 
                     ...prevState, 
-                    category: responseJson 
+                    blog: responseJson 
                 }));
             }
         } catch(error) {
@@ -107,17 +107,17 @@ class CategorieForm extends Component {
     }
 
     submit = (values, actions) => {
-        const { categoryId } = this.props;
+        const { blogId } = this.props;
 
-        if (categoryId) {  
-            this.updateCategorie(categoryId, values);          
+        if (blogId) {  
+            this.updateBlog(blogId, values);          
         } else {
-            this.saveCategorie(values);
+            this.saveBlog(values);
         }
         
     }
 
-    saveCategorie = async (categoryData) => {
+    saveBlog = async (blogData) => {
         try {
             const options = {
                 method: 'POST',
@@ -125,12 +125,12 @@ class CategorieForm extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(categoryData),
+                body: JSON.stringify(blogData),
                 mode: 'cors',
                 cache: 'default'
             };
 
-            const response = await fetch('/api/v1/categories', options);
+            const response = await fetch('/api/v1/blogs', options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);
@@ -140,7 +140,7 @@ class CategorieForm extends Component {
         }
     }
 
-    updateCategorie = async (categoryId, categoryData) => {
+    updateBlog = async (blogId, blogData) => {
         try {
             const options = {
                 method: 'PUT',
@@ -148,12 +148,12 @@ class CategorieForm extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(categoryData),
+                body: JSON.stringify(blogData),
                 mode: 'cors',
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/categories/${categoryId}`, options);
+            const response = await fetch(`/api/v1/blogs/${blogId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);
@@ -165,7 +165,7 @@ class CategorieForm extends Component {
 
     render() {
         const { classes } = this.props;
-        const { category:values } = this.state;
+        const { blog:values } = this.state;
 
         console.log(values);
 
@@ -174,7 +174,7 @@ class CategorieForm extends Component {
                 <div className={classes.container}>
                     <Paper className={classes.paper}>
                         <Formik
-                            render={props => <Form {...props} categories={this.state.categories} />}
+                            render={props => <Form {...props} blogs={this.state.blogs} />}
                             initialValues={values}
                             validationSchema={validationSchema}
                             onSubmit={(values, actions) => this.submit(values, actions)}
@@ -187,4 +187,4 @@ class CategorieForm extends Component {
     }
 }
 
-export default withStyles(styles)(CategorieForm);
+export default withStyles(styles)(BlogForm);
