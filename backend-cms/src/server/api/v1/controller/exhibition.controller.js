@@ -21,11 +21,12 @@ class ExhibitionController {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
+                    populate: 'museuma',
                     sort: { created_at: -1 },
                 };
                 exhibitions = await Exhibition.paginate({}, options);
             } else {
-                exhibitions = await Exhibition.find().sort({ created_at: -1 }).exec();
+                exhibitions = await Exhibition.find().populate('museum').sort({ created_at: -1 }).exec();
             }
 
             if (exhibitions === undefined || exhibitions === null) {
