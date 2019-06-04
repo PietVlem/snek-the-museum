@@ -11,6 +11,7 @@ import ZipcodeController from './zipcode.controller';
 import ExhibitionController from './exhibition.controller';
 import BaseController from './assignments/base.controller';
 import QuestionController from './assignments/question.controller';
+import ActionController from './action.controller';
 
 export {
     AuthController,
@@ -24,5 +25,6 @@ export {
     ZipcodeController,
     ExhibitionController,
     BaseController,
-    QuestionController
+    QuestionController,
+    ActionController
 };

@@ -1,4 +1,4 @@
-import { Blog, Category, Post, User, Museum, Disability, Zipcode, Photo, Exhibition, Base, Question } from './schemas';
+import { Blog, Category, Post, User, Museum, Disability, Zipcode, Photo, Exhibition, Base, Question, Action } from './schemas';
 import Seeder from './seeder';
 
 export {
@@ -13,5 +13,6 @@ export {
     Photo,
     Exhibition,
     Base,
-    Question
+    Question,
+    Action
 };

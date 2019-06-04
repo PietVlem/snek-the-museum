@@ -18,7 +18,7 @@ Import the internal libraries:
 - Photo
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question } from './schemas';
+import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question, Action } from './schemas';
 
 class Seeder {
     constructor() {
@@ -34,12 +34,12 @@ class Seeder {
         this.event = [];
         this.assignments = [];
         this.questions = [];
+        this.actions = [];
     }
 
     /*
     Models
     */
-
     blogCreate = async (title, description) => {
         const blogDetail = {
             title,
@@ -226,10 +226,28 @@ class Seeder {
         }
     }
 
+    actionCreate = async (assignmentId, successful) => {
+        const actionDetail = {
+            userId: this.getRandomUser(),
+            assignmentId,
+            completed: true,
+            successful
+        };
+        const action = new Action(actionDetail);
+
+        try {
+            const newAction = await action.save();
+            this.actions.push(newAction);
+
+            logger.log({ level: 'info', message: `Action created with id: ${newAction.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a action: ${err}!` });
+        }
+    }
+
     /* 
     Create instances of the model
     */
-
     createBlogs = async () => {
         await Promise.all([
             (async () => this.blogCreate(faker.lorem.sentence(), faker.lorem.paragraph()))(),
@@ -320,6 +338,11 @@ class Seeder {
         ])
     }
 
+    createActions = async () => {
+        await Promise.all([
+            (async () => this.actionCreate("5cf633f46cbcdb6ff0ad49ec", faker.random.boolean()))(),
+        ])
+    }
     /* 
     Random generatores
     */
@@ -342,9 +365,17 @@ class Seeder {
     getRandomZipcode = () => {
         let zipcode = null;
         if (this.zipcodes && this.zipcodes.length > 0) {
-            zipcode = this.zipcodes[Math.round(Math.random() * (this.museums.length - 1))];
+            zipcode = this.zipcodes[Math.round(Math.random() * (this.zipcodes.length - 1))];
         }
         return zipcode;
+    }
+
+    getRandomUser = () => {
+        let user = null;
+        if (this.users && this.users.length > 0) {
+            user = this.users[Math.round(Math.random() * (this.users.length - 1))];
+        }
+        return user;
     }
 
     /* 
@@ -431,6 +462,12 @@ class Seeder {
        })
        newQuestion.save();
        */
+       this.createActions = await Action.estimatedDocumentCount().exec().then(async (count) => {
+        if (count === 0) {
+            await this.createActions();
+        }
+        return Action.find().exec();
+    });
     }
 }
 export default Seeder;
