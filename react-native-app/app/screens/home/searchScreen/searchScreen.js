@@ -14,18 +14,11 @@ import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,SearchBar } from 'react-native-elements'
 
+
+
+import { fetchGithubData } from '../../../actions/home';
+
 class searchScreen extends Component {
-
-    componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
-
     state = {
         search: '',
       };
@@ -34,15 +27,21 @@ class searchScreen extends Component {
         this.setState({ search });
       };
 
+      componentDidMount() {
+        this.props.dispatch(fetchGithubData());
+        console.log(this.props)
+      }
+    
+
     renderRow ({ item }) {
         return (
-        item.name === "Amy Farha" ? 
+        item.title === "Amy Farha" ? 
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
           <ListItem
             roundAvatar
-            title={item.name}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
+            title={item.title}
+            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            avatar={item.photo.url}
             containerStyle={styles.ListstyleSelected}
             subtitleStyle={styles.subtitleSelected}
             titleStyle={styles.ListItemTitleSelected}
@@ -62,9 +61,9 @@ class searchScreen extends Component {
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
           <ListItem
             roundAvatar
-            title={item.name}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
+            title={item.title}
+            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
@@ -92,7 +91,9 @@ class searchScreen extends Component {
       }
 
     render() {
+        const {data} = this.props;
         const { search } = this.state;
+        console.log(data)
         const list = [
             {
               name: 'Amy Farha',
@@ -106,7 +107,7 @@ class searchScreen extends Component {
               subtitle: 'Vice Chairman',
               check: false
             },
-          ]
+          ] 
         return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}>
                         <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
@@ -137,30 +138,21 @@ class searchScreen extends Component {
                      
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={data.sort((a, b) => a.title.localeCompare(b.title))}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
                         />            
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </View>
         );
     }
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        loggedIn: state.authReducer.loggedIn
-    }
-}
+const mapStateToProps = (state,props) => ({
+    data: state.githubReducer,
+  });
+  
+   export default connect(mapStateToProps)(searchScreen)
 
-export default connect(mapStateToProps, {setStatus, logout})(searchScreen);

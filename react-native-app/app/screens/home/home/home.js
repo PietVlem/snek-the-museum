@@ -92,14 +92,6 @@ class Home extends Component {
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
                         />            
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </View>
         );
     }
@@ -108,7 +100,7 @@ class Home extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        loggedIn: state.authReducer.loggedIn
+        
     }
 }
 
