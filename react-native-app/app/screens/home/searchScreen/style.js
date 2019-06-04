@@ -112,7 +112,8 @@ var styles = StyleSheet.create({
         fontFamily: 'MontserratLight',
         fontSize: 12,
         fontWeight: "300",
-        paddingLeft: 10
+        paddingLeft: 10,
+        marginTop: 5,
     },
     ListItemTitle:{
         color: "#303E48",
