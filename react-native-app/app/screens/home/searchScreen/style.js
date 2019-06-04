@@ -72,6 +72,9 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 3.84,
         elevation: 1,
+        paddingTop: 15,
+        paddingBottom: 15,
+        marginVertical: 10,
     },
     ListstyleSelected:{
         marginTop: 10,
