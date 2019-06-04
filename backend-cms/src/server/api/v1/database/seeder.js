@@ -277,10 +277,10 @@ class Seeder {
 
     createUsers = async () => {
         await Promise.all([
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.photo.photoUrl(), 'admin', [], faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.photo.photoUrl(), 'museum', [], faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.photo.photoUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.photo.photoUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'admin', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'museum', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
         ]);
     }
 
