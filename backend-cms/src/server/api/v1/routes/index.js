@@ -18,6 +18,7 @@ import disabilityRouter from './disability.routes';
 import imageRouter from './image.routes';
 import zipcodeRouter from './zipcode.routes';
 import exhibtionRouter from './exhibition.routes';
+import BaseRouter from './assignments/base.routes';
 import questionsRouter from './assignments/question.routes';
 
 // Initialize the AuthService
@@ -35,6 +36,7 @@ disabilityRouter(apiV1Router, authService);
 imageRouter(apiV1Router, authRouter);
 zipcodeRouter(apiV1Router, authRouter);
 exhibtionRouter(apiV1Router, authRouter);
+BaseRouter(apiV1Router, authService);
 questionsRouter(apiV1Router, authRouter);
 
 export default apiV1Router;

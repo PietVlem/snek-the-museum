@@ -9,6 +9,7 @@ import DisabilityController from './disability.controller';
 import ImageController from './image.controller';
 import ZipcodeController from './zipcode.controller';
 import ExhibitionController from './exhibition.controller';
+import BaseController from './assignments/base.controller';
 import QuestionController from './assignments/question.controller';
 
 export {
@@ -22,5 +23,6 @@ export {
     ImageController,
     ZipcodeController,
     ExhibitionController,
+    BaseController,
     QuestionController
 };

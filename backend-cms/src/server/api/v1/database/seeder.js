@@ -424,7 +424,7 @@ class Seeder {
         */
        /*
        const newQuestion = new Question({
-        exhibitionId: 1,
+        exhibitionId: "5cd5a91da8de1e611b9f9133",
         question: 'How much do i drink?',
         posibilities: ['Not much', 'alot', 'way to much!'],
         answer: 2

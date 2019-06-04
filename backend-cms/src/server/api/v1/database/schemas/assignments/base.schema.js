@@ -11,12 +11,14 @@ const baseOptions = {
     The name of our collection
     */
     collection: 'assignments',
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
 };
 
 /* 
 Our Base schema: these properties will be shared with our "real" schemas
 */
-const Base = mongoose.model('Base', new Schema(
+const baseSchema = new Schema(
     {
         exhibitionId: {
             type: Schema.Types.ObjectId,
@@ -25,8 +27,15 @@ const Base = mongoose.model('Base', new Schema(
         }
     },
     baseOptions,
-),
 );
 
+baseSchema.virtual('id').get(function () { return this._id; });
 
-module.exports = mongoose.model('Base');
+baseSchema.virtual('exhibition', {
+    ref: 'Exhibition',
+    localField: 'exhibitionId',
+    foreignField: '_id',
+    justOne: true,
+})
+
+module.exports = mongoose.model('Base', baseSchema);
