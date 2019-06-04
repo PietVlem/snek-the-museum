@@ -8,17 +8,17 @@ import Exhibition from './exhibition.schema';
 import Disability from './disability.shema';
 import Zipcode from './zipcode.schema';
 import Photo from './photo.schema';
-
-// test
-import { Assignment, Question } from './assignment.schema';
+import Base from './assignments/base.schema';
+import Question from './assignments/question.schema';
 
 /*
-const question = new Question({
+const questionUnit = new Question({
     exhibitionId: 1,
     question: 'How bad do i smell?',
-    posibilities: ['bad', 'very bad', 'super very bad']
+    posibilities: ['bad', 'very bad', 'super very bad'],
+    answer: 0
 })
-question.save();
+questionUnit.save();
 */
 
 export {
@@ -31,7 +31,6 @@ export {
     Disability,
     Zipcode,
     Photo,
-    // test
-    Assignment,
+    Base,
     Question
 };

@@ -18,7 +18,7 @@ Import the internal libraries:
 - Photo
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Assignment, Question } from './schemas';
+import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question } from './schemas';
 
 class Seeder {
     constructor() {
@@ -207,11 +207,12 @@ class Seeder {
         }
     }
 
-    questionCreate = async (exhibitionId, questionString, posibilities) => {
+    questionCreate = async (exhibitionId, questionString, posibilities, answer) => {
         const questionDetail = {
             exhibitionId,
             questionString,
-            posibilities
+            posibilities,
+            answer
         };
         const question = new Question(questionDetail);
 
@@ -219,9 +220,9 @@ class Seeder {
             const newQuestion = await question.save();
             this.questions.push(newQuestion);
 
-            logger.log({ level: 'info', message: `Question created with id: ${newPhoto.id}!` });
+            logger.log({ level: 'info', message: `Question created with id: ${newQuestion.id}!` });
         } catch (err) {
-            logger.log({ level: 'info', message: `An error occurred when creating a suestion: ${err}!` });
+            logger.log({ level: 'info', message: `An error occurred when creating a question: ${err}!` });
         }
     }
 
@@ -315,7 +316,7 @@ class Seeder {
 
     createQuestions = async () => {
         await Promise.all([
-            (async () => this.questionCreate(1, 'How bad do i smell?', ['bad', 'very bad', 'super very bad']))(),
+            (async () => this.questionCreate(1, 'How bad do i smell?', ['bad', 'very bad', 'super very bad'], 1))(),
         ])
     }
 
@@ -413,24 +414,23 @@ class Seeder {
             return Photo.find().exec();
         });
 
-        
-
         /*
-        this.createQuestions = await Question.estimatedDocumentCount().exec().then(async (count) => {
+        this.createQuestions = await Base.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createQuestions();
             }
             return Question.find().exec();
         });
         */
-        /*
-        const question = new Question({
-            exhibitionId: 1,
-            question: 'How bad do i smell?',
-            posibilities: ['bad', 'very bad', 'super very bad']
-        })
-        question.save();
-        */
+       /*
+       const newQuestion = new Question({
+        exhibitionId: 1,
+        question: 'How much do i drink?',
+        posibilities: ['Not much', 'alot', 'way to much!'],
+        answer: 2
+       })
+       newQuestion.save();
+       */
     }
 }
 export default Seeder;

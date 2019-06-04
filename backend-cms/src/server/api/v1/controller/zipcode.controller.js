@@ -25,7 +25,7 @@ class ZipcodeController {
                 };
                 zipcodes = await Zipcode.paginate({}, options);
             } else {
-                zipcodes = await Zipcode.find().populate('category').sort({ created_at: -1 }).exec();
+                zipcodes = await Zipcode.find().sort({ created_at: -1 }).exec();
             }
 
             if (zipcodes === undefined || zipcodes === null) {

@@ -56,7 +56,6 @@ class ExhibitionForm extends Component {
     };
 
     componentWillMount() {
-        this.loadCategories();
         
         if (this.props.museumId) {            
             this.loadExhibition(this.props.museumId);
