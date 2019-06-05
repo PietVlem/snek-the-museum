@@ -18,7 +18,7 @@ var styles = StyleSheet.create({
         height: 100,
         position: "absolute",
         left: "-17%",
-        top: "40%",
+        top: "90%",
         transform: [{ rotate: '-310deg'}]
     },
     Liststyle:{
@@ -107,8 +107,8 @@ var styles = StyleSheet.create({
         resizeMode: 'contain',
         height: 100,
         position: "absolute",
-        left: "-15%",
-        top: "20%",
+        left: "-18%",
+        top: "38%",
         transform: [{ rotate: '-310deg'}]
     },  
     Liststyle:{
@@ -124,9 +124,12 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 3.84,
         elevation: 1,
+        paddingTop: 15,
+        paddingBottom: 15,
     },
     Listbox:{
         paddingHorizontal: 20,
+        paddingVertical: 20,
     },
     subtitle:{
         color: "#A9A9B0",
@@ -141,35 +144,6 @@ var styles = StyleSheet.create({
         fontSize: 15,
         paddingLeft: 10
     },
-    ContainerSearchbox:{
-        margin: 20,
-        borderBottomWidth: 0,
-        borderTopWidth: 0,
-        backgroundColor: "white",
-        borderRadius: 10,
-        shadowColor: "#8386A3",
-        shadowOffset: {
-            width: 2,
-            height: 4,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
-        elevation: 1,
-    },
-    Input:{
-        color:"red",
-        backgroundColor: "white",
-        width:"100%",
-    },
-    SearchIcon:{
-        width: 25,
-        height: 25,
-        resizeMode: 'contain',
-        justifyContent: 'flex-end',
-        marginLeft:40,
-        
-    },
-
 });
 
 module.exports = styles;

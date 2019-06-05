@@ -58,8 +58,8 @@ class CategorieForm extends Component {
     componentWillMount() {
         this.loadCategories();
         
-        if (this.props.categorieId) {            
-            this.loadCategorie(this.props.categorieId);
+        if (this.props.categoryId) {            
+            this.loadCategorie(this.props.categoryId);
         }
     }
 
@@ -85,7 +85,7 @@ class CategorieForm extends Component {
         }
     }
 
-    loadCategorie = async (categorieId) => {
+    loadCategorie = async (categoryId) => {
         try {
             const options = {
                 method: 'GET',
@@ -93,7 +93,7 @@ class CategorieForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/categories/${categorieId}`, options);
+            const response = await fetch(`/api/v1/categories/${categoryId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({ 
@@ -107,17 +107,17 @@ class CategorieForm extends Component {
     }
 
     submit = (values, actions) => {
-        const { categorieId } = this.props;
+        const { categoryId } = this.props;
 
-        if (categorieId) {  
-            this.updateCategorie(categorieId, values);          
+        if (categoryId) {  
+            this.updateCategorie(categoryId, values);          
         } else {
             this.saveCategorie(values);
         }
         
     }
 
-    saveCategorie = async (categorieData) => {
+    saveCategorie = async (categoryData) => {
         try {
             const options = {
                 method: 'POST',
@@ -125,7 +125,7 @@ class CategorieForm extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(categorieData),
+                body: JSON.stringify(categoryData),
                 mode: 'cors',
                 cache: 'default'
             };
@@ -140,7 +140,7 @@ class CategorieForm extends Component {
         }
     }
 
-    updateCategorie = async (categorieId, categorieData) => {
+    updateCategorie = async (categoryId, categoryData) => {
         try {
             const options = {
                 method: 'PUT',
@@ -148,12 +148,12 @@ class CategorieForm extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(categorieData),
+                body: JSON.stringify(categoryData),
                 mode: 'cors',
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/categories/${categorieId}`, options);
+            const response = await fetch(`/api/v1/categories/${categoryId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);

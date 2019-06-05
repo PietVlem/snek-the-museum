@@ -39,7 +39,7 @@ class spinPage extends Component {
                 color='#6FA29B'
                 size={15}
                 iconStyle={{paddingRight: 15,}}
-                onPress={() => Actions.mapPage()} />
+                onPress={() => Actions.detailpage()} />
             }
             chevronColor="#6FA29B"
           />
@@ -57,7 +57,7 @@ class spinPage extends Component {
           ]
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-            <View style={{marginLeft: 5,marginTop: "-5%",}}><NavBar/></View>
+            <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>

@@ -161,7 +161,6 @@ class MuseumsTable extends Component {
               <TableRow>
                 <TableCell>Title</TableCell>
                 <TableCell>Category</TableCell>
-                <TableCell>Created</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -170,7 +169,6 @@ class MuseumsTable extends Component {
                 <TableRow key={museum.id}>
                   <TableCell>{museum.title}</TableCell>
                   <TableCell>{museum.category && museum.category.name}</TableCell>
-                  <TableCell>{museum.created_at}</TableCell>
                   <TableCell>
                     <IconButton
                       component={Link} to={ `/admin/museums/${museum.id}/edit`}>

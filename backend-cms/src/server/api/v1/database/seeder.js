@@ -15,10 +15,10 @@ Import the internal libraries:
 - Exhibition
 - Disability
 - Zipcode
-- Image
+- Photo
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Image } from './schemas';
+import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question, Action } from './schemas';
 
 class Seeder {
     constructor() {
@@ -30,13 +30,16 @@ class Seeder {
         this.exhibitions = [];
         this.disabilities = [];
         this.zipcodes = [];
-        this.images = [];
+        this.photos = [];
+        this.event = [];
+        this.assignments = [];
+        this.questions = [];
+        this.actions = [];
     }
 
     /*
     Models
     */
-
     blogCreate = async (title, description) => {
         const blogDetail = {
             title,
@@ -169,7 +172,7 @@ class Seeder {
         }
     }
 
-    zipcodeCreate = async (code, city, country) =>{
+    zipcodeCreate = async (code, city, country) => {
         const zipcodeDetail = {
             code,
             city,
@@ -187,27 +190,64 @@ class Seeder {
         }
     }
 
-    imageCreate = async (name, url) =>{
-        const imageDetail = {
+    photoCreate = async (name, url) => {
+        const photoDetail = {
             name,
             url
         };
-        const image = new Image(imageDetail);
+        const photo = new Photo(photoDetail);
 
         try {
-            const newImage = await image.save();
-            this.images.push(newImage);
+            const newPhoto = await photo.save();
+            this.photos.push(newPhoto);
 
-            logger.log({ level: 'info', message: `Image created with id: ${newImage.id}!` });
+            logger.log({ level: 'info', message: `Photo created with id: ${newPhoto.id}!` });
         } catch (err) {
-            logger.log({ level: 'info', message: `An error occurred when creating a image: ${err}!` });
+            logger.log({ level: 'info', message: `An error occurred when creating a photo: ${err}!` });
+        }
+    }
+
+    questionCreate = async (exhibitionId, questionString, posibilities, answer) => {
+        const questionDetail = {
+            exhibitionId,
+            questionString,
+            posibilities,
+            answer
+        };
+        const question = new Question(questionDetail);
+
+        try {
+            const newQuestion = await question.save();
+            this.questions.push(newQuestion);
+
+            logger.log({ level: 'info', message: `Question created with id: ${newQuestion.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a question: ${err}!` });
+        }
+    }
+
+    actionCreate = async (assignmentId, successful) => {
+        const actionDetail = {
+            userId: this.getRandomUser(),
+            assignmentId,
+            completed: true,
+            successful
+        };
+        const action = new Action(actionDetail);
+
+        try {
+            const newAction = await action.save();
+            this.actions.push(newAction);
+
+            logger.log({ level: 'info', message: `Action created with id: ${newAction.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a action: ${err}!` });
         }
     }
 
     /* 
     Create instances of the model
     */
-
     createBlogs = async () => {
         await Promise.all([
             (async () => this.blogCreate(faker.lorem.sentence(), faker.lorem.paragraph()))(),
@@ -237,64 +277,75 @@ class Seeder {
 
     createUsers = async () => {
         await Promise.all([
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'admin', [] , faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'museum', [] , faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [] , faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [] , faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'admin', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'museum', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.date.past(), faker.image.imageUrl(), 'user', [], faker.internet.email(), 'wicked4u'))(),
         ]);
     }
 
-    createMuseums = async() =>{
+    createMuseums = async () => {
         await Promise.all([
-            (async() => this.museumCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.museumCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.museumCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.museumCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.museumCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async () => this.museumCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.museumCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.museumCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.museumCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.museumCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
         ])
     }
 
-    createExhibitions = async() =>{
+    createExhibitions = async () => {
         await Promise.all([
-            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
-            (async() => this.exhibitionCreate(faker.lorem.words(),faker.lorem.paragraph()))(),
+            (async () => this.exhibitionCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.exhibitionCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.exhibitionCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.exhibitionCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
+            (async () => this.exhibitionCreate(faker.lorem.words(), faker.lorem.paragraph()))(),
         ])
     }
 
-    createDisabilities = async() => {
+    createDisabilities = async () => {
         await Promise.all([
-            (async() => this.disabilityCreate(faker.lorem.word()))(),
-            (async() => this.disabilityCreate(faker.lorem.word()))(),
-            (async() => this.disabilityCreate(faker.lorem.word()))(),
-            (async() => this.disabilityCreate(faker.lorem.word()))()
+            (async () => this.disabilityCreate(faker.lorem.word()))(),
+            (async () => this.disabilityCreate(faker.lorem.word()))(),
+            (async () => this.disabilityCreate(faker.lorem.word()))(),
+            (async () => this.disabilityCreate(faker.lorem.word()))()
         ])
     }
 
-    createZipcodes = async() => {
+    createZipcodes = async () => {
         await Promise.all([
-            (async() => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
-            (async() => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
-            (async() => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
-            (async() => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
-            (async() => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
+            (async () => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
+            (async () => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
+            (async () => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
+            (async () => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
+            (async () => this.zipcodeCreate(faker.address.zipCode(), faker.address.city(), faker.address.country()))(),
         ])
     }
 
-    createImages = async() => {
+    createPhotos = async () => {
         await Promise.all([
-            (async() => this.imageCreate(faker.lorem.words(), faker.image.imageUrl()))(),
-            (async() => this.imageCreate(faker.lorem.words(), faker.image.imageUrl()))(),
-            (async() => this.imageCreate(faker.lorem.words(), faker.image.imageUrl()))(),
+            (async () => this.photoCreate(faker.lorem.words(), "https://images.unsplash.com/photo-1556951348-de7d29704984?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"))(),
+            (async () => this.photoCreate(faker.lorem.words(), "https://images.unsplash.com/photo-1556951348-de7d29704984?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"))(),
+            (async () => this.photoCreate(faker.lorem.words(), "https://images.unsplash.com/photo-1556951348-de7d29704984?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"))(),
+            (async () => this.photoCreate(faker.lorem.words(), "https://images.unsplash.com/photo-1556951348-de7d29704984?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"))(),
         ])
     }
 
+    createQuestions = async () => {
+        await Promise.all([
+            (async () => this.questionCreate(1, 'How bad do i smell?', ['bad', 'very bad', 'super very bad'], 1))(),
+        ])
+    }
+
+    createActions = async () => {
+        await Promise.all([
+            (async () => this.actionCreate("5cf633f46cbcdb6ff0ad49ec", faker.random.boolean()))(),
+        ])
+    }
     /* 
     Random generatores
     */
-    
     getRandomCategory = () => {
         let category = null;
         if (this.categories && this.categories.length > 0) {
@@ -306,15 +357,30 @@ class Seeder {
     getRandomMuseum = () => {
         let museum = null;
         if (this.museums && this.museums.length > 0) {
-            museum = this.categories[Math.round(Math.random() * (this.museums.length - 1))];
+            museum = this.museums[Math.round(Math.random() * (this.museums.length - 1))];
         }
         return museum;
+    }
+
+    getRandomZipcode = () => {
+        let zipcode = null;
+        if (this.zipcodes && this.zipcodes.length > 0) {
+            zipcode = this.zipcodes[Math.round(Math.random() * (this.zipcodes.length - 1))];
+        }
+        return zipcode;
+    }
+
+    getRandomUser = () => {
+        let user = null;
+        if (this.users && this.users.length > 0) {
+            user = this.users[Math.round(Math.random() * (this.users.length - 1))];
+        }
+        return user;
     }
 
     /* 
     Data seeder with faker
     */
-
     seed = async () => {
         this.categories = await Category.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
@@ -372,12 +438,36 @@ class Seeder {
             return Zipcode.find().exec();
         });
 
-        this.createImages = await Image.estimatedDocumentCount().exec().then(async (count) => {
+        this.createPhotos = await Photo.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
-                await this.createImages();
+                await this.createPhotos();
             }
-            return Image.find().exec();
+            return Photo.find().exec();
         });
+
+        /*
+        this.createQuestions = await Base.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createQuestions();
+            }
+            return Question.find().exec();
+        });
+        */
+       /*
+       const newQuestion = new Question({
+        exhibitionId: "5cd5a91da8de1e611b9f9133",
+        question: 'How much do i drink?',
+        posibilities: ['Not much', 'alot', 'way to much!'],
+        answer: 2
+       })
+       newQuestion.save();
+       */
+       this.createActions = await Action.estimatedDocumentCount().exec().then(async (count) => {
+        if (count === 0) {
+            await this.createActions();
+        }
+        return Action.find().exec();
+    });
     }
 }
 export default Seeder;

@@ -25,7 +25,7 @@ class ZipcodeController {
                 };
                 zipcodes = await Zipcode.paginate({}, options);
             } else {
-                zipcodes = await Zipcode.find().populate('category').sort({ created_at: -1 }).exec();
+                zipcodes = await Zipcode.find().sort({ created_at: -1 }).exec();
             }
 
             if (zipcodes === undefined || zipcodes === null) {
@@ -63,9 +63,9 @@ class ZipcodeController {
     store = async (req, res, next) => {
         try {
             const zipcodeCreate = new Zipcode({
-                title: req.body.title,
-                body: req.body.body,
-                categoryId: req.body.categoryId
+                code: req.body.code,
+                city: req.body.city,
+                country: req.body.country
             });
             const zipcode = await zipcodeCreate.save();
             return res.status(201).json(zipcode);

@@ -41,7 +41,7 @@ const UserSchema = new Schema(
         dayOfBirth:{ type: Date, required: false },
         avatar: { type: String, required: false },
         userRole: { type: String, required: false },
-        exhibitionsVisited: { type: Array, required: false },
+        museumsVisited: { type: Array, required: false },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },

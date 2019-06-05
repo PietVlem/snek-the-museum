@@ -64,7 +64,7 @@ class Home extends Component {
             },
           ]
         return (
-            <View style={{flex: 1,backgroundColor: "#FFF"}}>
+            <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 80,}}>
                 
                     <Text style={styles.Pushtitle}>Duw hier voor een nieuw museum avontuur !</Text>
                         <View style={styles.SearchIconBox}>
@@ -83,7 +83,7 @@ class Home extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                     
+                        <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
                         data={list}
@@ -92,14 +92,6 @@ class Home extends Component {
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
                         />            
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </View>
         );
     }
@@ -108,7 +100,7 @@ class Home extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        loggedIn: state.authReducer.loggedIn
+        
     }
 }
 

@@ -7,7 +7,10 @@ import express from 'express';
 /*
 Import the internal libraries:
 */
+// Services
 import AuthService from '../service';
+
+// Routers
 import authRouter from './auth.routes';
 import blogRouter from './blog.routes';
 import categoryRouter from './category.routes';
@@ -17,6 +20,10 @@ import museumRouter from './museum.routes';
 import disabilityRouter from './disability.routes';
 import imageRouter from './image.routes';
 import zipcodeRouter from './zipcode.routes';
+import exhibtionRouter from './exhibition.routes';
+import baseRouter from './assignments/base.routes';
+import questionsRouter from './assignments/question.routes';
+import actionRouter from './actions.routes';
 
 // Initialize the AuthService
 const authService = new AuthService();
@@ -32,5 +39,9 @@ museumRouter(apiV1Router, authService);
 disabilityRouter(apiV1Router, authService);
 imageRouter(apiV1Router, authRouter);
 zipcodeRouter(apiV1Router, authRouter);
+exhibtionRouter(apiV1Router, authRouter);
+baseRouter(apiV1Router, authService);
+questionsRouter(apiV1Router, authRouter);
+actionRouter(apiV1Router, authRouter);
 
 export default apiV1Router;

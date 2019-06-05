@@ -8,32 +8,32 @@ Import the internal libraries:
 - * from database
 - errorHandler
 */
-import { Image } from '../database';
+import { Photo } from '../database';
 import { APIError, handleAPIError } from '../../../utilities';
 
-class ImageController {
+class PhotoController {
     // List all the models
     index = async (req, res, next) => {
         try {
             const { limit, skip } = req.query;
-            let images = null;
+            let photos = null;
             if (limit && skip) {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
                     sort: { created_at: -1 },
                 };
-                images = await Image.paginate({}, options);
+                photos = await Photo.paginate({}, options);
             } else {
-                images = await Image.find().populate('category').sort({ created_at: -1 }).exec();
+                photos = await Photo.find().sort({ created_at: -1 }).exec();
             }
 
-            if (images === undefined || images === null) {
-                throw new APIError(404, 'Collection for images not found!');
+            if (photos === undefined || photos === null) {
+                throw new APIError(404, 'Collection for photos not found!');
             }
-            return res.status(200).json(images);
+            return res.status(200).json(photos);
         } catch (err) {
-            return handleAPIError(500, err.message || 'Some error occurred while retrieving images', next);
+            return handleAPIError(500, err.message || 'Some error occurred while retrieving photos', next);
         }
     };
 
@@ -41,13 +41,13 @@ class ImageController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Image.findById(id).populate('category').exec();
+            const item = await Photo.findById(id).populate('category').exec();
             if (item === undefined || item === null) {
-                throw new APIError(404, `Image with id: ${id} not found!`);
+                throw new APIError(404, `Photo with id: ${id} not found!`);
             }
             return res.status(200).json(item);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || 'Some error occurred while retrieving images', next);
+            return handleAPIError(err.status || 500, err.message || 'Some error occurred while retrieving photos', next);
         }
     }
 
@@ -62,15 +62,15 @@ class ImageController {
     // Store / Create the new model
     store = async (req, res, next) => {
         try {
-            const imageCreate = new Image({
+            const photoCreate = new Photo({
                 title: req.body.title,
                 body: req.body.body,
                 categoryId: req.body.categoryId
             });
-            const image = await imageCreate.save();
-            return res.status(201).json(image);
+            const photo = await photoCreate.save();
+            return res.status(201).json(photo);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Image!', next);
+            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Photo!', next);
         }
     }
 
@@ -79,19 +79,19 @@ class ImageController {
         const { id } = req.params;
 
         try {
-            const image = await Image.findById(id).exec();
+            const photo = await Photo.findById(id).exec();
 
-            if (!image) {
-                throw new APIError(404, `Image with id: ${id} not found!`);
+            if (!photo) {
+                throw new APIError(404, `Photo with id: ${id} not found!`);
             } else {
                 const vm = {
-                    image,
+                    photo,
                     categories: [],
                 };
                 return res.status(200).json(vm);
             }
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Image with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Photo with id: ${id}!`, next);
         }
     }
 
@@ -100,15 +100,15 @@ class ImageController {
         const { id } = req.params;
 
         try {
-            const imageUpdate = req.body;
-            const image = await Image.findOneAndUpdate({ _id: id }, imageUpdate, { new: true }).exec();
+            const photoUpdate = req.body;
+            const photo = await Photo.findOneAndUpdate({ _id: id }, photoUpdate, { new: true }).exec();
 
-            if (!image) {
-                throw new APIError(404, `Image with id: ${id} not found!`);
+            if (!photo) {
+                throw new APIError(404, `Photo with id: ${id} not found!`);
             }
-            return res.status(200).json(image);
+            return res.status(200).json(photo);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Image with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Photo with id: ${id}!`, next);
         }
     }
 
@@ -117,25 +117,25 @@ class ImageController {
         const { id } = req.params;
 
         try {
-            let image = null;
+            let photo = null;
 
             let { mode } = req.query;
             if (mode) {
-                image = await Image.findByIdAndUpdate({ _id: id }, { deleted_at: (mode === 'softdelete' ? Date.now() : null) }, { new: true });
+                photo = await Photo.findByIdAndUpdate({ _id: id }, { deleted_at: (mode === 'softdelete' ? Date.now() : null) }, { new: true });
             } else {
                 mode = 'delete';
-                image = await Image.findOneAndRemove({ _id: id });
+                photo = await Photo.findOneAndRemove({ _id: id });
             }
 
-            if (!image) {
-                throw new APIError(404, `Image with id: ${id} not found!`);
+            if (!photo) {
+                throw new APIError(404, `Photo with id: ${id} not found!`);
             } else {
-                return res.status(200).json({ message: `Successful deleted the Image with id: ${id}!`, image, mode });
+                return res.status(200).json({ message: `Successful deleted the Photo with id: ${id}!`, photo, mode });
             }
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Image with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Photo with id: ${id}!`, next);
         }
     }
 }
 
-export default ImageController;
+export default PhotoController;

@@ -1,7 +1,7 @@
 
-
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,Animated,Dimensions,StyleSheet,ScrollView } = require('react-native');
 var { StyleSheet } = require('react-native');
-
+const width = Dimensions.get('window').width
 var styles = StyleSheet.create({
 
     
@@ -19,12 +19,11 @@ var styles = StyleSheet.create({
         elevation: 1,
         paddingLeft: 5,
         paddingTop: 5,
+        marginLeft: 20,
+        marginRight: 20,
     },
     Listbox:{
-        position: "absolute",
-        bottom: 30,
-        left: 10, right: 10,
-        paddingHorizontal: 10,
+        backgroundColor: "red"
     },
     subtitle:{
         color: "#A9A9B0",
@@ -40,11 +39,11 @@ var styles = StyleSheet.create({
         paddingLeft: 10
     },
     MapMuseaBox:{
-    paddingTop: 10,
-    paddingBottom: 15,
-    flex: 1,
-    flexDirection: 'row',
-    paddingHorizontal: 10,
+        paddingTop: 10,
+        paddingBottom: 15,
+        flex: 1,
+        flexDirection: 'row',
+        paddingHorizontal: 10,
     },
     distanceIcon:{
         width: 30,
@@ -57,7 +56,10 @@ var styles = StyleSheet.create({
         fontFamily: "MontserratRegular",
         color: '#6FA29B',
         marginTop: 8,
-    }
+    },
+        view: {
+          width: width,
+        },
 });
 
 module.exports = styles;

@@ -40,11 +40,9 @@ class AuthService {
                     const user = await User.findOne({
                         email,
                     });
-
                     if (!user) {
                         return done(null, false, { message: 'No user by that email' });
                     }
-
                     return user.comparePassword(password, (isMatch) => {
                         if (!isMatch) {
                             return done(null, false);

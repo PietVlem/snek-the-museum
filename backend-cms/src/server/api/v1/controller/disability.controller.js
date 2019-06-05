@@ -25,7 +25,7 @@ class DisabilityController {
                 };
                 disabilities = await Disability.paginate({}, options);
             } else {
-                disabilities = await Disability.find().populate('category').sort({ created_at: -1 }).exec();
+                disabilities = await Disability.find().sort({ created_at: -1 }).exec();
             }
 
             if (disabilities === undefined || disabilities === null) {
@@ -62,15 +62,13 @@ class DisabilityController {
     // Store / Create the new model
     store = async (req, res, next) => {
         try {
-            const museumCreate = new Disability({
-                title: req.body.title,
-                body: req.body.body,
-                categoryId: req.body.categoryId
+            const disabilityCreate = new Disability({
+                name: req.body.name,
             });
-            const disability = await museumCreate.save();
+            const disability = await disabilityCreate.save();
             return res.status(201).json(disability);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Disability!', next);
+            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the disability!', next);
         }
     }
 
@@ -86,7 +84,6 @@ class DisabilityController {
             } else {
                 const vm = {
                     disability,
-                    categories: [],
                 };
                 return res.status(200).json(vm);
             }
@@ -100,8 +97,8 @@ class DisabilityController {
         const { id } = req.params;
 
         try {
-            const museumUpdate = req.body;
-            const disability = await Disability.findOneAndUpdate({ _id: id }, museumUpdate, { new: true }).exec();
+            const disabilityUpdate = req.body;
+            const disability = await Disability.findOneAndUpdate({ _id: id }, disabilityUpdate, { new: true }).exec();
 
             if (!disability) {
                 throw new APIError(404, `Disability with id: ${id} not found!`);

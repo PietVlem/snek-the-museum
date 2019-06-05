@@ -12,7 +12,8 @@ import { ContentLayout } from '../../layouts';
 /*
 Pages
 */
-
+import BlogsTablePage from '../blogs-table';
+import BlogFormPage from '../blog-form';
 
 const tabs = [
   { id: 'List', link: '/admin/blogs' },
@@ -26,6 +27,9 @@ class BlogsOverviewPage extends Component {
     return (
       <ContentLayout title="Blogs Overview" tabs={tabs}>
         { children }
+        <Route exact path="/admin/blogs" component={ BlogsTablePage }></Route>
+        <Route path="/admin/blogs/create" component={ BlogFormPage }></Route>
+        <Route path="/admin/blogs/:id/edit" component={ BlogFormPage }></Route>
       </ContentLayout>
     )
   }
