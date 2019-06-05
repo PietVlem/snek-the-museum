@@ -13,17 +13,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
-class groupScreen extends Component {
+class detailScreen extends Component {
 
-    componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
 
     renderRow ({ item }) {
         return (
@@ -158,15 +149,6 @@ class groupScreen extends Component {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-                {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                    
-                }
             </View>
         );
     }
@@ -175,8 +157,8 @@ class groupScreen extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        loggedIn: state.authReducer.loggedIn
+        
     }
 }
 
-export default connect(mapStateToProps, {setStatus, logout})(groupScreen);
+export default connect(mapStateToProps, {setStatus, logout})(detailScreen);

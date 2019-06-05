@@ -19,17 +19,24 @@ import { ListItem,SearchBar } from 'react-native-elements'
 import { fetchGithubData } from '../../../actions/home';
 
 class searchScreen extends Component {
-    state = {
-        search: '',
-      };
-    
-      updateSearch = search => {
-        this.setState({ search });
-      };
 
+    constructor (props) {
+        super(props);
+    
+        this.state = {
+          loading: false,
+          error: null,
+          value: ''
+        };
+      }
+
+      searchFilterFunction = text => {
+        this.setState({
+          value: text
+        });  
+      };
       componentDidMount() {
         this.props.dispatch(fetchGithubData());
-        console.log(this.props)
       }
     
 
@@ -91,9 +98,6 @@ class searchScreen extends Component {
       }
 
     render() {
-        const {data} = this.props;
-        const { search } = this.state;
-        console.log(data)
         const list = [
             {
               name: 'Amy Farha',
@@ -126,8 +130,10 @@ class searchScreen extends Component {
                               width: 0
                             }}}
                             placeholder="Zoeken..."
-                            onChangeText={this.updateSearch}
-                            value={search}
+                            ref="search"
+                            textInputRef="searchText"
+                            value={this.state.value}
+                            onChangeText={text => this.searchFilterFunction(text)}
                             searchIcon={{ size: 24 }}
                             />
                         </View>   
@@ -138,7 +144,7 @@ class searchScreen extends Component {
                      
                         <FlatList
                         ref='listRef'
-                        data={data.sort((a, b) => a.title.localeCompare(b.title))}
+                        data={this.props.data.filter(item => item.title.includes(this.state.value))}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}

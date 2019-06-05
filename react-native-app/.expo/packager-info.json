@@ -1,9 +1,6 @@
 {
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 70312,
-  "expoServerNgrokUrl": "https://ku-gbz.nickboone.react-native-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.ku-gbz.nickboone.react-native-app.exp.direct",
-  "ngrokPid": 70333
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
