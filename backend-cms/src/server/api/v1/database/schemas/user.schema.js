@@ -4,7 +4,6 @@ Import external libraries:
 */
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
-import slug from 'slug';
 import bcrypt from 'bcrypt';
 
 /*
@@ -12,6 +11,7 @@ Import internal libraries:
 - config
 */
 import config from '../../../../config';
+
 
 /*
 Constants
@@ -27,16 +27,22 @@ const UserSchema = new Schema(
             unique: true,
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         },
+        password: {
+            type: String,
+            required: false,
+        },
         localProvider: {
             password: {
                 type: String,
                 required: false,
             },
         },
+         /*
         facebookProvider: {
             id: { type: String, required: false },
             token: { type: String, required: false },
         },
+        */
         name:{ type: String, required: false },
         dayOfBirth:{ type: Date, required: false },
         avatar: { type: String, required: false },
@@ -54,17 +60,8 @@ const UserSchema = new Schema(
     },
 );
 
-UserSchema.methods.slugify = function () {
-    this.slug = slug(this.email);
-};
 
-UserSchema.pre('validate', function (next) {
-    if (!this.slug) {
-        this.slugify();
-    }
-    return next();
-});
-
+/*
 UserSchema.pre('save', function (next) {
     const user = this;
 
@@ -93,6 +90,7 @@ UserSchema.methods.comparePassword = function (candidatePassword, cb) {
         return cb(null, isMatch);
     });
 };
+*/
 
 UserSchema.virtual('id').get(function () { return this._id; });
 

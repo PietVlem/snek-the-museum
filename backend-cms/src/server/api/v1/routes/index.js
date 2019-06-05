@@ -37,11 +37,11 @@ postRouter(apiV1Router, authService);
 userRouter(apiV1Router, authService);
 museumRouter(apiV1Router, authService);
 disabilityRouter(apiV1Router, authService);
-imageRouter(apiV1Router, authRouter);
-zipcodeRouter(apiV1Router, authRouter);
-exhibtionRouter(apiV1Router, authRouter);
+imageRouter(apiV1Router, authService);
+zipcodeRouter(apiV1Router, authService);
+exhibtionRouter(apiV1Router, authService);
 baseRouter(apiV1Router, authService);
-questionsRouter(apiV1Router, authRouter);
-actionRouter(apiV1Router, authRouter);
+questionsRouter(apiV1Router, authService);
+actionRouter(apiV1Router, authService);
 
 export default apiV1Router;

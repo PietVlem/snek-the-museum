@@ -21,7 +21,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: An array of posts
      */
-    parentRouter.get('/posts', postController.index);
+    parentRouter.get('/posts', authService.testMiddleware, postController.index);
     /**
      * @swagger
      * /api/v1/posts/create:
@@ -139,6 +139,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *         description: Delete post
      */
     parentRouter.delete('/posts/:id', postController.destroy);
+
 };
 
 export default initializeEndpoints;

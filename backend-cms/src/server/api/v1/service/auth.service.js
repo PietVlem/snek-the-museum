@@ -19,6 +19,7 @@ const { ExtractJwt, Strategy: JwtStrategy } = passportJWT;
 
 class AuthService {
     constructor() {
+        /*
         this.initializeLocalStrategy();
         this.initializeJwtStrategy();
         passport.serializeUser((user, done) => {
@@ -28,7 +29,9 @@ class AuthService {
             done(null, user);
         });
         this.passport = passport;
+        */
     }
+
 
     initializeLocalStrategy = () => {
         passport.use(new LocalStrategy(
@@ -71,6 +74,11 @@ class AuthService {
                 });
             },
         ));
+    }
+
+    testMiddleware = (req,res,next) => {
+        console.log('test...');
+        next();
     }
 }
 
