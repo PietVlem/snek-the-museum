@@ -17,6 +17,12 @@ import ExhibitionsOverviewPage from '../exhibitions-overview';
 import UsersOverviewPage from '../users-overview';
 
 class AdminPage extends Component {
+  componentWillMount() {
+    if(localStorage.getItem('JWT') == null){
+      window.location.href = 'http://localhost:3000/login';
+    }
+  }
+
   render() {
     return (
       <div className="Admin">

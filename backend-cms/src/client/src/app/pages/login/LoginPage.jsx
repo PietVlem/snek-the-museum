@@ -21,6 +21,12 @@ Material UI
 */
 import Grid from '@material-ui/core/Grid';
 
+/* 
+Dotenv
+*/
+import dotenv from 'dotenv';
+dotenv.config();
+
 /*
 Components
 */
@@ -61,9 +67,54 @@ const styles = theme => ({
 });
 
 class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
+
+  componentWillMount() {
+    if(localStorage.getItem('JWT') !== null){
+      window.location.href = 'http://localhost:3000/admin';
+    }
+  }
+
+  handleChangeEmail(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  handleChangePassword(e) {
+    this.setState({ password: e.target.value });
+  }
+
+  signIn() {
+    fetch('http://127.0.0.1:8080/api/v1/signIn', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "email": this.state.email,
+        "password": this.state.password,
+      })
+    }).then(function (response) {
+      return response.json();
+    })
+      .then(async function (data) {
+        console.log(data.token);
+        await localStorage.setItem('JWT', data.token);
+        window.location.href = 'http://localhost:3000/admin';
+      }).catch(function(error) {
+        console.log(error);
+    });
+  }
+
   render() {
     const { classes } = this.props;
-    
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -77,22 +128,32 @@ class LoginPage extends Component {
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
+              <Input
+                id="email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={this.state.email}
+                onChange={this.handleChangeEmail.bind(this)}
+              />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" />
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={this.state.password}
+                onChange={this.handleChangePassword.bind(this)}
+              />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={() => this.signIn()}
             >
               Sign in
             </Button>

@@ -16,7 +16,7 @@ const firebaseConfig = {
     projectId: process.env.FIREBASE_PROJECT_ID,
     storageBucket: "snek-the-museum.appspot.com",
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID
+    appId: process.env.FIREBASE_APP_ID,
 };
 
 Firebase.initializeApp(firebaseConfig);
