@@ -35,7 +35,6 @@ const UserSchema = new Schema(
                 type: String
             }
         },
-        /*
         facebook: {
             id: {
                 type: String
@@ -46,7 +45,6 @@ const UserSchema = new Schema(
                 required: false,
             }
         },
-        */
         name: { type: String, required: false },
         dayOfBirth: { type: Date, required: false },
         avatar: { type: String, required: false },
@@ -67,7 +65,6 @@ const UserSchema = new Schema(
 
 UserSchema.pre('save', async function (next) {
     try {
-        console.log('entered');
         if (this.method !== 'local') {
             next();
         }
@@ -78,7 +75,6 @@ UserSchema.pre('save', async function (next) {
         const passwordHash = await bcrypt.hash(this.local.password, salt);
         // Re-assign hashed version over original, plain text password
         this.local.password = passwordHash;
-        console.log('exited');
         next();
     } catch (error) {
         next(error);
