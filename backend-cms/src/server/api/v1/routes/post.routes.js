@@ -21,7 +21,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: An array of posts
      */
-    parentRouter.get('/posts', authService.testMiddleware, postController.index);
+    parentRouter.get('/posts', postController.index);
     /**
      * @swagger
      * /api/v1/posts/create:

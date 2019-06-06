@@ -76,10 +76,6 @@ class AuthService {
         ));
     }
 
-    testMiddleware = (req,res,next) => {
-        console.log('test...');
-        next();
-    }
 }
 
 export default AuthService;
