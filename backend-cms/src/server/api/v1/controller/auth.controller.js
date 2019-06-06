@@ -42,7 +42,8 @@ class AuthController {
 
     signIn = async (req, res, next) => {
         // generate token
-        console.log('signIn Called ...');
+        const token = this.signToken(req.user);
+        res.status(200).json({token});
     }
 
     signUp = async (req, res, next) => {

@@ -37,14 +37,14 @@ const UserSchema = new Schema(
                 required: false,
             },
         },
-         /*
-        facebookProvider: {
-            id: { type: String, required: false },
-            token: { type: String, required: false },
-        },
-        */
-        name:{ type: String, required: false },
-        dayOfBirth:{ type: Date, required: false },
+        /*
+       facebookProvider: {
+           id: { type: String, required: false },
+           token: { type: String, required: false },
+       },
+       */
+        name: { type: String, required: false },
+        dayOfBirth: { type: Date, required: false },
         avatar: { type: String, required: false },
         userRole: { type: String, required: false },
         museumsVisited: { type: Array, required: false },
@@ -61,36 +61,28 @@ const UserSchema = new Schema(
 );
 
 
-/*
-UserSchema.pre('save', function (next) {
-    const user = this;
-
-    if (!user.isModified('localProvider.password')) return next();// only hash the password if it has been modified (or is new)
-
+UserSchema.pre('save', async function (next) {
     try {
-        return bcrypt.genSalt(config.auth.bcrypt.SALT_WORK_FACTOR, (errSalt, salt) => {
-            if (errSalt) throw errSalt;
-
-            return bcrypt.hash(user.localProvider.password, salt, (errHash, hash) => {
-                if (errHash) throw errHash;
-
-                user.localProvider.password = hash;
-                return next();
-            });
-        });
+        // Generate a salt
+        const salt = await bcrypt.genSalt(config.auth.bcrypt.saltWorkFactor);
+        // Generate a password hash (salt + hash)
+        const passwordHash = await bcrypt.hash(this.password, salt);
+        // Re-assign hashed version over original, plain text password
+        this.password = passwordHash;
+        // next
+        next();
     } catch (error) {
         return next(error);
     }
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-    const user = this;
-    bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
-        if (err) return cb(err, null);
-        return cb(null, isMatch);
-    });
-};
-*/
+UserSchema.methods.isValidPassword = async function (newPassword) {
+    try {
+        return await bcrypt.compare(newPassword, this.password);
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 UserSchema.virtual('id').get(function () { return this._id; });
 
