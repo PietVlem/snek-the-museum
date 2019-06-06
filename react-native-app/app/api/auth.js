@@ -3,19 +3,20 @@ var { AsyncStorage } = require('react-native');
 
 import { SERVER_ERROR, ERROR } from "../config";
 
-var REQUEST_URL = "";
+var REQUEST_URL = "http://127.0.0.1:8080/api/v1/";
 
 
 // Callback : success, data, error
 var AuthAPI = {
     register: function(data, callback){
-        var url = REQUEST_URL +"/register";
+        var url = REQUEST_URL +"/singUp";
         this.requestWithoutToken(url, data, callback);
     },
 
     login: function(data, callback){
-        var url = REQUEST_URL + "/login";
+        var url = REQUEST_URL + "/signIn";
         this.requestWithoutToken(url, data, callback);
+        console.log(data);
     },
 
     logout(callback){
