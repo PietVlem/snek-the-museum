@@ -68,7 +68,7 @@ export default class Main extends Component {
                                     panHandlers={null}/>
                             </Scene>
                         </Stack>
-                        <Stack key="auth" hideNavBar>
+                        <Stack key="main" hideNavBar>
                             <Scene tabs tabBarStyle={{backgroundColor: "white",borderTopColor: "white",shadowOffset:{  width: 2,  height: -3,padding: 10,},shadowColor: '#8386A3',shadowOpacity: 0.12,}}  showLabel={false} hideNavBar>
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'home' : 'home'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="groupScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={groupScreen} initial/>
