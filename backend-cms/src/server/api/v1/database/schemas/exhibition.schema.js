@@ -11,6 +11,7 @@ const ExhibitionSchema = new Schema(
         info: { type: String, required: false },
         gallery: { type: Array, required: false },
         price: { type: Number, required: false },
+        duration: { type: Number, required: false },
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },

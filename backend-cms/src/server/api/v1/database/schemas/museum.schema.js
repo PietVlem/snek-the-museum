@@ -14,7 +14,10 @@ const MuseumSchema = new Schema(
         },
         body: { type: String, required: false },
         slug: { type: String, lowercase: true, unique: true, required: true },
-        openingHours: { type: String, required: false },
+        openingHours: {
+            open: { type: String, required: false },
+            closed: { type: String, required: false },
+        },
         streetAndNumber: { type: String, required: false },
         zipcodeId: {
             type: Schema.Types.ObjectId,
@@ -28,6 +31,14 @@ const MuseumSchema = new Schema(
             ref: 'Disability',
             required: false
         }],
+        website: { type: String, required: false },
+        telephone: { type: String, required: false },
+        mail: { 
+            type: String, 
+            lowercase: true,
+            match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 
+            required: false
+        },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
         categoryId: {
