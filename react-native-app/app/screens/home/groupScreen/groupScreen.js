@@ -278,7 +278,7 @@ const pickerSelectStyles = StyleSheet.create({
 
 function mapStateToProps(state, props) {
     return {
-        loggedIn: state.authReducer.loggedIn
+        //loggedIn: state.authReducer.loggedIn
     }
 }
 

@@ -41,9 +41,10 @@ class searchScreen extends Component {
     
 
     renderRow ({ item }) {
+      console.log(item);
         return (
         item.title === "Amy Farha" ? 
-        <TouchableOpacity onPress={() => Actions.detailScreen()}>
+        <TouchableOpacity onPress={() => Actions.detailScreen(alert('You tapped the button!'))}>
           <ListItem
             roundAvatar
             title={item.title}
@@ -65,7 +66,7 @@ class searchScreen extends Component {
           />
         </TouchableOpacity>  
         :
-        <TouchableOpacity onPress={() => Actions.detailScreen()}>
+        <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
           <ListItem
             roundAvatar
             title={item.title}
@@ -94,6 +95,7 @@ class searchScreen extends Component {
                 containerStyle={{position: 'absolute',top: '10%',left: '13%'}}/>
         }
         </TouchableOpacity> 
+
         )
       }
 

@@ -12,7 +12,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 import MapView from "react-native-maps";
 import { TabNavigator } from "react-navigation";
-import Polyline from '@mapbox/polyline';
 
 const images = [
   'https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png',
@@ -38,26 +37,26 @@ class mapPage extends Component {
       cordLatitude:-6.23,
       cordLongitude:106.75,
       markers: [
-        {
-          coordinate: {
-            latitude: 51.087064,
-            longitude: 3.670115,
+          {
+            coordinate: {
+              latitude: 51.087064,
+              longitude: 3.670115,
+            },
+            title: "your location",
           },
-          title: "your location",
-        },
-        {
-          coordinate: {
-            latitude: 51.054588,
-            longitude: 3.721880,
+          {
+            coordinate: {
+              latitude: 51.054588,
+              longitude: 3.721880,
+            },
+            title: "Destination",
+            description: "museum",
           },
-          title: "Destination",
-          description: "museum",
+        ],
+        region: {
+          latitude: 51.054588,
+          longitude: 3.721880,
         },
-      ],
-      region: {
-        latitude: 51.054588,
-        longitude: 3.721880,
-      },
       
     };
 
@@ -142,12 +141,19 @@ class mapPage extends Component {
           style={styles.container}
           flex={1}
         >
-        <MapView
-               ref={map => this.map = map}
-               initialRegion={this.state.region}
-               style={{flex: 1}}
-             >
-      {this.state.markers.map((marker:any)  => (  
+         <MapView
+         ref={MapView => (this.MapView = MapView)}
+         style={styles.map}
+         initialRegion={this.state.region}
+         loadingEnabled = {true}
+         loadingIndicatorColor="#666666"
+         loadingBackgroundColor="#eeeeee"
+         moveOnMarkerPress = {false}
+         showsUserLocation={true}
+         showsCompass={true}
+         showsPointsOfInterest = {false}
+         provider="google">
+         {this.state.markers.map((marker:any)  => (  
               <MapView.Marker
                 key={marker.id}
                 coordinate={marker.coordinate}
@@ -155,22 +161,7 @@ class mapPage extends Component {
                 description={marker.description}
               />
          ))}
-
-       {!!this.state.latitude && !!this.state.longitude && this.state.x == 'true' && <MapView.Polyline
-            coordinates={this.state.coords}
-            strokeWidth={2}
-            strokeColor="red"/>
-        }
-
-        {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
-          coordinates={[
-              {latitude: this.state.latitude, longitude: this.state.longitude},
-              {latitude: this.state.cordLatitude, longitude: this.state.cordLongitude},
-          ]}
-          strokeWidth={2}
-          strokeColor="red"/>
-         }
-        </MapView>
+      </MapView>
         <ScrollView 
           ref={(scrollView) => { this.scrollView = scrollView; }}
           contentOffset={{
