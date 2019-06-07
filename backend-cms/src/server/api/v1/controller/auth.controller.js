@@ -40,7 +40,7 @@ class AuthController {
             },
             name: name,
             userRole: 'user',
-            dayOfBirth: dayOfBirth,
+            dayOfBirth: dayOfBirth
         });
 
         await newUser.save();

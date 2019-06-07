@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 module.exports = {
     validateBody: (schema) => {
@@ -26,5 +26,3 @@ module.exports = {
         }),
     }
 }
-
-

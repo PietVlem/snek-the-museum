@@ -24,38 +24,68 @@ const initializeEndpoints = (parentRouter, authService) => {
     /**
      * @swagger
      * /api/v1/signUp:
-     *   post:
-     *     tags:
-     *       - AUTH
-     *     description: Create a user to the application
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: Web token
+     *      post:
+     *          tags:
+     *              - Auth
+     *          summary: Create a user to the application
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: email
+     *                name: email
+     *                description: your email
+     *                required: true
+     *              - in: password
+     *                name: password 
+     *                description: your password 
+     *                required: true
+     *              - in: name
+     *                name: name 
+     *                description: your full name
+     *                required: true
+     *              - in: dayOfBirth
+     *                name: dayOfBirth 
+     *                description: your birthday 
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.post('/signIn', validateBody(schemas.authSchema), passportSignIn, authController.signIn);
-    /**
+        /**
      * @swagger
      * /api/v1/signIn:
-     *   post:
-     *     tags:
-     *       - AUTH
-     *     description: Sign in to the application
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: Web token
+     *      post:
+     *          tags:
+     *              - Auth
+     *          summary: Sign in a user to the application (local)
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: email
+     *                name: email
+     *                description: your email
+     *                required: true
+     *              - in: password
+     *                name: password 
+     *                description: your password 
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.get('/secret', passportJWT, authController.secret);
     /**
      * @swagger
-     * /api/v1/scret:
+     * /api/v1/secret:
      *   get:
      *     tags:
-     *       - AUTH
-     *     description: Get a JWT 
+     *       - Auth
+     *     summary: Put your jwt in authorization header to a secret message
      *     produces:
      *       - application/json
      *     responses:
@@ -66,15 +96,22 @@ const initializeEndpoints = (parentRouter, authService) => {
     /**
      * @swagger
      * /api/v1/facebook:
-     *   post:
-     *     tags:
-     *       - AUTH
-     *     description: Facebook login
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: Web token
+     *      post:
+     *          tags:
+     *              - Auth
+     *          summary: Sign in a user to the application (facebook)
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: access_token
+     *                name: access_token
+     *                description: access_token (graph api token => https://developers.facebook.com/tools/explorer/)
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
 };
 
