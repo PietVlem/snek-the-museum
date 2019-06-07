@@ -23,7 +23,7 @@ class AuthController {
     }
 
     signUp = async (req, res, next) => {
-        const { email, password } = req.value.body;
+        const { email, password, name, dayOfBirth } = req.value.body;
 
         // Check if there is a user with the same email
         const foundUser = await User.findOne({ "local.email": email });
@@ -37,7 +37,10 @@ class AuthController {
             local: {
                 email: email,
                 password: password
-            }
+            },
+            name: name,
+            userRole: 'user',
+            dayOfBirth: dayOfBirth,
         });
 
         await newUser.save();

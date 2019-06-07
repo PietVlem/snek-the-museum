@@ -21,7 +21,7 @@ const passportFacebook = passport.authenticate('facebookToken', { session: false
 const authController = new AuthController();
 
 const initializeEndpoints = (parentRouter, authService) => {
-    parentRouter.post('/signUp', validateBody(schemas.authSchema), authController.signUp);
+    parentRouter.post('/signUp', validateBody(schemas.registerSchema), authController.signUp);
     /**
      * @swagger
      * /api/v1/signUp:
