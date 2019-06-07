@@ -13,9 +13,9 @@ const MuseumSchema = new Schema(
             required: false
         },
         body: { type: String, required: false },
-        slug: {
-            type: String, lowercase: true, unique: true, required: true,
-        },
+        slug: { type: String, lowercase: true, unique: true, required: true },
+        openingHours: { type: String, required: false },
+        streetAndNumber: { type: String, required: false },
         zipcodeId: {
             type: Schema.Types.ObjectId,
             ref: 'Zipcode',
@@ -23,6 +23,11 @@ const MuseumSchema = new Schema(
         },
         longitude: { type: Number, required: false },
         latitude: { type: Number, required: false },
+        disabilityIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Disability',
+            required: false
+        }],
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
         categoryId: {
@@ -72,6 +77,12 @@ MuseumSchema.virtual('zipcode', {
     localField: 'zipcodeId',
     foreignField: '_id',
     justOne: true,
+})
+
+MuseumSchema.virtual('disability', {
+    ref: 'Disability',
+    localField: 'disabilityIds',
+    foreignField: '_id'
 })
 
 MuseumSchema.plugin(mongoosePaginate);

@@ -22,7 +22,7 @@ const UserSchema = new Schema(
     {
         method: {
             type: String,
-            enum: ['local', 'google', 'facebook'],
+            enum: ['local', 'facebook'],
             required: true
         },
         local: {
@@ -49,7 +49,11 @@ const UserSchema = new Schema(
         dayOfBirth: { type: Date, required: false },
         avatar: { type: String, required: false },
         userRole: { type: String, required: false },
-        museumsVisited: { type: Array, required: false },
+        museumsVisitedIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Museum',
+            required: false
+        }],
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },
@@ -61,6 +65,12 @@ const UserSchema = new Schema(
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
     },
 );
+
+UserSchema.virtual('museum', {
+    ref: 'Museum',
+    localField: 'museumsVisitedIds',
+    foreignField: '_id'
+})
 
 
 UserSchema.pre('save', async function (next) {

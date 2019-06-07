@@ -24,11 +24,12 @@ class MuseumController {
                     populate: 'category',
                     populate: 'zipcode',
                     populate: 'photo',
+                    populate: 'disabililty',
                     sort: { created_at: -1 },
                 };
                 museums = await Museum.paginate({}, options);
             } else {
-                museums = await Museum.find().populate('category').populate('zipcode').populate('photo').sort({ created_at: -1 }).exec();
+                museums = await Museum.find().populate('category').populate('zipcode').populate('photo').populate('disability').sort({ created_at: -1 }).exec();
             }
 
             if (museums === undefined || museums === null) {

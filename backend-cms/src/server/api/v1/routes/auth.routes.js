@@ -9,8 +9,8 @@ Import the internal libraries
 import { AuthController } from '../controller';
 import { validateBody, schemas } from '../helpers/routeHelpers';
 
-/*
-auth methods
+/* 
+Passport authentication option(s)
 */
 const passportSignIn = passport.authenticate('local', { session: false });
 const passportJWT = passport.authenticate('jwt', { session: false });
@@ -85,7 +85,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *   get:
      *     tags:
      *       - Auth
-     *     summary: Put your jwt in authorization header to a secret message
+     *     summary: Put your jwt in authorization header for a secret message
      *     produces:
      *       - application/json
      *     responses:
