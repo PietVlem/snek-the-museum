@@ -13,11 +13,42 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
+import { fetchGithubData } from '../../../actions/home';
+
+//var newArr = Object.keys(Item);
+//console.log(newArr);
+
 class detailScreen extends Component {
 
+    constructor (props) {
+        super(props);
+    
+        this.state = {
+          loading: false,
+          error: null,
+          value: ''
+        };
+    }
 
-    renderRow ({ item }) {
-        return (
+    componentDidMount() {
+        //var Img = this.props.photo.url;
+        //alert(this.props.title);
+        console.log(this.props);
+    }
+
+    renderRow ({ item, index }) {
+        if (index === 0) return (
+        <TouchableOpacity onPress={() => Actions.mapPage(item)}>
+        <ListItem
+            avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
+            title={item.info}
+            titleStyle={{color:"#6FA29B",marginLeft: 20,fontSize: 13,fontFamily: "MontserratMedium",}}
+            titleNumberOfLines={2}
+            containerStyle={styles.Liststyle}
+            hideChevron
+        />
+        </TouchableOpacity>)
+        else return (
           <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -83,7 +114,7 @@ class detailScreen extends Component {
             <ScrollView>
                 <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
                 <View style={{flex:1,flexDirection: 'row'}}>
-                    <Text style={styles.DetailTitle}>Design Museum</Text>
+                    <Text style={styles.DetailTitle}>{this.props.title}</Text>
                     <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
                     <View style={{flexDirection:'row'}}>
 
@@ -107,7 +138,7 @@ class detailScreen extends Component {
                 <Image
                     resizeMode={'cover'}
                     style={styles.HeaderImg}
-                    source={require('../../../../assets/smak.jpg')}
+                    source={{uri: this.props.photo.url}}
                 />   
                 <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
                 <View style={styles.button}>
@@ -117,8 +148,13 @@ class detailScreen extends Component {
                 </View>
                 </TouchableOpacity>
                 <Text style={styles.DetailText}>
-                    Design Museum Gent is een museum in Gent met een omvangrijke collectie Belgisch en internationaal design. De verzameling omvat ontwerpen van de art nouveau van Henry Van de Velde tot de hedendaagse avantgarde- vormgeving.
+                {this.props.body}
                 </Text>
+                
+                
+                
+                
+                <Text style={styles.Infobox}>Bekijk de route</Text>
                 <FlatList
                     ref='infoRef'
                     data={list}
@@ -155,10 +191,8 @@ class detailScreen extends Component {
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        
-    }
-}
+const mapStateToProps = (state,props) => ({
+    data: state.githubReducer,
+  });
 
 export default connect(mapStateToProps, {setStatus, logout})(detailScreen);
