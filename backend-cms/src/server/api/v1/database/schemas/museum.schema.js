@@ -33,6 +33,8 @@ const MuseumSchema = new Schema(
         }],
         website: { type: String, required: false },
         telephone: { type: String, required: false },
+        facebook: { type: String, required: false },
+        twitter: { type: String, required: false },
         mail: { 
             type: String, 
             lowercase: true,
