@@ -453,21 +453,22 @@ class Seeder {
             return Question.find().exec();
         });
         */
-       /*
-       const newQuestion = new Question({
-        exhibitionId: "5cd5a91da8de1e611b9f9133",
-        question: 'How much do i drink?',
-        posibilities: ['Not much', 'alot', 'way to much!'],
-        answer: 2
-       })
-       newQuestion.save();
-       */
-       this.createActions = await Action.estimatedDocumentCount().exec().then(async (count) => {
-        if (count === 0) {
-            await this.createActions();
-        }
-        return Action.find().exec();
-    });
+        /*
+        const newQuestion = new Question({
+         exhibitionId: "5cd5a91da8de1e611b9f9133",
+         question: 'How much do i drink?',
+         posibilities: ['Not much', 'alot', 'way to much!'],
+         answer: 2
+        })
+        newQuestion.save();
+        */
+
+        this.createActions = await Action.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createActions();
+            }
+            return Action.find().exec();
+        });
     }
 }
 export default Seeder;

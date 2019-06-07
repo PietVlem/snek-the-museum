@@ -9,7 +9,8 @@ const ExhibitionSchema = new Schema(
         name: { type: String, required: true, max: 128 },
         image: { type: String, required: false },
         info: { type: String, required: false },
-        gallery: { type: Array, required: false } ,
+        gallery: { type: Array, required: false },
+        price: { type: Number, required: false },
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },

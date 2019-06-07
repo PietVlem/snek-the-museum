@@ -160,17 +160,15 @@ class UsersTable extends Component {
             <TableHead>
               <TableRow>
                 <TableCell>User</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>Country</TableCell>
+                <TableCell>Role</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users && users.map( (user, index) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.code}</TableCell>
-                  <TableCell>{user.city}</TableCell>
-                  <TableCell>{user.country}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.userRole}</TableCell>
                   <TableCell>
                     <IconButton
                       component={Link} to={ `/admin/users/${user.id}/edit`}>

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "passport-facebook-token": "^3.3.0"
+  }
+}

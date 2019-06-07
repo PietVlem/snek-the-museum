@@ -25,7 +25,7 @@ class UserController {
                 };
                 posts = await User.paginate({}, options);
             } else {
-                posts = await User.find().sort({ created_at: -1 }).exec();
+                posts = await User.find().populate('museum').sort({ created_at: -1 }).exec();
             }
 
             if (posts === undefined || posts === null) {
@@ -41,7 +41,7 @@ class UserController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await User.findById(id).exec();
+            const item = await User.findById(id).populate('museum').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `User with id: ${id} not found!`);
             }

@@ -4,7 +4,6 @@ Import external libraries:
 */
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
-import slug from 'slug';
 import bcrypt from 'bcrypt';
 
 /*
@@ -13,6 +12,7 @@ Import internal libraries:
 */
 import config from '../../../../config';
 
+
 /*
 Constants
 */
@@ -20,28 +20,40 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
     {
-        email: {
+        method: {
             type: String,
-            required: true,
-            trim: true,
-            unique: true,
-            match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            enum: ['local', 'facebook'],
+            required: true
         },
-        localProvider: {
-            password: {
-                type: String,
-                required: false,
+        local: {
+            email: {
+                type: String, 
+                lowercase: true,
+                match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
             },
+            password: {
+                type: String
+            }
         },
-        facebookProvider: {
-            id: { type: String, required: false },
-            token: { type: String, required: false },
+        facebook: {
+            id: {
+                type: String
+            },
+            email: {
+                type: String,
+                lowercase: true,
+                required: false,
+            }
         },
-        name:{ type: String, required: false },
-        dayOfBirth:{ type: Date, required: false },
+        name: { type: String, required: false },
+        dayOfBirth: { type: Date, required: false },
         avatar: { type: String, required: false },
         userRole: { type: String, required: false },
-        museumsVisited: { type: Array, required: false },
+        museumsVisitedIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Museum',
+            required: false
+        }],
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },
@@ -54,45 +66,38 @@ const UserSchema = new Schema(
     },
 );
 
-UserSchema.methods.slugify = function () {
-    this.slug = slug(this.email);
-};
+UserSchema.virtual('museum', {
+    ref: 'Museum',
+    localField: 'museumsVisitedIds',
+    foreignField: '_id'
+})
 
-UserSchema.pre('validate', function (next) {
-    if (!this.slug) {
-        this.slugify();
-    }
-    return next();
-});
 
-UserSchema.pre('save', function (next) {
-    const user = this;
-
-    if (!user.isModified('localProvider.password')) return next();// only hash the password if it has been modified (or is new)
-
+UserSchema.pre('save', async function (next) {
     try {
-        return bcrypt.genSalt(config.auth.bcrypt.SALT_WORK_FACTOR, (errSalt, salt) => {
-            if (errSalt) throw errSalt;
+        if (this.method !== 'local') {
+            next();
+        }
 
-            return bcrypt.hash(user.localProvider.password, salt, (errHash, hash) => {
-                if (errHash) throw errHash;
-
-                user.localProvider.password = hash;
-                return next();
-            });
-        });
+        // Generate a salt
+        const salt = await bcrypt.genSalt(10);
+        // Generate a password hash (salt + hash)
+        const passwordHash = await bcrypt.hash(this.local.password, salt);
+        // Re-assign hashed version over original, plain text password
+        this.local.password = passwordHash;
+        next();
     } catch (error) {
-        return next(error);
+        next(error);
     }
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-    const user = this;
-    bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
-        if (err) return cb(err, null);
-        return cb(null, isMatch);
-    });
-};
+UserSchema.methods.isValidPassword = async function (newPassword) {
+    try {
+        return await bcrypt.compare(newPassword, this.local.password);
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 UserSchema.virtual('id').get(function () { return this._id; });
 

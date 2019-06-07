@@ -139,6 +139,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *         description: Delete post
      */
     parentRouter.delete('/posts/:id', postController.destroy);
+
 };
 
 export default initializeEndpoints;

@@ -15,7 +15,7 @@ const config = {
     mongoDbConnectionstring: process.env.MONGODB_CONNECTION,
     auth: {
         bcrypt: {
-            saltWorkFactor: process.env.AUTH_BCRYPT_SALT,
+            saltWorkFactor: 10,
         },
         jwtSecret: process.env.AUTH_JWT_SECRET,
         jwtSession: {
