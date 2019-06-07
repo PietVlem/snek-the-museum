@@ -39,6 +39,11 @@ const MuseumSchema = new Schema(
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 
             required: false
         },
+        exhibtionIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Exhibtion',
+            required: false
+        }],
         gallery: [{
             type: Schema.Types.ObjectId,
             ref: 'Photo',
@@ -98,6 +103,12 @@ MuseumSchema.virtual('zipcode', {
 MuseumSchema.virtual('disability', {
     ref: 'Disability',
     localField: 'disabilityIds',
+    foreignField: '_id'
+})
+
+MuseumSchema.virtual('exhibitions', {
+    ref: 'Exhibition',
+    localField: 'exhibtionIds',
     foreignField: '_id'
 })
 
