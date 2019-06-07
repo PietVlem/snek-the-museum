@@ -8,7 +8,6 @@ Import the internal libraries
 */
 import { AuthController } from '../controller';
 import { validateBody, schemas } from '../helpers/routeHelpers';
-const passportConf = require('../service/passport.service');
 
 /*
 auth methods
