@@ -29,7 +29,7 @@ class MuseumController {
                 };
                 museums = await Museum.paginate({}, options);
             } else {
-                museums = await Museum.find().populate('category').populate('zipcode').populate('photo').populate('disability').sort({ created_at: -1 }).exec();
+                museums = await Museum.find().populate('category').populate('zipcode').populate('photo').populate('disability').populate('museumGallery').sort({ created_at: -1 }).exec();
             }
 
             if (museums === undefined || museums === null) {
@@ -45,7 +45,7 @@ class MuseumController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Museum.findById(id).populate('category').exec();
+            const item = await Museum.findById(id).populate('category').populate('zipcode').populate('photo').populate('disability').populate('museumGallery').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Museum with id: ${id} not found!`);
             }

@@ -35,7 +35,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Create post
      */
-    parentRouter.get('/images/create/', imageController.create);
+    parentRouter.get('/images/create', imageController.create);
     /**
      * @swagger
      * /api/v1/images/{id}:
