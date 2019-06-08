@@ -54,7 +54,11 @@ class AuthController {
     signIn = async (req, res, next) => {
         // Generate token
         const token = this.signToken(req.user);
-        res.status(200).json({ token });
+        
+        res.status(200).json({ 
+            token: token,
+            userRole: req.user.userRole
+         });
     }
 
 
