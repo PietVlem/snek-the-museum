@@ -113,6 +113,48 @@ const initializeEndpoints = (parentRouter, authService) => {
      *              200:
      *                  description: Web token
      */
+    parentRouter.post('/forgot', authController.forgot);
+    /**
+     * @swagger
+     * /api/v1/forgot:
+     *      post:
+     *          tags:
+     *              - Auth
+     *          summary: Reset your password
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: email
+     *                name: email
+     *                description: your email
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
+     */
+    parentRouter.post('/reset/:token', authController.reset);
+    /**
+     * @swagger
+     * /api/v1//reset/:token:
+     *      post:
+     *          tags:
+     *              - Auth
+     *          summary: Reset your password
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: email
+     *                name: email
+     *                description: your email
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
+     */
 };
 
 export default initializeEndpoints;

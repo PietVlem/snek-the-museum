@@ -45,6 +45,8 @@ const UserSchema = new Schema(
                 required: false,
             }
         },
+        resetPasswordToken: { type: String, required: false },
+        resetPasswordExpires: { type: Date, required: false },
         name: { type: String, required: false },
         dayOfBirth: { type: Date, required: false },
         avatar: { type: String, required: false },

@@ -26,6 +26,12 @@ const config = {
             clientSecret: process.env.AUTH_FACEBOOK_CLIENT_SECRET,
         },
     },
+    pwReset:{
+        baseUrl: process.env.RESET_PASSWORD_URL,
+        service: process.env.RESET_PASSWORD_SERVICE,
+        mailAccount: process.env.RESET_PASSWORD_GMAIL_ACCOUNT,
+        mailAccountPw: process.env.RESET_PASSWORD_GMAIL_PASSWORD
+    }
 };
 
 export default config;
