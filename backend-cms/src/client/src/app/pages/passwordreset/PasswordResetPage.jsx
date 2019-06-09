@@ -158,7 +158,7 @@ class PasswordResetPage extends Component {
                             className={classes.submit}
                             onClick={this.resetPassword}
                         >
-                            Sign in
+                            Reset Password
             </Button>
                     </form>
                 </Paper>
