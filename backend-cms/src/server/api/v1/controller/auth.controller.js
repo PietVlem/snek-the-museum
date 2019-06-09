@@ -105,7 +105,6 @@ class AuthController {
                 });
             }
         });
-
     }
 
     reset = async (req, res, next) => {

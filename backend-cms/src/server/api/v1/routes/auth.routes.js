@@ -134,7 +134,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *              200:
      *                  description: Web token
      */
-    parentRouter.post('/reset/:token', authController.reset);
+    parentRouter.post('/reset/:token', validateBody(schemas.passwordSchema), authController.reset);
     /**
      * @swagger
      * /api/v1/reset/:token:
