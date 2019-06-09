@@ -120,7 +120,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *      post:
      *          tags:
      *              - Auth
-     *          summary: Reset your password
+     *          summary: Sends a reset password email
      *          consumes:
      *              - application/json
      *          produces:
@@ -137,7 +137,7 @@ const initializeEndpoints = (parentRouter, authService) => {
     parentRouter.post('/reset/:token', authController.reset);
     /**
      * @swagger
-     * /api/v1//reset/:token:
+     * /api/v1/reset/:token:
      *      post:
      *          tags:
      *              - Auth
