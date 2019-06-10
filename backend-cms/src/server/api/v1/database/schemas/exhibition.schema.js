@@ -15,9 +15,13 @@ const ExhibitionSchema = new Schema(
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },
+        reactionIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Reaction',
+            required: false
+        }],
         published_at: { type: Date, required: false },
-        deleted_at: { type: Date, required: false },
-        museumId: { type: Schema.Types.ObjectId, ref: 'Museum', required: false },
+        deleted_at: { type: Date, required: false },  
     },
     {
         toJSON: { virtuals: true },
@@ -41,12 +45,11 @@ ExhibitionSchema.pre('validate', function (next) {
 
 ExhibitionSchema.virtual('id').get(function () { return this._id; });
 
-ExhibitionSchema.virtual('museum', {
-    ref: 'Museum',
-    localField: 'museumId',
-    foreignField: '_id',
-    justOne: true,
-});
+ExhibitionSchema.virtual('reactions', {
+    ref: 'Reaction',
+    localField: 'reactionIds',
+    foreignField: '_id'
+})
 
 ExhibitionSchema.plugin(mongoosePaginate);
 export default mongoose.model('Exhibition', ExhibitionSchema);
