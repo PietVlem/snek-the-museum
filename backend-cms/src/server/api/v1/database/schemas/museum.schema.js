@@ -51,13 +51,18 @@ const MuseumSchema = new Schema(
             ref: 'Photo',
             required: false
         }],
-        published_at: { type: Date, required: false },
-        deleted_at: { type: Date, required: false },
+        reactionIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Reaction',
+            required: false
+        }],
         categoryId: {
             type: Schema.Types.ObjectId,
             ref: 'Category',
             required: false
         },
+        published_at: { type: Date, required: false },
+        deleted_at: { type: Date, required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -117,6 +122,12 @@ MuseumSchema.virtual('exhibitions', {
 MuseumSchema.virtual('museumGallery', {
     ref: 'Photo',
     localField: 'gallery',
+    foreignField: '_id'
+})
+
+MuseumSchema.virtual('reactions', {
+    ref: 'Reaction',
+    localField: 'reactionIds',
     foreignField: '_id'
 })
 

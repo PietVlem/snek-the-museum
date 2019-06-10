@@ -11,6 +11,7 @@ import Photo from './photo.schema';
 import Base from './assignments/base.schema';
 import Question from './assignments/question.schema';
 import Action from './actions.schema';
+import Reaction from './reaction.schema';
 
 export {
     Blog,
@@ -24,5 +25,6 @@ export {
     Photo,
     Base,
     Question,
-    Action
+    Action,
+    Reaction
 };

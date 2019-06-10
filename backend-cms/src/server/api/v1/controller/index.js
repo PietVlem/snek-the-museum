@@ -12,6 +12,7 @@ import ExhibitionController from './exhibition.controller';
 import BaseController from './assignments/base.controller';
 import QuestionController from './assignments/question.controller';
 import ActionController from './action.controller';
+import ReactionController from './reaction.controller';
 
 export {
     AuthController,
@@ -26,5 +27,6 @@ export {
     ExhibitionController,
     BaseController,
     QuestionController,
-    ActionController
+    ActionController,
+    ReactionController
 };

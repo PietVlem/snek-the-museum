@@ -24,6 +24,7 @@ import exhibtionRouter from './exhibition.routes';
 import baseRouter from './assignments/base.routes';
 import questionsRouter from './assignments/question.routes';
 import actionRouter from './actions.routes';
+import reactionRouter from './reaction.routes';
 
 // Initialize the AuthService
 const authService = new AuthService();
@@ -43,5 +44,6 @@ exhibtionRouter(apiV1Router, authService);
 baseRouter(apiV1Router, authService);
 questionsRouter(apiV1Router, authService);
 actionRouter(apiV1Router, authService);
+reactionRouter(apiV1Router, authService);
 
 export default apiV1Router;
