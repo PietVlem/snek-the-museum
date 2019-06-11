@@ -7,6 +7,7 @@ import styles from '../../styles/index'
 import {Authentication} from './index';
 import { NavBar  } from '../index';
 import { Actions } from 'react-native-router-flux';
+
 class Login extends Component {
     render() {
         return (

@@ -15,10 +15,7 @@ var AuthAPI = {
 
     login: async function (data, callback) {
         var url = REQUEST_URL + "/signIn";
-        console.log(url);
         await this.requestWithoutToken(url, data, callback);
-        console.log(data);
-        console.log('test');
     },
 
     logout(callback) {
@@ -50,26 +47,26 @@ var AuthAPI = {
     },
 
     requestWithoutToken(url, data, callback) {
-
         let requestConfig = {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            //body: JSON.stringify(data)
             body: JSON.stringify({
-                email: 'test@test.be',
-                password: 'password',
+                email: data.email,
+                password: data.password,
             })
         }
 
         fetch(url, requestConfig)
             .then((response) => response.json())
-            .then((responseData) => {
+            .then( async (responseData) => {
                 console.log(responseData); 
                 // 1: --> now save token to local storage
-                // 2: --> only login when token isset
+                await this.saveDataAsyncStorage(responseData);
+                // 2: --> redirect to screen ...
+
                 if (responseData.error) callback(false, null, { type: ERROR, msg: responseData.error })
                 else if (responseData.success) callback(true, responseData.data, null)
             })
@@ -77,7 +74,16 @@ var AuthAPI = {
                 callback(false, null, { type: SERVER_ERROR })
             })
             .done();
-    }
+    },
+
+    saveDataAsyncStorage: async function(responseData){
+        await AsyncStorage.multiSet([
+            ["token", responseData.token],
+            ["userId", responseData.userId]
+        ])
+        const token = await AsyncStorage.getItem('token');
+        console.log(token);
+    },
 }
 
 module.exports = AuthAPI;
