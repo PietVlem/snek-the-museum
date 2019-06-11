@@ -3,9 +3,9 @@
  
 
 import React, {Component} from 'react';
-import { View,Text } from 'react-native';
+import { View,Text,AsyncStorage } from 'react-native';
 
-import {Router, Scene, Reducer,Stack} from 'react-native-router-flux';
+import {Router, Scene, Reducer,Stack,ActionConst,Actions} from 'react-native-router-flux';
 import Feather from 'react-native-vector-icons/Feather';
 import { Icon } from 'react-native-elements'
 
@@ -49,8 +49,18 @@ const getSceneStyle = (props, computedProps) => {
     };
     return style;
 };
-
 export default class Main extends Component {
+
+    componentDidMount() {
+        var _this = this;
+
+        //Check if token exist
+        AsyncStorage.getItem('token', (err, token) => {
+            if (token === null) Actions.welcome();
+            else Actions.home();
+        });
+    }
+
     render() {
         return (
             <View style={{flex:1}}>
@@ -67,7 +77,7 @@ export default class Main extends Component {
                             <Scene key="password" direction="vertical" component={Password} title="Password"
                                     panHandlers={null}/>
                             </Scene>
-                        </Stack>
+                        </Stack>    
                         <Stack key="main" hideNavBar>
                             <Scene tabs tabBarStyle={{backgroundColor: "white",borderTopColor: "white",shadowOffset:{  width: 2,  height: -3,padding: 10,},shadowColor: '#8386A3',shadowOpacity: 0.12,}}  showLabel={false} hideNavBar>
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'home' : 'home'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
@@ -77,8 +87,8 @@ export default class Main extends Component {
                                     <Scene key="startScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={startScreen} initial/>
                                     <Scene key="startCheckScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={startCheckScreen} initial/>
                                     <Scene key="questionScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={questionScreen} initial/>
-                                    <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={endScreen} initial/>
-                                    <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={Home} initial/>
+                                    <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar   component={endScreen} initial/>
+                                    <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={Home} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
                                     <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
@@ -91,7 +101,7 @@ export default class Main extends Component {
                                     <Scene key="profileScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={profileScreen} initial/>
                                 </Scene>
                             </Scene>
-                        </Stack>
+                        </Stack>   
                     </Scene>
                 </Router>
             </View>
