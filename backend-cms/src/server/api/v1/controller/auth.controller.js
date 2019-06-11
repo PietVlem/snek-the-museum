@@ -50,7 +50,11 @@ class AuthController {
         // Generate the token
         const token = this.signToken(newUser);
         // Respond with token
-        res.status(200).json({ token });
+        res.status(200).json({ 
+            token: token,
+            userId: req.user.id,
+            userRole: req.user.userRole,
+         });
     }
 
     signIn = async (req, res, next) => {
@@ -67,7 +71,11 @@ class AuthController {
     facebookOAuth = async (req, res, next) => {
         // Generate token
         const token = this.signToken(req.user);
-        res.status(200).json({ token });
+        res.status(200).json({ 
+            token: token,
+            userId: req.user.id,
+            userRole: req.user.userRole,
+         });
     }
 
     secret = async (req, res, next) => {
