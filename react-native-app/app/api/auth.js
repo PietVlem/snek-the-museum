@@ -51,7 +51,8 @@ var AuthAPI = {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "authorization": "token"
             },
             body: JSON.stringify({
                 email: data.email,
