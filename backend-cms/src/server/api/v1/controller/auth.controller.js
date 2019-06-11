@@ -59,7 +59,8 @@ class AuthController {
 
         res.status(200).json({
             token: token,
-            userRole: req.user.userRole
+            userId: req.user.id,
+            userRole: req.user.userRole,
         });
     }
 
