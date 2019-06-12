@@ -31,7 +31,7 @@ export const fetchProfile = (data) => {
 
 export const fetchProfileData = () => {
   return (dispatch) => {
-    return axios.get("http://127.0.0.1:8080/api/v1/users")
+    return axios.get("http://127.0.0.1:8080/api/v1/users/5cfa14b19ff7a77ae56b4457")
       .then(response => {
         dispatch(fetchProfile(response.data))
       })

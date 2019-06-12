@@ -83,10 +83,10 @@ class Home extends Component {
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
-                        data={this.props.data}
+                        data={this.props.Profile}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
-                        initialNumToRender={5}
+                        initialNumToRender={2}
                         keyExtractor={(item, index) => index.toString()}
                         />            
             </View>
@@ -96,7 +96,7 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.homeReducer,
+    Profile: state.homeReducer,
   });
   
    export default connect(mapStateToProps)(Home)
