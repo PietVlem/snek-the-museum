@@ -146,7 +146,7 @@ class searchScreen extends Component {
                      
                         <FlatList
                         ref='listRef'
-                        data={this.props.data.filter(item => item.title.includes(this.state.value))}
+                        data={this.props.museum.filter(item => item.title.includes(this.state.value))}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
@@ -159,7 +159,7 @@ class searchScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.MuseumReducer,
+    museum: state.homeReducer.museum,
   });
   
    export default connect(mapStateToProps)(searchScreen)

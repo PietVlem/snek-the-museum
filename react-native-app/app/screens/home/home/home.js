@@ -83,7 +83,7 @@ class Home extends Component {
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
-                        data={this.props.Profile}
+                        data={this.props.profile}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={2}
@@ -96,7 +96,7 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    Profile: state.homeReducer.museum,
+    profile: state.homeReducer.profile.museum,
   });
   
    export default connect(mapStateToProps)(Home)
