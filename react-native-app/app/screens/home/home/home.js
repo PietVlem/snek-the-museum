@@ -13,17 +13,14 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+
+import { fetchMuseumData } from '../../../actions/home';
 class Home extends Component {
 
     componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
+        this.props.dispatch(fetchMuseumData());
+      }
+    
     renderRow ({ item }) {
         return (
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
@@ -86,7 +83,7 @@ class Home extends Component {
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={this.props.data}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
@@ -98,10 +95,8 @@ class Home extends Component {
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        
-    }
-}
-
-export default connect(mapStateToProps, {setStatus, logout})(Home);
+const mapStateToProps = (state,props) => ({
+    data: state.homeReducer,
+  });
+  
+   export default connect(mapStateToProps)(Home)

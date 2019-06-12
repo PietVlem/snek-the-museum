@@ -66,9 +66,6 @@ export default class Main extends Component {
             <View style={{flex:1}}>
                 <Router createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
                     <Scene key="root">
-
-
-
                         <Stack key="auth" hideNavBar>
                             <Scene key="welcome" hideNavBar hideTabBar panHandlers={null}
                                 schema="modal" direction="vertical">
