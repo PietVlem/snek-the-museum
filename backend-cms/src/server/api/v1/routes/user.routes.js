@@ -1,4 +1,9 @@
 /*
+Import external libraries:
+*/
+import passport from 'passport';
+
+/*
 Import the internal libraries:
 - UserController
 */
@@ -6,6 +11,11 @@ import { UserController } from '../controller';
 
 // Create instance of UserController otherwise you can't use it
 const userController = new UserController();
+
+/* 
+Passport authentication option(s)
+*/
+const passportJWT = passport.authenticate('jwt', { session: false });
 
 const initializeEndpoints = (parentRouter, authService) => {
     /**
@@ -74,7 +84,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Return saved user
      */
-    parentRouter.post('/users', userController.store);
+    parentRouter.post('/users', passportJWT, userController.store);
     /**
      * @swagger
      * /api/v1/users/{id}/edit:

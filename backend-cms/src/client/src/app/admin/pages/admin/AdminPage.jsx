@@ -18,7 +18,7 @@ import UsersOverviewPage from '../users-overview';
 
 class AdminPage extends Component {
   componentWillMount() {
-    if(localStorage.getItem('snek_the_museums') == null){
+    if(localStorage.getItem('snek_the_museum') == null){
       window.location.href = 'http://localhost:3000/login';
     }
   }

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import githubReducer from "./home"
+import homeReducer from "./home"
 import authReducer from "./auth"
 
 // Combine all the reducers
-const rootReducer = combineReducers({ githubReducer,authReducer });
+const rootReducer = combineReducers({ homeReducer,authReducer });
 
 export default rootReducer;

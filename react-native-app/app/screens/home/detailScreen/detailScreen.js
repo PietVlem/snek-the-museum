@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
-import { fetchExhibitionData } from '../../../actions/home';
+import { fetchExhibitionData,fetchMuseumData } from '../../../actions/home';
 
 //var newArr = Object.keys(Item);
 //console.log(newArr);
@@ -220,7 +220,7 @@ class detailScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.githubReducer,
+    data: state.homeReducer,
   });
 
 export default connect(mapStateToProps)(detailScreen);
