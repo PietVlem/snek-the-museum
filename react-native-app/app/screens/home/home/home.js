@@ -96,7 +96,7 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    //profile: state.homeReducer.profile.museum,
+    profile: state.homeReducer.profile.museum,
   });
   
    export default connect(mapStateToProps)(Home)
