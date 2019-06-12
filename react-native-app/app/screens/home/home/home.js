@@ -13,23 +13,20 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+
+import { fetchProfileData } from '../../../actions/home';
 class Home extends Component {
 
     componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
+        this.props.dispatch(fetchProfileData());
+      }
+    
     renderRow ({ item }) {
         return (
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
           <ListItem
             roundAvatar
-            title={item.name}
+            title={item.title}
             subtitle={item.subtitle}
             avatar={{uri:item.avatar_url}}
             containerStyle={styles.Liststyle}
@@ -86,10 +83,10 @@ class Home extends Component {
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={this.props.profile}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
-                        initialNumToRender={5}
+                        initialNumToRender={2}
                         keyExtractor={(item, index) => index.toString()}
                         />            
             </View>
@@ -98,10 +95,8 @@ class Home extends Component {
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        
-    }
-}
-
-export default connect(mapStateToProps, {setStatus, logout})(Home);
+const mapStateToProps = (state,props) => ({
+    profile: state.homeReducer.profile.museum,
+  });
+  
+   export default connect(mapStateToProps)(Home)

@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
-import { fetchExhibitionData,fetchMuseumData } from '../../../actions/home';
+import { fetchGithubData } from '../../../actions/home';
 
 //var newArr = Object.keys(Item);
 //console.log(newArr);
@@ -31,12 +31,12 @@ class detailScreen extends Component {
     }
 
     componentDidMount() {
-
-        //console.log(this.props);
-        this.props.dispatch(fetchExhibitionData());
+        //var Img = this.props.photo.url;
+        //alert(this.props.title);
+        console.log(this.props);
     }
 
-    renderMap ({ item, index }) {
+    renderRow ({ item, index }) {
         if (index === 0) return (
         <TouchableOpacity onPress={() => Actions.mapPage(item)}>
         <ListItem
@@ -59,39 +59,6 @@ class detailScreen extends Component {
           />  
         )
       }
-      renderRow ({ item }) {
-          return (
-          <TouchableOpacity onPress={() => Actions.exhibitionScreen(item)}>
-            <ListItem
-              roundAvatar
-              title={item.name}
-              //avatar={item.photo.url}
-              containerStyle={styles.Liststyle}
-              subtitleStyle={styles.subtitle}
-              titleStyle={styles.ListItemTitle}
-              rightIcon={
-                  <Icon
-                  name='ios-arrow-forward'
-                  type='ionicon'
-                  color='#6FA29B'
-                  size={15}
-                  iconStyle={{paddingRight: 15,}}
-                  onPress={() => console.log('hello')} />
-              }
-              chevronColor="#6FA29B"
-            />
-          {item.check === true &&
-            <Icon
-                  name='ios-checkmark'
-                  type='ionicon'
-                  color='#6FA29B'
-                  size={30}
-                  containerStyle={{position: 'absolute',top: '10%',left: '13%'}}/>
-          }
-          </TouchableOpacity> 
-  
-          )
-        }
 
     renderReaction ({ item }) {
         return (
@@ -118,6 +85,14 @@ class detailScreen extends Component {
             {
               info: 'Bekijk de route',
               icon_url: require('../../../../assets/route.png'),
+            },
+            {
+                info: '€5 voor volwassenen \n€2.5 per kind',
+                icon_url: require('../../../../assets/money.png'),
+            },
+            {
+                info: this.props.exhibition.duration,
+                icon_url: require('../../../../assets/clock.png'),
             },
             {
                 info: this.props.openingHours.open + this.props.openingHours.closed,
@@ -175,22 +150,19 @@ class detailScreen extends Component {
                 <Text style={styles.DetailText}>
                 {this.props.body}
                 </Text>
+                
+                
+                
+                
+                <Text style={styles.Infobox}>Bekijk de route</Text>
                 <FlatList
                     ref='infoRef'
                     data={list}
                     style={styles.Infobox}
-                    renderItem={this.renderMap}
+                    renderItem={this.renderRow}
                     initialNumToRender={5}
                     keyExtractor={(item, index) => index.toString()}
                 />
-                <FlatList
-                        ref='listRef'
-                        data={this.props.data}
-                        style={styles.Listbox}
-                        renderItem={this.renderRow}
-                        initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}
-                        />            
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
                 </View>
@@ -220,7 +192,7 @@ class detailScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.homeReducer,
+    data: state.githubReducer,
   });
 
-export default connect(mapStateToProps)(detailScreen);
+export default connect(mapStateToProps, {setStatus, logout})(detailScreen);

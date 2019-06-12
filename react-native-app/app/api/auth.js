@@ -18,27 +18,13 @@ var AuthAPI = {
         await this.requestWithoutToken(url, data, callback);
     },
 
-    logout(callback) {
-        var url = REQUEST_URL + "/logout?token=";
-        AsyncStorage.getItem('token', (err, token) => {
-            if (token !== null) {
-                let requestConfig = {
-                    method: "GET",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }
+    async logout(callback) {
+        await this.deleteDataAsyncStorage();
+    },
 
-                fetch(url + token, requestConfig)
-                    .then((response) => response.json())
-                    .then((responseData) => callback(true))
-                    .catch(error => callback(false, error))
-                    .done();
-            } else {
-                callback(true);
-            }
-        });
+    deleteDataAsyncStorage: async function(){
+        await AsyncStorage.removeItem('token');
+        Actions.login();
     },
 
     recover: function (data, callback) {

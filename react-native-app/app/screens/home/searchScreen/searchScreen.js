@@ -16,7 +16,7 @@ import { ListItem,SearchBar } from 'react-native-elements'
 
 
 
-import { fetchGithubData } from '../../../actions/home';
+import { fetchMuseumData } from '../../../actions/home';
 
 class searchScreen extends Component {
 
@@ -36,7 +36,7 @@ class searchScreen extends Component {
         });  
       };
       componentDidMount() {
-        this.props.dispatch(fetchGithubData());
+        this.props.dispatch(fetchMuseumData());
       }
     
 
@@ -122,7 +122,7 @@ class searchScreen extends Component {
                             inputStyle={{backgroundColor: 'white',fontSize: 14,marginLeft: 20,}}
                             containerStyle={{backgroundColor: 'white',
                             borderBottomColor: 'transparent',
-                            width: '90%',textAlign: "left",
+                            width: '90%',
                             borderTopColor: 'transparent', borderRadius: 10,
                             shadowColor: "#C7D0F8",
                             shadowOpacity: 0.5,
@@ -146,7 +146,7 @@ class searchScreen extends Component {
                      
                         <FlatList
                         ref='listRef'
-                        data={this.props.data.filter(item => item.title.includes(this.state.value))}
+                        data={this.props.museum.filter(item => item.title.includes(this.state.value))}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
@@ -159,7 +159,7 @@ class searchScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.githubReducer,
+    museum: state.homeReducer.museum,
   });
   
    export default connect(mapStateToProps)(searchScreen)
