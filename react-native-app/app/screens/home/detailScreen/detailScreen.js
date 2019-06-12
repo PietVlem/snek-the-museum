@@ -91,11 +91,11 @@ class detailScreen extends Component {
                 icon_url: require('../../../../assets/money.png'),
             },
             {
-                info: 'Tentoonstelling van 30 min',
+                info: this.props.exhibition.duration,
                 icon_url: require('../../../../assets/clock.png'),
             },
             {
-                info: 'ma - vr 9u tot 19u \nzat - zon gesloten',
+                info: this.props.openingHours.open + this.props.openingHours.closed,
                 icon_url: require('../../../../assets/calendar.png'),
             },
           ]
