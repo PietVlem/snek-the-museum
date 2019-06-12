@@ -159,7 +159,7 @@ class searchScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.homeReducer,
+    data: state.MuseumReducer,
   });
   
    export default connect(mapStateToProps)(searchScreen)

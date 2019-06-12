@@ -2,10 +2,10 @@
 import { FETCH_MUSEUM_DATA,FETCH_PROFILE_DATA } from './action_types';
 import axios from 'axios';
 
-export const fetchMuseum = (data) => {
+export const fetchMuseum = (Museum) => {
   return {
     type: FETCH_MUSEUM_DATA,
-    data
+    Museum
   }
 };
 
@@ -13,7 +13,7 @@ export const fetchMuseumData = () => {
   return (dispatch) => {
     return axios.get("http://127.0.0.1:8080/api/v1/museums")
       .then(response => {
-        dispatch(fetchMuseum(response.data))
+        dispatch(fetchMuseum(response.Museum))
       })
       .catch(error => {
         throw(error);
