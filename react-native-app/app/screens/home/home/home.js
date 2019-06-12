@@ -26,7 +26,7 @@ class Home extends Component {
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
           <ListItem
             roundAvatar
-            title={item.name}
+            title={item.title}
             subtitle={item.subtitle}
             avatar={{uri:item.avatar_url}}
             containerStyle={styles.Liststyle}
@@ -96,7 +96,7 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    Profile: state.homeReducer,
+    Profile: state.homeReducer.museum,
   });
   
    export default connect(mapStateToProps)(Home)
