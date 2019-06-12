@@ -71,12 +71,14 @@ class LoginPage extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     }
+    this.signIn = this.signIn.bind(this);
   }
 
   componentWillMount() {
-    if(localStorage.getItem('JWT') !== null){
+    if (localStorage.getItem('JWT') !== null) {
       window.location.href = 'http://localhost:3000/admin';
     }
   }
@@ -90,6 +92,7 @@ class LoginPage extends Component {
   }
 
   signIn() {
+    console.log('pressed...');
     fetch('http://127.0.0.1:8080/api/v1/signIn', {
       method: 'POST',
       headers: {
@@ -100,16 +103,31 @@ class LoginPage extends Component {
         "email": this.state.email,
         "password": this.state.password,
       })
-    }).then(function (response) {
+    }).then((response) => {
       return response.json();
     })
-      .then(async function (data) {
-        console.log(data.token);
-        await localStorage.setItem('JWT', data.token);
-        window.location.href = 'http://localhost:3000/admin';
-      }).catch(function(error) {
-        console.log(error);
-    });
+      .then( (data) => {
+        console.log(data);
+        if (data.isJoi === true){
+          this.setState({ errorMessage: "oops, something when wrong :(" });
+          return;
+        }else if ( data.userRole === 'user'){
+          this.setState({ errorMessage: "You are not allowed to login to this platform" });
+          return;
+        }else{
+          const localData = {
+            'JWT_token': data.token,
+            'User_role': data.userRole
+          }
+          localStorage.setItem('snek_the_museums', JSON.stringify(localData));
+          window.location.href = 'http://localhost:3000/admin';
+        }
+      })
+      .catch(function (error) {
+        // console.log(error);
+        this.setState({ errorMessage: "oops, something when wrong :(" });
+        return;
+      });
   }
 
   render() {
@@ -125,6 +143,7 @@ class LoginPage extends Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <p>{this.state.errorMessage}</p>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -153,7 +172,7 @@ class LoginPage extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => this.signIn()}
+              onClick={this.signIn}
             >
               Sign in
             </Button>

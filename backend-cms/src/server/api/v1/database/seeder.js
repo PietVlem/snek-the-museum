@@ -18,7 +18,7 @@ Import the internal libraries:
 - Photo
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question, Action } from './schemas';
+import { Blog, Category, Post, User, Museum, Exhibition, Disability, Zipcode, Photo, Base, Question, Action, Reaction } from './schemas';
 
 class Seeder {
     constructor() {
@@ -35,6 +35,7 @@ class Seeder {
         this.assignments = [];
         this.questions = [];
         this.actions = [];
+        this.reactions = [];
     }
 
     /*
@@ -245,6 +246,23 @@ class Seeder {
         }
     }
 
+    reactionCreate = async (body) => {
+        const reactionDetail = {
+            userId: this.getRandomUser(),
+            body
+        };
+        const reaction = new Reaction(reactionDetail);
+
+        try {
+            const newReaction = await reaction.save();
+            this.reactions.push(newReaction);
+
+            logger.log({ level: 'info', message: `Reaction created with id: ${newReaction.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a reaction: ${err}!` });
+        }
+    }
+
     /* 
     Create instances of the model
     */
@@ -343,6 +361,15 @@ class Seeder {
             (async () => this.actionCreate("5cf633f46cbcdb6ff0ad49ec", faker.random.boolean()))(),
         ])
     }
+
+    createReactions = async () => {
+        await Promise.all([
+            (async () => this.reactionCreate(faker.lorem.sentence()))(),
+            (async () => this.reactionCreate(faker.lorem.sentence()))(),
+            (async () => this.reactionCreate(faker.lorem.sentence()))(),
+        ])
+    }
+
     /* 
     Random generatores
     */
@@ -466,6 +493,13 @@ class Seeder {
         this.createActions = await Action.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createActions();
+            }
+            return Action.find().exec();
+        });
+
+        this.createReactions = await Reaction.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createReactions();
             }
             return Action.find().exec();
         });

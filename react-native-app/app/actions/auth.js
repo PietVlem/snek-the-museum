@@ -5,7 +5,7 @@ import {LOGIN_SUCCESS, LOGGED_IN, LOGGED_OUT} from "./action_types";
 import { NETWORK_ERROR, SERVER_ERROR, ERROR, NETWORK_MSG, SERVER_MSG} from "../config";
 import api from '../api/auth';
 
-NetInfo.isConnected.addEventListener('change', () => {});
+NetInfo.isConnected.addEventListener('connectionChange', () => {});
 
 //Register
 export function register(data, callback) {

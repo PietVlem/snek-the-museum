@@ -63,9 +63,8 @@ class PhotoController {
     store = async (req, res, next) => {
         try {
             const photoCreate = new Photo({
-                title: req.body.title,
-                body: req.body.body,
-                categoryId: req.body.categoryId
+                name: req.body.name,
+                url: req.body.url,
             });
             const photo = await photoCreate.save();
             return res.status(201).json(photo);

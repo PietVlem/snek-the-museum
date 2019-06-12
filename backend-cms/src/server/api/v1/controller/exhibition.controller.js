@@ -21,12 +21,11 @@ class ExhibitionController {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
-                    populate: 'museum',
                     sort: { created_at: -1 },
                 };
                 exhibitions = await Exhibition.paginate({}, options);
             } else {
-                exhibitions = await Exhibition.find().populate('museum').sort({ created_at: -1 }).exec();
+                exhibitions = await Exhibition.find().sort({ created_at: -1 }).exec();
             }
 
             if (exhibitions === undefined || exhibitions === null) {
@@ -42,7 +41,7 @@ class ExhibitionController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Exhibition.findById(id).populate('category').exec();
+            const item = await Exhibition.findById(id).populate('reactions').populate('category').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Exhibition with id: ${id} not found!`);
             }

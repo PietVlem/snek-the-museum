@@ -33,19 +33,36 @@ const MuseumSchema = new Schema(
         }],
         website: { type: String, required: false },
         telephone: { type: String, required: false },
+        facebook: { type: String, required: false },
+        twitter: { type: String, required: false },
         mail: { 
             type: String, 
             lowercase: true,
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 
             required: false
         },
-        published_at: { type: Date, required: false },
-        deleted_at: { type: Date, required: false },
+        exhibtionIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Exhibtion',
+            required: false
+        }],
+        gallery: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Photo',
+            required: false
+        }],
+        reactionIds: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Reaction',
+            required: false
+        }],
         categoryId: {
             type: Schema.Types.ObjectId,
             ref: 'Category',
             required: false
         },
+        published_at: { type: Date, required: false },
+        deleted_at: { type: Date, required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -93,6 +110,24 @@ MuseumSchema.virtual('zipcode', {
 MuseumSchema.virtual('disability', {
     ref: 'Disability',
     localField: 'disabilityIds',
+    foreignField: '_id'
+})
+
+MuseumSchema.virtual('exhibitions', {
+    ref: 'Exhibition',
+    localField: 'exhibtionIds',
+    foreignField: '_id'
+})
+
+MuseumSchema.virtual('museumGallery', {
+    ref: 'Photo',
+    localField: 'gallery',
+    foreignField: '_id'
+})
+
+MuseumSchema.virtual('reactions', {
+    ref: 'Reaction',
+    localField: 'reactionIds',
     foreignField: '_id'
 })
 

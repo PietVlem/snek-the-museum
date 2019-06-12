@@ -45,7 +45,7 @@ class MuseumController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Museum.findById(id).populate('category').exec();
+            const item = await Museum.findById(id).populate('category').populate('zipcode').populate('photo').populate('disability').populate('museumGallery').populate('exhibitions').populate('reactions').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Museum with id: ${id} not found!`);
             }
