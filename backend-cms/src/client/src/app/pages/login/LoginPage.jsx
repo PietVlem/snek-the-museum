@@ -119,7 +119,7 @@ class LoginPage extends Component {
             'JWT_token': data.token,
             'User_role': data.userRole
           }
-          localStorage.setItem('snek_the_museums', JSON.stringify(localData));
+          localStorage.setItem('snek_the_museum', JSON.stringify(localData));
           window.location.href = 'http://localhost:3000/admin';
         }
       })
