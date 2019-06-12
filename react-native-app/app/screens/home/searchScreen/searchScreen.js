@@ -16,7 +16,7 @@ import { ListItem,SearchBar } from 'react-native-elements'
 
 
 
-import { fetchGithubData } from '../../../actions/home';
+import { fetchMuseumData } from '../../../actions/home';
 
 class searchScreen extends Component {
 
@@ -36,7 +36,7 @@ class searchScreen extends Component {
         });  
       };
       componentDidMount() {
-        this.props.dispatch(fetchGithubData());
+        this.props.dispatch(fetchMuseumData());
       }
     
 
