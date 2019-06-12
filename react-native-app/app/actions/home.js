@@ -1,5 +1,5 @@
 
-import { FETCH_MUSEUM_DATA } from './action_types';
+import { FETCH_MUSEUM_DATA,FETCH_PROFILE_DATA } from './action_types';
 import axios from 'axios';
 
 export const fetchMuseum = (data) => {
@@ -22,18 +22,18 @@ export const fetchMuseumData = () => {
 };
 
 
-export const fetchD = (data) => {
+export const fetchProfile = (data) => {
   return {
-    type: FETCH_GITHUB_DATA,
+    type: FETCH_PROFILE_DATA,
     data
   }
 };
 
-export const fetchGithubData = () => {
+export const fetchProfileData = () => {
   return (dispatch) => {
-    return axios.get("http://127.0.0.1:8080/api/v1/museums")
+    return axios.get("http://127.0.0.1:8080/api/v1/users")
       .then(response => {
-        dispatch(fetchData(response.data))
+        dispatch(fetchProfile(response.data))
       })
       .catch(error => {
         throw(error);

@@ -14,11 +14,11 @@ import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 
-import { fetchMuseumData } from '../../../actions/home';
+import { fetchProfileData } from '../../../actions/home';
 class Home extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchMuseumData());
+        this.props.dispatch(fetchProfileData());
       }
     
     renderRow ({ item }) {
