@@ -57,6 +57,8 @@ class mapPage extends Component {
       region: {
         latitude: 51.054588,
         longitude: 3.721880,
+        latitudeDelta: 0.001,
+        longitudeDalta: 0.001,
       },
       
     };
@@ -147,7 +149,7 @@ class mapPage extends Component {
                initialRegion={this.state.region}
                style={{flex: 1}}
              >
-      {this.state.markers.map((marker:any)  => (  
+      {this.state.markers.map((marker)  => (  
               <MapView.Marker
                 key={marker.id}
                 coordinate={marker.coordinate}
