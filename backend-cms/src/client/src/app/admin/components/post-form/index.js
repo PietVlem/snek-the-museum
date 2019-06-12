@@ -14,6 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 
 /*
+Import internal libraries
+*/
+import Snackbardefault from '../../components/notifications';
+
+/*
 Custom Form
 */
 import Form from "./Form";
@@ -111,9 +116,11 @@ class PostForm extends Component {
         const { postId } = this.props;
 
         if (postId) {  
-            this.updatePost(postId, values);          
+            this.updatePost(postId, values); 
+            this.refs.notificationEdit.handleClick();               
         } else {
             this.savePost(values);
+            this.refs.notificationCreate.handleClick();
         }
         
     }
@@ -183,6 +190,8 @@ class PostForm extends Component {
                         />
                     </Paper>
                 </div>
+                <Snackbardefault ref={"notificationCreate"} message={"Post created!"}/>
+                <Snackbardefault ref={"notificationEdit"} message={"Post edited!"}/>
             </React.Fragment>
         );
     }
