@@ -10,9 +10,17 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
-import MapView from "react-native-maps";
-import { TabNavigator } from "react-navigation";
-import Polyline from '@mapbox/polyline';
+import { Constants, MapView } from 'expo';
+
+import MapViewDirections from './MapViewDirections';
+const { width, height } = Dimensions.get('window');
+const ASPECT_RATIO = width / height;
+const LATITUDE = 37.771707;
+const LONGITUDE = -122.4053769;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+const GOOGLE_MAPS_APIKEY = 'AIzaSyCYvMpmVhFc0ydILEuXGJNYNGFnBoKPCL8';
 
 const images = [
   'https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png',
@@ -29,51 +37,49 @@ class mapPage extends Component {
     super(props);
 
     this.state = {
-      latitude: null,
-      longitude: null,
-      error: null,
-      concat: null,
-      coords:[],
-      x: 'false',
-      cordLatitude:-6.23,
-      cordLongitude:106.75,
-      markers: [
+      coordinates: [
         {
-          coordinate: {
-            latitude: 51.087064,
-            longitude: 3.670115,
-          },
-          title: "your location",
+          latitude: 51.087064,
+          longitude: 3.670115,
         },
         {
-          coordinate: {
-            latitude: 51.054588,
-            longitude: 3.721880,
-          },
-          title: "Destination",
-          description: "museum",
+          latitude: 51.054588,
+          longitude: 3.721880,
         },
       ],
       region: {
         latitude: 51.054588,
         longitude: 3.721880,
-        latitudeDelta: 0.001,
-        longitudeDalta: 0.001,
+        latitudeDelta: 0.0041,
+        longitudeDelta: 0.0021
       },
       
     };
-
-    this.mergeLot = this.mergeLot.bind(this);
-
+    this.mapView = null;
   }
+
+	onReady = (result) => {
+		this.mapView.fitToCoordinates(result.coordinates, {
+			edgePadding: {
+				right: (width / 20),
+				bottom: (height / 20),
+				left: (width / 20),
+				top: (height / 20),
+			}
+		});
+	}
+
+	onError = (errorMessage) => {
+		Alert.alert(errorMessage);
+	}
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
        (position) => {
          console.log(position);
          this.setState({
-           latitude: position.coords.latitude,
-           longitude: position.coords.longitude,
+           positionLat: position.coords.latitude,
+           positionLong: position.coords.longitude,
            error: null,
          });
        },
@@ -81,39 +87,6 @@ class mapPage extends Component {
        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
      );
    }
-
-   mergeLot(){
-    if (this.state.latitude != null && this.state.longitude!=null)
-     {
-       let concatLot = this.state.latitude +","+this.state.longitude
-       this.setState({
-         concat: concatLot
-       }, () => {
-         this.getDirections(concatLot, "51.054588,3.721880");
-       });
-     }
-
-   }
-
-   async getDirections(startLoc, destinationLoc) {
-
-    try {
-        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }`)
-        let respJson = await resp.json();
-        let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
-        let coords = points.map((point, index) => {
-            return  {
-                latitude : point[0],
-                longitude : point[1]
-            }
-        })
-        this.setState({coords: coords})
-        return coords
-    } catch(error) {
-        alert(error)
-        return error
-    }
-}
 
     static navigationOptions = {
         header: null,
@@ -145,34 +118,28 @@ class mapPage extends Component {
           flex={1}
         >
         <MapView
-               ref={map => this.map = map}
-               initialRegion={this.state.region}
-               style={{flex: 1}}
-             >
-      {this.state.markers.map((marker)  => (  
-              <MapView.Marker
-                key={marker.id}
-                coordinate={marker.coordinate}
-                title={marker.title}
-                description={marker.description}
-              />
-         ))}
-
-       {!!this.state.latitude && !!this.state.longitude && this.state.x == 'true' && <MapView.Polyline
-            coordinates={this.state.coords}
-            strokeWidth={2}
-            strokeColor="red"/>
-        }
-
-        {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
-          coordinates={[
-              {latitude: this.state.latitude, longitude: this.state.longitude},
-              {latitude: this.state.cordLatitude, longitude: this.state.cordLongitude},
-          ]}
-          strokeWidth={2}
-          strokeColor="red"/>
-         }
-        </MapView>
+          ref={map => this.map = map}
+          initialRegion={this.state.region}
+  				style={StyleSheet.absoluteFill}
+  				ref={c => this.mapView = c} // eslint-disable-line react/jsx-no-bind
+  				onPress={this.onMapPress}
+  				loadingEnabled={true}
+  			>
+  				{this.state.coordinates.map((coordinate, index) =>
+  					<MapView.Marker key={`coordinate_${index}`} coordinate={coordinate} /> // eslint-disable-line react/no-array-index-key
+  				)}
+  				{(this.state.coordinates.length === 2) && (
+  					<MapViewDirections
+  						origin={this.state.coordinates[0]}
+  						destination={this.state.coordinates[1]}
+  						apikey={GOOGLE_MAPS_APIKEY}
+  						strokeWidth={3}
+  						strokeColor="#6FA29B"
+  						onReady={this.onReady}
+  						onError={this.onError}
+  					/>
+  				)}
+  			</MapView>
         <ScrollView 
           ref={(scrollView) => { this.scrollView = scrollView; }}
           contentOffset={{

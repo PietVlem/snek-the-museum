@@ -9,6 +9,20 @@ export const fetchMuseum = (data) => {
   }
 };
 
+export const fetchProfile = (data) => {
+  return {
+    type: FETCH_PROFILE_DATA,
+    data
+  }
+};
+
+export const fetchExhibition = (data) => {
+  return {
+    type: FETCH_EXHIBITION_DATA,
+    data
+  }
+};
+
 export const fetchMuseumData = () => {
   return (dispatch) => {
     return axios.get("http://127.0.0.1:8080/api/v1/museums")
@@ -21,38 +35,17 @@ export const fetchMuseumData = () => {
   };
 };
 
-
-export const fetchProfile = (data) => {
-  return {
-    type: FETCH_PROFILE_DATA,
-    data
-  }
-};
-
-export const fetchExhibitionsData = (data) => {
-  return {
-    type: FETCH_EXHIBITION_DATA,
-    data
-  }
-};
-
-export const fetchMuseumData = () => {
+export const fetchExhibitionData = () => {
   return (dispatch) => {
-    return axios.get('http://127.0.0.1:8080/api/v1/museums')
+    return axios.get("http://127.0.0.1:8080/api/v1/exhibitions")
       .then(response => {
-        dispatch(fetchMuseumsData(response.data))
+        dispatch(fetchExhibition(response.data))
       })
       .catch(error => {
         throw(error);
       });
   };
 };
-
-export const fetchExhibitionData = () => {
-  return (dispatch) => {
-    return axios.get('http://127.0.0.1:8080/api/v1/exhibitions')
-      .then(response => {
-        dispatch(fetchExhibitionsData(response.data))
 
 export const fetchProfileData = () => {
   return (dispatch) => {
@@ -65,6 +58,3 @@ export const fetchProfileData = () => {
       });
   };
 };
-
-
-
