@@ -14,6 +14,9 @@ import { Constants, MapView } from 'expo';
 
 import MapViewDirections from './MapViewDirections';
 const { width, height } = Dimensions.get('window');
+
+import { fetchMuseumData } from '../../../actions/home';
+
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.771707;
 const LONGITUDE = -122.4053769;
@@ -78,6 +81,7 @@ class mapPage extends Component {
 
   componentDidMount() {
 
+    this.props.dispatch(fetchMuseumData());
     
     /*navigator.geolocation.getCurrentPosition(
        (position) => {
@@ -304,4 +308,4 @@ function mapStateToProps(state, props) {
 
 }
 
-export default connect(mapStateToProps, {setStatus, logout})(mapPage);
+export default connect(mapStateToProps)(mapPage);
