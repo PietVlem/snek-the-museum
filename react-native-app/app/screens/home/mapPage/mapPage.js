@@ -135,12 +135,12 @@ class mapPage extends Component {
   			>
         <MapView.Marker identifier="yourLocation" coordinate={this.state.coordinates[0]}>
             <View style={{ width: 10, height: 10 }}>
-              <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50 }} />
+              <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50,bottom: 40, }} />
             </View>
         </MapView.Marker>
         <MapView.Marker identifier="destination" coordinate={this.state.coordinates[1]}>
             <View style={{ width: 10, height: 10 }}>
-              <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 }} />
+              <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 , bottom: 40,}} />
             </View>
         </MapView.Marker>
 
