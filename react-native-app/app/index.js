@@ -16,6 +16,7 @@ import spinPage from './screens/home/spinPage/spinPage'
 import mapPage from './screens/home/mapPage/mapPage'
 import profileScreen from './screens/home/profileScreen/profileScreen'
 import searchScreen from './screens/home/searchScreen/searchScreen'
+import exhibitionScreen from './screens/home/exhibitionScreen/exhibitionScreen'
 import kortingScreen from './screens/home/kortingScreen/kortingScreen'
 import startScreen from './screens/home/StartQrcodeScreens/startScreen/startScreen'
 import startCheckScreen from './screens/home/StartQrcodeScreens/startCheckScreen/startCheckScreen'
@@ -91,6 +92,7 @@ export default class Main extends Component {
                                     <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={Home} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                <Scene key="exhibitionScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={exhibitionScreen} initial/>
                                     <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
                                     <Scene key="searchScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={searchScreen} initial/>
                                 </Scene> 

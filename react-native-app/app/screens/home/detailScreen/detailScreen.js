@@ -48,7 +48,7 @@ class detailScreen extends Component {
             hideChevron
         />
         </TouchableOpacity>)
-        else return (
+        else if (item.info !== undefined) return (
           <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -58,6 +58,16 @@ class detailScreen extends Component {
             hideChevron
           />  
         )
+        else return (
+            <ListItem
+              avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
+              title={'geen informatie beschikbaar'}
+              titleStyle={{color:"#6FA29B",marginLeft: 20,fontSize: 13,fontFamily: "MontserratMedium",}}
+              titleNumberOfLines={2}
+              containerStyle={styles.Liststyle}
+              hideChevron
+            />  
+          )
       }
       renderRow ({ item }) {
           return (
@@ -116,16 +126,17 @@ class detailScreen extends Component {
     render() {
         const list = [
             {
-              info: 'Bekijk de route',
-              icon_url: require('../../../../assets/route.png'),
+                info: 'Bekijk de route',
+                icon_url: require('../../../../assets/route.png'),
             },
             {
                 info: this.props.openingHours.open + this.props.openingHours.closed,
                 icon_url: require('../../../../assets/calendar.png'),
             },
-          ]
+        ]
 
-          const listReaction = [
+
+        const listReaction = [
             {
               name: 'Jelena',
               title: 'Super Museum',
@@ -190,7 +201,15 @@ class detailScreen extends Component {
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        />            
+                        /> 
+                <FlatList
+                        ref='listExhibition'
+                        data={this.props.exhibition.filter(item => item.museumId.includes(this.props._id))}
+                        style={styles.Listbox}
+                        renderItem={this.renderRow}
+                        initialNumToRender={5}
+                        keyExtractor={(item, index) => index.toString()}
+                        />                       
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
                 </View>
@@ -220,7 +239,8 @@ class detailScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.homeReducer,
+    museum: state.homeReducer.museum,
+    exhibition: state.homeReducer.exhibition,
   });
 
 export default connect(mapStateToProps)(detailScreen);

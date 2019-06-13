@@ -11,12 +11,6 @@ const initialState = {
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {
-      case FETCH_MUSEUM_DATA:
-      return action.data;
-      case FETCH_EXHIBITION_DATA:
-      return action.data;
-      case FETCH_PROFILE_DATA:
-      return action.data;
     case FETCH_MUSEUM_DATA: {
       return Object.assign({}, state, {
         museum: action.data
