@@ -37,18 +37,7 @@ class detailScreen extends Component {
     }
 
     renderRow ({ item, index }) {
-        if (index === 0) return (
-        <TouchableOpacity onPress={() => Actions.mapPage(item)}>
-        <ListItem
-            avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
-            title={item.info}
-            titleStyle={{color:"#6FA29B",marginLeft: 20,fontSize: 13,fontFamily: "MontserratMedium",}}
-            titleNumberOfLines={2}
-            containerStyle={styles.Liststyle}
-            hideChevron
-        />
-        </TouchableOpacity>)
-        else return (
+        return (
           <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -82,39 +71,24 @@ class detailScreen extends Component {
 
     render() {
         const list = [
-            {
-              info: 'Bekijk de route',
-              icon_url: require('../../../../assets/route.png'),
-            },
+
             {
                 info: '€5 voor volwassenen \n€2.5 per kind',
                 icon_url: require('../../../../assets/money.png'),
             },
-            {
+            /*{
                 info: this.props.exhibition.duration,
                 icon_url: require('../../../../assets/clock.png'),
-            },
-            {
-                info: this.props.openingHours.open + this.props.openingHours.closed,
-                icon_url: require('../../../../assets/calendar.png'),
-            },
+            },*/
+
           ]
 
-          const listReaction = [
-            {
-              name: 'Jelena',
-              title: 'Super Museum',
-              body: 'Dit museum was super!',
-              published: "5u geleden",
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-            },
-          ]
         return (
             <View style={styles.container}>
             <ScrollView>
                 <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
                 <View style={{flex:1,flexDirection: 'row'}}>
-                    <Text style={styles.DetailTitle}>{this.props.title}</Text>
+                    <Text style={styles.DetailTitle}>{this.props.slug}</Text>
                     <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
                     <View style={{flexDirection:'row'}}>
 
@@ -134,12 +108,7 @@ class detailScreen extends Component {
                             onPress={() => console.log('hello')} />
                     </View>
                     </View>
-                </View>
-                <Image
-                    resizeMode={'cover'}
-                    style={styles.HeaderImg}
-                    source={{uri: this.props.photo.url}}
-                />   
+                </View> 
                 <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
@@ -148,13 +117,9 @@ class detailScreen extends Component {
                 </View>
                 </TouchableOpacity>
                 <Text style={styles.DetailText}>
-                {this.props.body}
+                {this.props.info}
                 </Text>
                 
-                
-                
-                
-                <Text style={styles.Infobox}>Bekijk de route</Text>
                 <FlatList
                     ref='infoRef'
                     data={list}
@@ -164,25 +129,7 @@ class detailScreen extends Component {
                     keyExtractor={(item, index) => index.toString()}
                 />
                 <View style={styles.galleryBox}>
-                    <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
-                </View>
-                <View style={styles.reactionBox}>
-                    <Text style={styles.reactionTitle}>Reacties (1)</Text>
-                    <FlatList
-                    ref='listRef'
-                    data={listReaction}
-                    style={styles.reactionBoxList}
-                    renderItem={this.renderReaction}
-                    initialNumToRender={5}
-                    keyExtractor={(item, index) => index.toString()}/> 
-
-                    <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
-                        <View style={styles.button}>
-                            <Text style={styles.buttonText}>
-                                REACTIE PLAATSEN
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <Text style={styles.galleryTitle}>Foto’s van de tentoonstelling</Text>
                 </View>
             </ScrollView>
             </View>
@@ -192,7 +139,7 @@ class detailScreen extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    data: state.githubReducer,
+    exhibition: state.homeReducer.exhibition,
   });
 
 export default connect(mapStateToProps, {setStatus, logout})(detailScreen);

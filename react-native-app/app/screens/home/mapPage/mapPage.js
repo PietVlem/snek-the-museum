@@ -14,6 +14,9 @@ import { Constants, MapView } from 'expo';
 
 import MapViewDirections from './MapViewDirections';
 const { width, height } = Dimensions.get('window');
+
+import { fetchMuseumData } from '../../../actions/home';
+
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.771707;
 const LONGITUDE = -122.4053769;
@@ -37,6 +40,9 @@ class mapPage extends Component {
     super(props);
 
     this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
       coordinates: [
         {
           latitude: 51.087064,
@@ -71,21 +77,27 @@ class mapPage extends Component {
 
 	onError = (errorMessage) => {
 		Alert.alert(errorMessage);
-	}
+  }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
+
+    this.props.dispatch(fetchMuseumData());
+    
+    /*navigator.geolocation.getCurrentPosition(
        (position) => {
          console.log(position);
          this.setState({
-           positionLat: position.coords.latitude,
-           positionLong: position.coords.longitude,
-           error: null,
+            mylatitude: position.coords.latitude,
+            mylongitude: position.coords.longitude,
          });
        },
        (error) => this.setState({ error: error.message }),
        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-     );
+    );*/
+     {this.props.error ? alert('geen locatie') : null}
+     console.log( "this is the museums loader : " + this.props.museum);
+     console.log( "De Props : " + this.props);
+
    }
 
     static navigationOptions = {
@@ -125,9 +137,17 @@ class mapPage extends Component {
   				onPress={this.onMapPress}
   				loadingEnabled={true}
   			>
-  				{this.state.coordinates.map((coordinate, index) =>
-  					<MapView.Marker key={`coordinate_${index}`} coordinate={coordinate} /> // eslint-disable-line react/no-array-index-key
-  				)}
+        <MapView.Marker identifier="yourLocation" coordinate={this.state.coordinates[0]}>
+            <View style={{ width: 10, height: 10 }}>
+              <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50 }} />
+            </View>
+        </MapView.Marker>
+        <MapView.Marker identifier="destination" coordinate={this.state.coordinates[1]}>
+            <View style={{ width: 10, height: 10 }}>
+              <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 }} />
+            </View>
+        </MapView.Marker>
+
   				{(this.state.coordinates.length === 2) && (
   					<MapViewDirections
   						origin={this.state.coordinates[0]}
@@ -161,12 +181,12 @@ class mapPage extends Component {
           onLayout={this.adjustCardSize}
         >
         {
-          list.map((item, i) => (
+          this.props.museum.map((item, i) => (
             <View style={styles.view}>
             <TouchableOpacity style={styles.Liststyle}>
                 <ListItem
                   roundAvatar
-                  title={item.name}
+                  title={item.title}
                   subtitle={item.subtitle}
                   avatar={{uri:item.avatar_url}}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
@@ -282,7 +302,10 @@ class mapPage extends Component {
 function mapStateToProps(state, props) {
     return {
         //loggedIn: state.authReducer.loggedIn
+        museum: state.homeReducer.museum,
+        
     }
+
 }
 
-export default connect(mapStateToProps, {setStatus, logout})(mapPage);
+export default connect(mapStateToProps)(mapPage);
