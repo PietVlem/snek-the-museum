@@ -186,7 +186,7 @@ class mapPage extends Component {
             <TouchableOpacity style={styles.Liststyle}>
                 <ListItem
                   roundAvatar
-                  title={item.name}
+                  title={item.title}
                   subtitle={item.subtitle}
                   avatar={{uri:item.avatar_url}}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
