@@ -25,7 +25,7 @@ class ExhibitionController {
                 };
                 exhibitions = await Exhibition.paginate({}, options);
             } else {
-                exhibitions = await Exhibition.find().sort({ created_at: -1 }).exec();
+                exhibitions = await Exhibition.find().populate('eImage').sort({ created_at: -1 }).exec();
             }
 
             if (exhibitions === undefined || exhibitions === null) {
@@ -41,7 +41,7 @@ class ExhibitionController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Exhibition.findById(id).populate('reactions').populate('category').exec();
+            const item = await Exhibition.findById(id).populate('reactions').populate('eImage').populate('exhibitionGallery').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Exhibition with id: ${id} not found!`);
             }
@@ -64,6 +64,12 @@ class ExhibitionController {
         try {
             const exhibitionCreate = new Exhibition({
                 name: req.body.name,
+                exhibitionImage: req.body.exhibitionImage,
+                info: req.body.info,
+                price: req.body.price,
+                duration: req.body.duration,
+                promocode: req.body.promocode,
+                museumId: req.body.museumId
             });
             const exhibition = await exhibitionCreate.save();
             return res.status(201).json(exhibition);

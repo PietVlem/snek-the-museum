@@ -25,7 +25,7 @@ class UserController {
                 };
                 posts = await User.paginate({}, options);
             } else {
-                posts = await User.find().populate('museum').sort({ created_at: -1 }).exec();
+                posts = await User.find().populate('profilePicture').sort({ created_at: -1 }).exec();
             }
 
             if (posts === undefined || posts === null) {
@@ -41,7 +41,7 @@ class UserController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await User.findById(id).populate('museum').exec();
+            const item = await User.findById(id).populate('profilePicture').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `User with id: ${id} not found!`);
             }
@@ -69,7 +69,8 @@ class UserController {
                     password: req.body.password
                 },
                 name:  req.body.name,
-                userRole: req.body.userRole
+                userRole: req.body.userRole,
+                avatar: req.body.avatar
             });
             const user = await postCreate.save();
             return res.status(201).json(user);

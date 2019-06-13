@@ -14,6 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 
 /*
+Import internal libraries
+*/
+import Snackbardefault from '../../components/notifications';
+
+/*
 Custom Form
 */
 import Form from "./Form";
@@ -83,25 +88,31 @@ class ExhibitionForm extends Component {
         }
     }
 
-    submit = (values, actions) => {
+    submit = async (values, actions) => {
+        const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
+        const JWTLoggedInUser = LoggedInUser.JWT_token;
+
         const { museumId } = this.props;
 
         if (museumId) {  
-            this.updateExhibition(museumId, values);          
+            this.updateExhibition(museumId, values, JWTLoggedInUser);   
+            this.refs.notificationEdit.handleClick();       
         } else {
-            this.saveExhibition(values);
+            this.saveExhibition(values, JWTLoggedInUser);
+            this.refs.notificationCreate.handleClick();
         }
         
     }
 
-    saveExhibition = async (museumData) => {
+    saveExhibition = async (museumData, JWT_token) => {
         
         try {
             const options = {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(museumData),
                 mode: 'cors',
@@ -118,13 +129,14 @@ class ExhibitionForm extends Component {
         }
     }
 
-    updateExhibition = async (museumId, museumData) => {
+    updateExhibition = async (museumId, museumData, JWT_token) => {
         try {
             const options = {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(museumData),
                 mode: 'cors',
@@ -160,6 +172,8 @@ class ExhibitionForm extends Component {
                         />
                     </Paper>
                 </div>
+                <Snackbardefault ref={"notificationCreate"} message={"Zipcode created!"}/>
+                <Snackbardefault ref={"notificationEdit"} message={"Zipcode edited!"}/>
             </React.Fragment>
         );
     }

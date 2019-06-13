@@ -49,7 +49,11 @@ const UserSchema = new Schema(
         resetPasswordExpires: { type: Date, required: false },
         name: { type: String, required: false },
         dayOfBirth: { type: Date, required: false },
-        avatar: { type: String, required: false },
+        avatar: { 
+            type: Schema.Types.ObjectId,
+            ref: 'Photo',
+            required: false
+         },
         userRole: { type: String, required: false },
         museumsVisitedIds: [{
             type: Schema.Types.ObjectId,
@@ -74,6 +78,11 @@ UserSchema.virtual('museum', {
     foreignField: '_id'
 })
 
+UserSchema.virtual('profilePicture', {
+    ref: 'Photo',
+    localField: 'avatar',
+    foreignField: '_id'
+})
 
 UserSchema.pre('save', async function (next) {
     try {

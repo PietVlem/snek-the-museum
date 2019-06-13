@@ -14,6 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 
 /*
+Import internal libraries
+*/
+import Snackbardefault from '../../components/notifications';
+
+/*
 Custom Form
 */
 import Form from "./Form";
@@ -106,25 +111,30 @@ class MuseumForm extends Component {
         }
     }
 
-    submit = (values, actions) => {
+    submit = async (values, actions) => {
+        const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
+        const JWTLoggedInUser = LoggedInUser.JWT_token;
+        
         const { museumId } = this.props;
 
         if (museumId) {  
-            this.updateMuseum(museumId, values);          
+            this.updateMuseum(museumId, values, JWTLoggedInUser);
+            this.refs.notificationEdit.handleClick();        
         } else {
-            this.saveMuseum(values);
+            this.saveMuseum(values, JWTLoggedInUser);
+            this.refs.notificationCreate.handleClick();
         }
         
     }
 
-    saveMuseum = async (museumData) => {
-        /*
+    saveMuseum = async (museumData, JWT_token) => {
         try {
             const options = {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(museumData),
                 mode: 'cors',
@@ -139,17 +149,17 @@ class MuseumForm extends Component {
         } catch(error) {
             console.log(error);
         }
-        */
        console.log(museumData);
     }
 
-    updateMuseum = async (museumId, museumData) => {
+    updateMuseum = async (museumId, museumData, JWT_token) => {
         try {
             const options = {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(museumData),
                 mode: 'cors',
@@ -185,6 +195,8 @@ class MuseumForm extends Component {
                         />
                     </Paper>
                 </div>
+                <Snackbardefault ref={"notificationCreate"} message={"Museum created!"}/>
+                <Snackbardefault ref={"notificationEdit"} message={"Museum edited!"}/>
             </React.Fragment>
         );
     }

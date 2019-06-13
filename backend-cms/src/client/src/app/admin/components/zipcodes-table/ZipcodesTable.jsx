@@ -98,7 +98,7 @@ class ZipcodesTable extends Component {
       case POSTACTIONSENUM.DELETE:
         url = `/api/v1/zipcodes/${this.state.zipcodeId}`;
         options = {
-          method: 'DELETE'
+          method: 'DELETE',
         }
         break;
       case POSTACTIONSENUM.SOFTDELETE:

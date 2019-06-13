@@ -94,27 +94,30 @@ class ZipcodeForm extends Component {
         }
     }
 
-    submit = (values, actions) => {
+    submit = async (values, actions) => {
+        const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
+        const JWTLoggedInUser = LoggedInUser.JWT_token;
+
         const { zipcodeId } = this.props;
-        console.log(values);
 
         if (zipcodeId) {
-            this.updateZipcode(zipcodeId, values);
+            this.updateZipcode(zipcodeId, values, JWTLoggedInUser);
             this.refs.notificationEdit.handleClick();
         } else {
-            this.saveZipcode(values);
+            this.saveZipcode(values, JWTLoggedInUser);
             this.refs.notificationCreate.handleClick();
         }
 
     }
 
-    saveZipcode = async (zipcodeData) => {
+    saveZipcode = async (zipcodeData, JWT_token) => {
         try {
             const options = {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(zipcodeData),
                 mode: 'cors',
@@ -131,13 +134,14 @@ class ZipcodeForm extends Component {
         }
     }
 
-    updateZipcode = async (zipcodeId, zipcodeData) => {
+    updateZipcode = async (zipcodeId, zipcodeData, JWT_token) => {
         try {
             const options = {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': JWT_token,
                 },
                 body: JSON.stringify(zipcodeData),
                 mode: 'cors',
@@ -153,10 +157,6 @@ class ZipcodeForm extends Component {
             console.log(error);
         }
     }
-
-    accesChild = () => {
-        this.refs.notification.handleClick()
-      }
 
     render() {
         const { classes } = this.props;

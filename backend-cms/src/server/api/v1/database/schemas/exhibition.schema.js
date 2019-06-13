@@ -7,19 +7,28 @@ const { Schema } = mongoose;
 const ExhibitionSchema = new Schema(
     {
         name: { type: String, required: true, max: 128 },
-        image: { type: String, required: false },
+        exhibitionImage: { 
+            type: Schema.Types.ObjectId,
+            ref: 'Photo',
+            required: false
+         },
         info: { type: String, required: false },
-        gallery: { type: Array, required: false },
+        gallery: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Photo',
+            required: false
+        }],
         price: { type: Number, required: false },
         duration: { type: Number, required: false },
-        slug: {
-            type: String, lowercase: true, unique: true, required: true,
-        },
         reactionIds: [{
             type: Schema.Types.ObjectId,
             ref: 'Reaction',
             required: false
         }],
+        promoCode:{ type: String, required: false },
+        slug: {
+            type: String, lowercase: true, unique: true, required: true,
+        },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },  
     },
@@ -48,6 +57,18 @@ ExhibitionSchema.virtual('id').get(function () { return this._id; });
 ExhibitionSchema.virtual('reactions', {
     ref: 'Reaction',
     localField: 'reactionIds',
+    foreignField: '_id'
+})
+
+ExhibitionSchema.virtual('eImage', {
+    ref: 'Photo',
+    localField: 'exhibitionImage',
+    foreignField: '_id'
+})
+
+ExhibitionSchema.virtual('exhibitionGallery', {
+    ref: 'Photo',
+    localField: 'gallery',
     foreignField: '_id'
 })
 
