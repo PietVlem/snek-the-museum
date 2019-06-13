@@ -6,7 +6,7 @@ import {recover} from '../../actions/auth'; //Import your actions
 import styles from '../../styles/index'
 import {Authentication} from './index';
 
-class Login extends Component {
+class Password extends Component {
     render() {
         return (
 
@@ -27,4 +27,4 @@ class Login extends Component {
     }
 };
 
-export default connect(null, {recover})(Login);
+export default connect(null, {recover})(Password);

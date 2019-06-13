@@ -20,87 +20,93 @@ import RichEditor from "../rich-editor";
 
 const styles = {
   selectBlogs: {
-      minWidth: 240
+    minWidth: 240
+  },
+  textFields: {
+    marginBottom: 30
   }
 };
 
 class Form extends Component {
-    static propTypes = {
-        classes: PropTypes.object.isRequired,
-    }
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
 
-    change = (title, e) => {
-        e.persist();
-        this.props.handleChange(e);
-        this.props.setFieldTouched(title, true, false);
-    };
+  change = (title, e) => {
+    e.persist();
+    this.props.handleChange(e);
+    this.props.setFieldTouched(title, true, false);
+  };
 
-    render() {
-        const {
-            values: { title, description, slug },
-            errors,
-            touched,
-            handleChange,
-            handleSubmit,
-            isValid,
-            setFieldTouched,
-            blogs,
-            classes
-        } = this.props;
+  render() {
+    const {
+      values: { title, description, slug },
+      errors,
+      touched,
+      handleChange,
+      handleSubmit,
+      isValid,
+      setFieldTouched,
+      blogs,
+      classes
+    } = this.props;
 
-        return (
-          <form
-              onSubmit={(e) => {
-                this.props.handleSubmit(e);
-              }}
-              method="POST"
-          >
-              <TextField
-                id="title"
-                title="title"
-                helperText={touched.title ? errors.title : ""}
-                error={touched.title && Boolean(errors.title)}
-                label="Name"
-                value={title}
-                onChange={this.change.bind(null, "title")}
-                fullWidth
-        
-              />
-              <TextField
-                id="description"
-                title="description"
-                helperText={touched.description ? errors.description : ""}
-                error={touched.description && Boolean(errors.description)}
-                label="Description"
-                fullWidth
-                multiline
-                rows="4"
-                value={description}
-                onChange={this.change.bind(null, "description")}
-              />
-              <TextField
-                id="slug"
-                title="slug"
-                helperText={touched.title ? errors.title : ""}
-                error={touched.slug && Boolean(errors.slug)}
-                label="Slug"
-                value={slug}
-                onChange={this.change.bind(null, "slug")}
-                fullWidth
-              />
-        
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={!isValid}
-              >
-                Submit
+    return (
+      <form
+        onSubmit={(e) => {
+          this.props.handleSubmit(e);
+        }}
+        method="POST"
+      >
+        <TextField
+          className={classes.textFields}
+          id="title"
+          title="title"
+          helperText={touched.title ? errors.title : ""}
+          error={touched.title && Boolean(errors.title)}
+          label="Name"
+          value={title}
+          onChange={this.change.bind(null, "title")}
+          fullWidth
+
+        />
+        <TextField
+          className={classes.textFields}
+          id="description"
+          title="description"
+          helperText={touched.description ? errors.description : ""}
+          error={touched.description && Boolean(errors.description)}
+          label="Description"
+          fullWidth
+          multiline
+          rows="4"
+          value={description}
+          onChange={this.change.bind(null, "description")}
+        />
+        <TextField
+          className={classes.textFields}
+          id="slug"
+          title="slug"
+          helperText={touched.title ? errors.title : ""}
+          error={touched.slug && Boolean(errors.slug)}
+          label="Slug"
+          value={slug}
+          onChange={this.change.bind(null, "slug")}
+          fullWidth
+        />
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          disabled={!isValid}
+        >
+          Submit
               </Button>
-          </form>
-        );
-    }
+      </form>
+    );
+  }
 }
 
 export default withStyles(styles)(Form);

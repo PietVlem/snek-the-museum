@@ -19,9 +19,8 @@ export class Authentication extends Component {
             username: "",
             email: "",
             password: "",
-            pass: "",
             age: "",
-            error: {username:"", email:"", password: "", general:"",pass:"",age:""},
+            error: {username:"", email:"", password: "", general:"",age:""},
 
         };
     }
@@ -76,27 +75,13 @@ export class Authentication extends Component {
                         (this.props.register) &&
                         <AuthTextInput
                             onChangeText={(text) => this.setState({age: text})}
-                            placeholder={"Leeftijd"}
+                            placeholder={"Geboortedatum"}
                             autoFocus={true}
                             value={this.state.age}
                             error={this.state.error['age']}
                             secureTextEntry={false}
                         />
                     }
-
-                    {//if the container type is Register, show the
-                        // pass input
-                        (this.props.register) &&
-                        <AuthTextInput
-                            onChangeText={(text) => this.setState({pass: text})}
-                            placeholder={"Museumpas"}
-                            autoFocus={true}
-                            value={this.state.pass}
-                            error={this.state.error['pass']}
-                            secureTextEntry={false}
-                        />
-                    }
-
 
                     {//if the container type is Login, show the forgot password text
                         (this.props.login) &&
@@ -134,7 +119,7 @@ export class Authentication extends Component {
 
             if (this.props.register) {//if register, check username
                 if (state.age.length <= 0) errCount++;
-                error["age"] = (state.age.length <= 0) ? "Gelieve een leeftijd in te voeren" : "";
+                error["age"] = (state.age.length <= 0) ? "Gelieve een geboortedatum in te voeren" : "";
             }
         }
 
@@ -143,7 +128,6 @@ export class Authentication extends Component {
         if (errCount <= 0) {
             var data = {
                 age: state.age,
-                pass: state.pass,
                 username: state.username,
                 email:state.email,
                 password: state.password,

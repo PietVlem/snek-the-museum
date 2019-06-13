@@ -104,7 +104,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Edit user by id
      */
-    parentRouter.get('/users/:id/edit', userController.edit);
+    parentRouter.get('/users/:id/edit', passportJWT, userController.edit);
     /**
      * @swagger
      * /api/v1/users/{id}:
@@ -128,7 +128,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Update user
      */
-    parentRouter.put('/users/:id', userController.update);
+    parentRouter.put('/users/:id', passportJWT, userController.update);
     /**
      * @swagger
      * /api/v1/users/{id}:

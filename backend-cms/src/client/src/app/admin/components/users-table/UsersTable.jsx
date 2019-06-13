@@ -171,14 +171,6 @@ class UsersTable extends Component {
                   <TableCell>{user.userRole}</TableCell>
                   <TableCell>
                     <IconButton
-                      component={Link} to={ `/admin/users/${user.id}/edit`}>
-                      <IconCreate />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => this.handleDialogOpen(user.id, (user.deleted_at)?POSTACTIONSENUM.SOFTUNDELETE:POSTACTIONSENUM.SOFTDELETE)} style={{ opacity: ((user.deleted_at)?0.3:1) }}>
-                      <IconDelete/>
-                    </IconButton>
-                    <IconButton
                       onClick={() => this.handleDialogOpen(user.id, POSTACTIONSENUM.DELETE)}>
                       <IconDeleteForever />
                     </IconButton>

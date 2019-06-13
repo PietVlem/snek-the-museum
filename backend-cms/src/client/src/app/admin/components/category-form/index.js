@@ -14,6 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 
 /*
+Import internal libraries
+*/
+import Snackbardefault from '../../components/notifications';
+
+/*
 Custom Form
 */
 import Form from "./Form";
@@ -110,9 +115,11 @@ class CategorieForm extends Component {
         const { categoryId } = this.props;
 
         if (categoryId) {  
-            this.updateCategorie(categoryId, values);          
+            this.updateCategorie(categoryId, values); 
+            this.refs.notificationEdit.handleClick();         
         } else {
             this.saveCategorie(values);
+            this.refs.notificationCreate.handleClick();
         }
         
     }
@@ -182,6 +189,8 @@ class CategorieForm extends Component {
                         />
                     </Paper>
                 </div>
+                <Snackbardefault ref={"notificationCreate"} message={"Category created!"}/>
+                <Snackbardefault ref={"notificationEdit"} message={"Category edited!"}/>
             </React.Fragment>
         );
     }

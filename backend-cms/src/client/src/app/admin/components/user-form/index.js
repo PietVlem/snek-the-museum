@@ -14,6 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 
 /*
+Import internal libraries
+*/
+import Snackbardefault from '../../components/notifications';
+
+/*
 Custom Form
 */
 import Form from "./Form";
@@ -90,9 +95,11 @@ class UserForm extends Component {
         const { userId } = this.props;
 
         if (userId) {  
-            this.updateUser(userId, JWTLoggedInUser, values);          
+            this.updateUser(userId, JWTLoggedInUser, values);    
+            this.refs.notificationEdit.handleClick();      
         } else {
             this.saveUser(values, JWTLoggedInUser);
+            this.refs.notificationCreate.handleClick();
         }
     }
 
@@ -148,8 +155,6 @@ class UserForm extends Component {
         const { classes } = this.props;
         const { user:values } = this.state;
 
-        console.log(values);
-
         return (
             <React.Fragment>
                 <div className={classes.container}>
@@ -163,6 +168,8 @@ class UserForm extends Component {
                         />
                     </Paper>
                 </div>
+                <Snackbardefault ref={"notificationCreate"} message={"User created!"}/>
+                <Snackbardefault ref={"notificationEdit"} message={"User edited!"}/>
             </React.Fragment>
         );
     }

@@ -15,16 +15,20 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from "@material-ui/core/TextField";
-
 import RichEditor from "../rich-editor";
 
 const styles = {
-  selectCategories: {
-      minWidth: 240
+  textFields: {
+      marginBottom: 30
   }
 };
 
 class Form extends Component {
+  constructor(props){
+    super(props);
+    this.state = {}
+  }
+    
     static propTypes = {
         classes: PropTypes.object.isRequired,
     }
@@ -34,6 +38,8 @@ class Form extends Component {
         this.props.handleChange(e);
         this.props.setFieldTouched(name, true, false);
     };
+
+    
 
     render() {
         const {
@@ -48,6 +54,7 @@ class Form extends Component {
             classes
         } = this.props;
 
+
         return (
           <form
               onSubmit={(e) => {
@@ -56,6 +63,7 @@ class Form extends Component {
               method="POST"
           >
               <TextField
+                className={classes.textFields}
                 id="code"
                 name="code"
                 helperText={touched.code ? errors.code : ""}
@@ -67,6 +75,7 @@ class Form extends Component {
               />
 
               <TextField
+                className={classes.textFields}
                 id="city"
                 name="city"
                 helperText={touched.city ? errors.city : ""}
@@ -78,6 +87,7 @@ class Form extends Component {
               />
 
               <TextField
+                className={classes.textFields}
                 id="country"
                 name="country"
                 helperText={touched.country ? errors.country : ""}
@@ -97,6 +107,7 @@ class Form extends Component {
               >
                 Submit
               </Button>
+              
           </form>
         );
     }
