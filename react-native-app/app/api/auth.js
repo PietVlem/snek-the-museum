@@ -19,16 +19,6 @@ var AuthAPI = {
         await this.requestWithoutToken(url, data, callback);
     },
 
-    logout: async function (callback) {
-        await this.deleteDataAsyncStorage();
-    },
-
-    deleteDataAsyncStorage: async function(){
-        await AsyncStorage.removeItem('token');
-        const token = await AsyncStorage.getItem('token');
-        if (!token){Actions.login();}
-    },
-
     recover: function (data, callback) {
         var url = REQUEST_URL + "/forgot";
         this.requestRecover(url, data, callback);
