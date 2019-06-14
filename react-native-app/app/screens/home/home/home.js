@@ -112,7 +112,6 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    VisitedMuseumId: state.homeReducer.profile,
     museum: state.homeReducer.museum.filter( addedItem => {
         return state.homeReducer.profile.museumsVisitedIds.find( cartItem => cartItem === addedItem.id );
     })
