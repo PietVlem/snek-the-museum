@@ -29,8 +29,19 @@ Validation
 const validationSchema = Yup.object(
 {
     title: Yup.string("Enter a title").required("Title is required").max(128),
-    body: Yup.string("Enter a story").required(false).min(256),
-    categoryId: Yup.string("Select a category").required(false),
+    body: Yup.string("Enter a story").min(256),
+    categoryId: Yup.string("Select a category"),
+    photoId: Yup.string("Enter a photoId"),
+    openingHours: Yup.string("Enter opening hours").required("Opening Hours are required"),
+    streetAndNumber: Yup.string("Enter street and number").required("Street and number are required"),
+    zipcodeId: Yup.string("Enter a Zipcode").required("Zipcode is required"),
+    longitude: Yup.number("Enter the longitude of the museum").required("the logitude is required"),
+    latitude: Yup.number("Enter the latitude of the museum").required("the latitude is required"),
+    website: Yup.string("Enter a website"),
+    telephone: Yup.string("Enter a telephone number"),
+    facebook: Yup.string("Enter a facebook url"),
+    twitter: Yup.string("Enter a twitter url"),
+    mail: Yup.string().email(),
 });
 
 /*
@@ -57,11 +68,31 @@ class MuseumForm extends Component {
     
     state = {
         categories: [],
-        museum: { title: "", file: null, body: "", categoryId: ""},
+        zipcodes: [],
+        disabilities: [],
+        museum: { 
+            title: "",
+            body: "",
+            categoryId: "",
+            photoId: "",
+            openingHours: "",
+            streetAndNumber: "",
+            zipcodeId: "",
+            longitude: "",
+            latitude: "",
+            disabilityIds: [],
+            website: "",
+            telephone: "",
+            facebook: "",
+            twitter: "",
+            mail: ""
+        },
     };
 
     componentWillMount() {
         this.loadCategories();
+        this.loadZipcodes();
+        this.loaddisabilities();
         
         if (this.props.museumId) {            
             this.loadMuseum(this.props.museumId);
@@ -83,6 +114,50 @@ class MuseumForm extends Component {
                 this.setState(prevState => ({ 
                     ...prevState, 
                     categories: responseJson 
+                }));
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    loadZipcodes = async () => {
+        try {
+            const options = {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            const response = await fetch('/api/v1/zipcodes', options);
+            console.log(response);
+            const responseJson = await response.json();
+            if (responseJson) {
+                this.setState(prevState => ({ 
+                    ...prevState, 
+                    zipcodes: responseJson 
+                }));
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    loaddisabilities = async () => {
+        try {
+            const options = {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            const response = await fetch('/api/v1/disabilities', options);
+            console.log(response);
+            const responseJson = await response.json();
+            if (responseJson) {
+                this.setState(prevState => ({ 
+                    ...prevState, 
+                    disabilities: responseJson 
                 }));
             }
         } catch(error) {
@@ -112,6 +187,8 @@ class MuseumForm extends Component {
     }
 
     submit = async (values, actions) => {
+        console.log(values);
+
         const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
         const JWTLoggedInUser = LoggedInUser.JWT_token;
         
@@ -124,7 +201,6 @@ class MuseumForm extends Component {
             this.saveMuseum(values, JWTLoggedInUser);
             this.refs.notificationCreate.handleClick();
         }
-        
     }
 
     saveMuseum = async (museumData, JWT_token) => {
@@ -187,7 +263,7 @@ class MuseumForm extends Component {
                 <div className={classes.container}>
                     <Paper className={classes.paper}>
                         <Formik
-                            render={props => <Form {...props} categories={this.state.categories} />}
+                            render={props => <Form {...props} categories={this.state.categories} zipcodes={this.state.zipcodes} disabilities={this.state.disabilities}/>}
                             initialValues={values}
                             validationSchema={validationSchema}
                             onSubmit={(values, actions) => this.submit(values, actions)}

@@ -69,7 +69,19 @@ class MuseumController {
             const museumCreate = new Museum({
                 title: req.body.title,
                 body: req.body.body,
-                categoryId: req.body.categoryId
+                categoryId: req.body.categoryId,
+                photoId: req.body.photoId,
+                openingHours: req.body.openingHours,
+                streetAndNumber: req.body.streetAndNumber,
+                zipcodeId: req.body.zipcodeId,
+                longitude: req.body.longitude,
+                latitude: req.body.latitude,
+                disabilityIds: req.body.disabilityIds,
+                website: req.body.website,
+                telephone: req.body.telephone,
+                facebook: req.body.facebook,
+                twitter: req.body.twitter,
+                mail: req.body.mail
             });
             const museum = await museumCreate.save();
             return res.status(201).json(museum);
