@@ -40,6 +40,7 @@ class Form extends Component {
         super(props);
         this.state = {
             firebaseImage: null,
+            avatarId: null
         }
     }
 
@@ -73,11 +74,42 @@ class Form extends Component {
                     this.setState({
                         firebaseImage: url
                     });
-
-                    console.log(url);
+                    this.saveImageToMongoDb(url);
+                    //console.log(url);
                 })
             }
         )
+    }
+
+    saveImageToMongoDb= async(imageUrl) => {
+        const data = {
+            name: "avatar",
+            url: imageUrl
+        }
+        try {
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    //'Authorization': JWT_token,
+                },
+                body: JSON.stringify(data),
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            const response = await fetch('/api/v1/images', options);
+            const responseJson = await response.json();
+            if (responseJson) {
+                console.log(responseJson);
+                this.setState({
+                    avatarId: responseJson.id
+                });
+            }
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -103,7 +135,7 @@ class Form extends Component {
         return (
             <form
                 onSubmit={(e) => {
-                    this.props.values.avatar = this.state.firebaseImage;
+                    this.props.values.avatar = this.state.avatarId;
                     this.props.handleSubmit(e);
                 }}
                 method="POST"

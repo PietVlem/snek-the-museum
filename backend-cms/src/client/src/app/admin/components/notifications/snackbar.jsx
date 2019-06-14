@@ -5,9 +5,11 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const styles = {
-    
-};
+const styles = theme => ({
+    snackbar:{
+        backgroundColor: '#3b953e'
+    }
+});
 
 class Snackbardefault extends Component {
     constructor(props) {
@@ -34,7 +36,7 @@ class Snackbardefault extends Component {
             <div>
                 {/*<Button onClick={this.handleClick.bind(this)}>Open simple snackbar</Button>*/}
                 <Snackbar
-                    className={{backgroundColor: '#3b953e'}}
+                    className={styles.snackbar}
                     anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',

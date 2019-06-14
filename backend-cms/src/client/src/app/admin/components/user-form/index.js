@@ -89,6 +89,7 @@ class UserForm extends Component {
     }
 
     submit = async (values, actions) => {
+        console.log(values);
         const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
         const JWTLoggedInUser = LoggedInUser.JWT_token;
 

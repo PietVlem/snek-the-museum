@@ -1,4 +1,9 @@
 /*
+Import external libraries:
+*/
+import passport from 'passport';
+
+/*
 Import the internal libraries:
 - ZipcodeController
 */
@@ -6,6 +11,11 @@ import { ZipcodeController } from '../controller';
 
 // Create instance of ZipcodeController otherwise you can't use it
 const zipcodeController = new ZipcodeController();
+
+/* 
+Passport authentication option(s)
+*/
+const passportJWT = passport.authenticate('jwt', { session: false });
 
 const initializeEndpoints = (parentRouter, authService) => {
     /**
@@ -74,7 +84,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Return saved post
      */
-    parentRouter.post('/zipcodes', zipcodeController.store);
+    parentRouter.post('/zipcodes', passportJWT , zipcodeController.store);
     /**
      * @swagger
      * /api/v1/zipcodes/{id}/edit:
@@ -118,7 +128,7 @@ const initializeEndpoints = (parentRouter, authService) => {
      *       200:
      *         description: Update zipcode
      */
-    parentRouter.put('/zipcodes/:id', zipcodeController.update);
+    parentRouter.put('/zipcodes/:id', passportJWT , zipcodeController.update);
     /**
      * @swagger
      * /api/v1/zipcodes/{id}:

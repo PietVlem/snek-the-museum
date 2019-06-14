@@ -8,115 +8,98 @@ import { BlogController } from '../controller';
 const blogController = new BlogController();
 
 const initializeEndpoints = (parentRouter, authService) => {
-    /**
-     * @swagger
-     * /api/v1/blogs:
-     *   get:
-     *     tags:
-     *       - Blogs
-     *     description: Returns all blogs
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: An array of blogs
-     */
     parentRouter.get('/blogs', blogController.index);
     /**
      * @swagger
-     * /api/v1/blogs/create:
-     *   get:
-     *     tags:
-     *       - Blog
-     *     description: Returns specific viewmodel such as blogs
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: Create post
+     * /api/v1/blogs:
+     *      get:
+     *          tags:
+     *              - Blog
+     *          summary: Get all Blogs
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.get('/blogs/create/', blogController.create);
     /**
      * @swagger
-     * /api/v1/blogs/{id}:
-     *   get:
-     *     tags:
-     *       - Blog
-     *     description: Returns specific post
-     *     produces:
-     *       - application/json
-     *     parameters:
-     *       - name: id
-     *         description: Blog id
-     *         in: path
-     *         required: true
-     *         type: string
-     *     responses:
-     *       200:
-     *         description: Get post by id
+     * /api/v1/blogs/create/:
+     *      get:
+     *          tags:
+     *              - Blog
+     *          summary: Returns specific viewmodel such as blog
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.get('/blogs/:id', blogController.show);
     /**
      * @swagger
-     * /api/v1/blogs:
-     *   post:
-     *     tags:
-     *       - Blog
-     *     description: Save post
-     *     produces:
-     *       - application/json
-     *     parameters:
-     *       - name: post
-     *         description: Blog object
-     *         in: body
-     *         required: true
-     *     responses:
-     *       200:
-     *         description: Return saved post
+     * /api/v1/blogs/{id}:
+     *      get:
+     *          tags:
+     *              - Blog
+     *          summary: Get blog with specific id
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.post('/blogs', blogController.store);
-    /**
+/**
      * @swagger
-     * /api/v1/blogs/{id}/edit:
-     *   get:
-     *     tags:
-     *       - Blog
-     *     description: Returns specific viewmodel such as post, blogs
-     *     produces:
-     *       - application/json
-     *     parameters:
-     *       - name: id
-     *         description: Blog id
-     *         in: path
-     *         required: true
-     *         type: string
-     *     responses:
-     *       200:
-     *         description: Edit blog by id
+     * /api/v1/blogs:
+     *      post:
+     *          tags:
+     *              - Blog
+     *          summary: create a blog
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - in: title
+     *                name: title
+     *                description: blog title
+     *                required: true
+     *              - in: synopsis
+     *                name: synopsis
+     *                description: blog synopsis
+     *                required: true
+     *              - in: body
+     *                name: body
+     *                description: blog body
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.get('/blogs/:id/edit', blogController.edit);
     /**
      * @swagger
-     * /api/v1/blogs/{id}:
-     *   put:
-     *     tags:
-     *       - Blog
-     *     description: Update specific post detail
-     *     produces:
-     *       - application/json
-     *     parameters:
-     *       - name: id
-     *         description: Blog id
-     *         in: path
-     *         required: true
-     *         type: string
-     *       - name: nlog object
-     *         description: blog data
-     *         in: body
-     *         required: true
-     *     responses:
-     *       200:
-     *         description: Update blog
+     * /api/v1/blogs/:id/edit:
+     *      get:
+     *          tags:
+     *              - Blog
+     *          summary: Returns specific viewmodel such as blog
+     *          consumes:
+     *              - application/json
+     *          produces:
+     *              - application/json
+     *          responses:
+     *              200:
+     *                  description: Web token
      */
     parentRouter.put('/blogs/:id', blogController.update);
     /**
