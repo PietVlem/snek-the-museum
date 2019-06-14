@@ -2,7 +2,7 @@
  
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList } = require('react-native');
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 
@@ -14,12 +14,22 @@ import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 
-import { fetchProfileData } from '../../../actions/home';
+import { fetchProfileData,fetchMuseumData } from '../../../actions/home';
 class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          dataSource: [],
+        };
+    }
 
     componentDidMount() {
         this.props.dispatch(fetchProfileData());
-      }
+        this.props.dispatch(fetchMuseumData());
+    }
+    
+
     
     renderRow ({ item }) {
         return (
@@ -48,18 +58,6 @@ class Home extends Component {
       }
 
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President'
-            },
-            {
-              name: 'Chris Jackson',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              subtitle: 'Vice Chairman'
-            },
-          ]
         return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 80,}}>
                 
@@ -81,14 +79,32 @@ class Home extends Component {
                             source={require('../../../../assets/logo.png')}
                         />
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
-                        <FlatList
-                        ref='listRef'
-                        data={this.props.profile}
-                        style={styles.Listbox}
-                        renderItem={this.renderRow}
-                        initialNumToRender={2}
-                        keyExtractor={(item, index) => index.toString()}
-                        />            
+                        <ScrollView style={styles.Listbox}>
+                            { this.props.museum.map((item, i) => (
+                                <TouchableOpacity key={i} onPress={() => Actions.detailScreen()}>
+                                <ListItem
+                                    roundAvatar
+                                    title={item.title}
+                                    subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                                    avatar={item.photo.url}
+                                    containerStyle={styles.Liststyle}
+                                    subtitleStyle={styles.subtitle}
+                                    titleStyle={styles.ListItemTitle}
+                                    rightIcon={
+                                        <Icon
+                                        name='ios-arrow-forward'
+                                        type='ionicon'
+                                        color='#6FA29B'
+                                        size={15}
+                                        iconStyle={{paddingRight: 15,}}
+                                        onPress={() => console.log('hello')} />
+                                    }
+                                    chevronColor="#6FA29B"
+                                />
+                                </TouchableOpacity>
+                            ))
+                            }
+                        </ScrollView>          
             </View>
         );
     }
@@ -96,7 +112,9 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    profile: state.homeReducer.profile.museum,
+    museum: state.homeReducer.museum.filter( addedItem => {
+        return state.homeReducer.profile.museumsVisitedIds.find( cartItem => cartItem === addedItem.id );
+    })
   });
   
    export default connect(mapStateToProps)(Home)

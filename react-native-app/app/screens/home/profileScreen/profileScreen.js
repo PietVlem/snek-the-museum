@@ -12,56 +12,26 @@ import {setStatus, logout} from '../../../actions/auth'; //Import your actions
 import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { fetchProfileData,fetchMuseumData } from '../../../actions/home';
 class profileScreen extends Component {
 
     componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
+        this.props.dispatch(fetchProfileData());
+        this.props.dispatch(fetchMuseumData());
     }
-    renderRow ({ item }) {
-        return (
-        <TouchableOpacity onPress={() => Actions.detailScreen()}>
-          <ListItem
-            roundAvatar
-            title={item.name}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
-            containerStyle={styles.Liststyle}
-            subtitleStyle={styles.subtitle}
-            titleStyle={styles.ListItemTitle}
-            rightIcon={
-                <Icon
-                name='ios-arrow-forward'
-                type='ionicon'
-                color='#6FA29B'
-                size={15}
-                iconStyle={{paddingRight: 15,}}
-                onPress={() => console.log('hello')} />
-            }
-            chevronColor="#6FA29B"
-          />
-        </TouchableOpacity>   
-        )
+
+    async logout() {
+        try {
+            await AsyncStorage.removeItem('token');
+            const token = await AsyncStorage.getItem('token');
+            if (!token){Actions.login();}
+        }
+        catch(exception) {
+          return false;
+        }
       }
 
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President'
-            },
-            {
-              name: 'Chris Jackson',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              subtitle: 'Vice Chairman'
-            },
-          ]
         return (
             <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}> 
              <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
@@ -111,18 +81,36 @@ class profileScreen extends Component {
                 </TouchableOpacity>
                 <View style={{flex:1,paddingBottom: 30,}}>  
                     <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
-                        <FlatList
-                            ref='listRef'
-                            data={list}
-                            style={styles.Listbox}
-                            renderItem={this.renderRow}
-                            initialNumToRender={5}
-                            keyExtractor={(item, index) => index.toString()}
+                    <ScrollView style={styles.Listbox}>
+                    { this.props.museum.map((item, i) => (
+                        <TouchableOpacity key={i} onPress={() => Actions.detailScreen()}>
+                        <ListItem
+                            roundAvatar
+                            title={item.title}
+                            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                            avatar={item.photo.url}
+                            containerStyle={styles.Liststyle}
+                            subtitleStyle={styles.subtitle}
+                            titleStyle={styles.ListItemTitle}
+                            rightIcon={
+                                <Icon
+                                name='ios-arrow-forward'
+                                type='ionicon'
+                                color='#6FA29B'
+                                size={15}
+                                iconStyle={{paddingRight: 15,}}
+                                onPress={() => console.log('hello')} />
+                            }
+                            chevronColor="#6FA29B"
                         />
+                        </TouchableOpacity>
+                    ))
+                    }
+                </ScrollView>
                 </View> 
                 {
                     // (this.props.loggedIn) &&
-                <TouchableOpacity onPress={this.props.logout}>
+                <TouchableOpacity onPress={this.logout}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>
                                      UITLOGGEN
@@ -136,10 +124,10 @@ class profileScreen extends Component {
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        loggedIn: state.authReducer.loggedIn
-    }
-}
-
-export default connect(mapStateToProps, {setStatus, logout})(profileScreen);
+const mapStateToProps = (state,props) => ({
+    museum: state.homeReducer.museum.filter( addedItem => {
+        return state.homeReducer.profile.museumsVisitedIds.find( cartItem => cartItem === addedItem.id );
+    })
+});
+  
+export default connect(mapStateToProps)(profileScreen);

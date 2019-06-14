@@ -72,7 +72,7 @@ export default class Main extends Component {
                                 schema="modal" direction="vertical">
                             <Scene key="welcome-" hideNavBar component={Welcome} title="Welcome" initial={true}
                                     panHandlers={null}/>
-                            <Scene key="login" direction="vertical" component={Login} title="Login" panHandlers={null}/>
+                            <Scene key="login" direction="vertical" type={ActionConst.REPLACE} component={Login} title="Login" panHandlers={null}/>
                             <Scene key="register" direction="vertical" component={Register} title="Register"
                                     panHandlers={null}/>
                             <Scene key="password" direction="vertical" component={Password} title="Password"
