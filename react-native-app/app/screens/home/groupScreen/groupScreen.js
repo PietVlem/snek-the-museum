@@ -15,33 +15,24 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import { fetchCategoriesData,fetchDisabilitiesData } from '../../../actions/home';
+
 class groupScreen extends Component {
-    state = {
-        search: '',
-      };
-    
-    updateSearch = search => {
-        this.setState({ search });
-    };
+
     constructor(props) {
         super(props);
         this.inputRefs = {};
         this.state = {
             type: "",
-            price: "",
+            disabilities: "",
             visited: ""
         };
         this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
+        this.props.dispatch(fetchCategoriesData());
+        this.props.dispatch(fetchDisabilitiesData());
     }
     renderRow ({ item }) {
         return (
@@ -74,7 +65,14 @@ class groupScreen extends Component {
         this.setState({ [fieldName] : text });
     }
 
-
+    async filter(){
+        await AsyncStorage.multiSet([
+            ["type", this.state.type],
+            ["disabilities", this.state.disabilities],
+            ["visited", this.state.visited],    
+        ])
+        Actions.spinPage();
+    }
 
     renderRow ({ item }) {
         return (
@@ -97,46 +95,11 @@ class groupScreen extends Component {
       }
 
     render() {
-        const { search } = this.state;
-        const list = [
-            {
-              name: 'Design Museum',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Jan Brydelstraat 5, 9000 Gent'
-            },
-            {
-              name: 'Smak',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              subtitle: 'Jan Hoetplein 1, 9000 Gent'
-            },
-          ]
-        const listPersons = [
-            {
-              name: 'Amy Farha',
-            },
-            {
-              name: 'Chris Jackson',
-            },
-            {
-                name: 'Chris Jackson',
-            },
-            {
-                name: 'Chris Jackson',
-            },
-          ]  
+        const typeMuseum = this.props.categories;
+        const typeDisabilities = this.props.disabilities;
         return (
             <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: 50,}}>
-                <View>
                 <View style={{marginLeft: 5,}}><NavBar/></View>
-                    <Text style={styles.GroupCreateTitle}>Snake groep maken</Text> 
-                        <FlatList
-                        ref='listRef'
-                        data={listPersons}
-                        style={styles.Listbox}
-                        renderItem={this.renderRow}
-                        initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}/>            
-                </View>
                 <Image
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
@@ -149,24 +112,13 @@ class groupScreen extends Component {
                             label: 'Type',
                             value: null,
                         }}
-                        items={[
-                            {
-                                label: 'Design gericht',
-                                value: 'design',
-                            },
-                            {
-                                label: 'Kindvriendelijk',
-                                value: 'child',
-                            },
-                            {
-                                label: 'Nieuw',
-                                value: 'new',
-                            },
-                            {
-                                label: 'Historiek',
-                                value: 'history',
-                            },
-                        ]}
+                        items={
+                            typeMuseum.map((data) => {
+                            return ({
+                            label: data.name,
+                            value: data.name,
+                            })
+                        })}
                         onValueChange={(value) => {
                             this.setState({
                                 type: value,
@@ -178,29 +130,26 @@ class groupScreen extends Component {
                             this.inputRefs.picker = el;
                         }}
                     />
-                    <Text style={styles.labelSelect}>Prijs</Text>
+                    <Text style={styles.labelSelect}>Toegankelijkheid</Text>
                     <RNPickerSelect
                         placeholder={{
-                            label: 'Prijs',
+                            label: 'Toegankelijkheid',
                             value: null,
                         }}
-                        items={[
-                            {
-                                label: 'minder dan 10 €',
-                                value: 'min',
-                            },
-                            {
-                                label: 'meer dan 10 €',
-                                value: 'more',
-                            },
-                        ]}
+                        items={
+                            typeDisabilities.map((data) => {
+                            return ({
+                            label: data.name,
+                            value: data.name,
+                            })
+                        })}
                         onValueChange={(value) => {
                             this.setState({
-                                price: value,
+                                disabilities: value,
                             });
                         }}
                         style={{ ...pickerSelectStyles}}
-                        value={this.state.price}
+                        value={this.state.disabilities}
                         ref={(el) => {
                             this.inputRefs.picker = el;
                         }}
@@ -233,22 +182,13 @@ class groupScreen extends Component {
                         }}
                     />
                 </View>
-                <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => this.filter()} style={styles.btnContainer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>
-                            GROEP BEVESTIGEN
+                            VOORKEUREN BEVESTIGEN
                         </Text>
                     </View>
                 </TouchableOpacity>
-                    
-                {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </ScrollView>
         );
     }
@@ -278,8 +218,9 @@ const pickerSelectStyles = StyleSheet.create({
 
 function mapStateToProps(state, props) {
     return {
-        //loggedIn: state.authReducer.loggedIn
+        categories: state.homeReducer.categories,
+        disabilities: state.homeReducer.disabilities
     }
 }
 
-export default connect(mapStateToProps, {setStatus, logout})(groupScreen);
+export default connect(mapStateToProps)(groupScreen);
