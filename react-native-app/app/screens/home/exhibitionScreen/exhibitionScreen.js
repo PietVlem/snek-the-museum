@@ -112,7 +112,7 @@ class detailScreen extends Component {
                 <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
-                        MUSEUM ONTDEKKEN
+                        VOORSTELLING ONTDEKKEN
                     </Text>
                 </View>
                 </TouchableOpacity>

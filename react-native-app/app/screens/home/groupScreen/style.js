@@ -60,7 +60,7 @@ var styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 20,
         marginLeft: 20,
-        marginTop: 100,
+        marginTop: 20,
     },
     labelSelect:{
         marginLeft: 30,

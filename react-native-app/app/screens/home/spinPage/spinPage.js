@@ -10,19 +10,13 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+import { fetchMuseumData } from '../../../actions/home';
+
 class spinPage extends Component {
 
-    componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
     renderRow ({ item }) {
         return (
+        ( item.category.name === 'Kunst' && 
         <TouchableOpacity>
           <ListItem
             roundAvatar
@@ -45,19 +39,13 @@ class spinPage extends Component {
           />
         </TouchableOpacity>   
         )
+        )
       }
 
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President'
-            },
-          ]
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-            <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
+            <View style={{marginLeft: 5,marginTop: 90,}}></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
@@ -77,29 +65,19 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={this.props.museum}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}/>            
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </View>
         );
     }
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        loggedIn: state.authReducer.loggedIn
-    }
-}
+const mapStateToProps = (state,props) => ({
+    museum: state.homeReducer.museum
+});
 
-export default connect(mapStateToProps, {setStatus, logout})(spinPage);
+export default connect(mapStateToProps)(spinPage);

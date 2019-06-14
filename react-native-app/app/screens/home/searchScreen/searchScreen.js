@@ -41,10 +41,9 @@ class searchScreen extends Component {
     
 
     renderRow ({ item }) {
-      console.log(item);
         return (
         item.title === "Amy Farha" ? 
-        <TouchableOpacity onPress={() => Actions.detailScreen(alert('You tapped the button!'))}>
+        <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
           <ListItem
             roundAvatar
             title={item.title}
@@ -100,20 +99,6 @@ class searchScreen extends Component {
       }
 
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President',
-              check: false
-            },
-            {
-              name: 'Chris Jackson',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              subtitle: 'Vice Chairman',
-              check: false
-            },
-          ] 
         return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}>
                         <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>

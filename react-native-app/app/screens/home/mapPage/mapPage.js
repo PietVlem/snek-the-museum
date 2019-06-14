@@ -167,8 +167,8 @@ class mapPage extends Component {
                   key={"List"+i}
                   roundAvatar
                   title={item.title}
-                  subtitle={item.subtitle}
-                  avatar={{uri:item.avatar_url}}
+                  subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                  avatar={item.photo.url}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
                   subtitleStyle={styles.subtitle}
                   titleStyle={styles.ListItemTitle}
