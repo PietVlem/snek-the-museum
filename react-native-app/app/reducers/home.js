@@ -6,7 +6,8 @@ import { combineReducers } from 'redux';
 const initialState = {
   profile: [],
   exhibition: [],
-  museum: []
+  museum: [],
+  museumDetail:[]
 }
 
 function homeReducer(state = initialState, action) {
