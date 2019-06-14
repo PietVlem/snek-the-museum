@@ -43,7 +43,7 @@ class searchScreen extends Component {
     renderRow ({ item }) {
         return (
         item.title === "Amy Farha" ? 
-        <TouchableOpacity onPress={() => Actions.detailScreen(alert('You tapped the button!'))}>
+        <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
           <ListItem
             roundAvatar
             title={item.title}
