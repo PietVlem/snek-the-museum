@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,Animated,Dimensions,StyleSheet,ScrollView } = require('react-native');
+var { View, Alert,Text, AsyncStorage,Image,TouchableOpacity,FlatList,Animated,Dimensions,StyleSheet,ScrollView, Platform } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 import { NavBar  } from '../../index';
@@ -18,12 +18,10 @@ const { width, height } = Dimensions.get('window');
 import { fetchMuseumData } from '../../../actions/home';
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.771707;
-const LONGITUDE = -122.4053769;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyCYvMpmVhFc0ydILEuXGJNYNGFnBoKPCL8';
+const GOOGLE_MAPS_APIKEY = 'AIzaSyBQ6Z16L3HplA0FqT03Q24dgizIhLUEKvI';
+// old key const GOOGLE_MAPS_APIKEY = 'AIzaSyCYvMpmVhFc0ydILEuXGJNYNGFnBoKPCL8';
+
 
 const images = [
   'https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png',
@@ -54,8 +52,8 @@ class mapPage extends Component {
         },
       ],
       region: {
-        latitude: 51.054588,
-        longitude: 3.721880,
+        latitude: 51.087064,
+        longitude: 3.670115,
         latitudeDelta: 0.0041,
         longitudeDelta: 0.0021
       },
@@ -65,6 +63,8 @@ class mapPage extends Component {
   }
 
 	onReady = (result) => {
+    //Alert.alert(errorMessage);
+    console.log("dit is de onReady functie : " + result);
 		this.mapView.fitToCoordinates(result.coordinates, {
 			edgePadding: {
 				right: (width / 20),
@@ -76,7 +76,8 @@ class mapPage extends Component {
 	}
 
 	onError = (errorMessage) => {
-		Alert.alert(errorMessage);
+    //Alert.alert(errorMessage);
+    console.log("dit is de error functie : " + errorMessage);
   }
 
   componentDidMount() {
@@ -85,7 +86,6 @@ class mapPage extends Component {
     
     /*navigator.geolocation.getCurrentPosition(
        (position) => {
-         console.log(position);
          this.setState({
             mylatitude: position.coords.latitude,
             mylongitude: position.coords.longitude,
@@ -94,35 +94,14 @@ class mapPage extends Component {
        (error) => this.setState({ error: error.message }),
        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );*/
-     {this.props.error ? alert('geen locatie') : null}
-     console.log( "this is the museums loader : " + this.props.museum);
-     console.log( "De Props : " + this.props);
 
    }
 
     static navigationOptions = {
         header: null,
     };  
-  
+    
     render() {
-
-      const list = [
-        {
-          name: 'Amy Farha',
-          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-          subtitle: 'Vice President'
-        },
-        {
-          name: 'Amy Farha',
-          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-          subtitle: 'Vice President'
-        },
-        {
-          name: 'Amy Farha',
-          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-          subtitle: 'Vice President'
-        },
-      ]
 
       return (
         <View
@@ -137,28 +116,28 @@ class mapPage extends Component {
   				onPress={this.onMapPress}
   				loadingEnabled={true}
   			>
-        <MapView.Marker identifier="yourLocation" coordinate={this.state.coordinates[0]}>
-            <View style={{ width: 10, height: 10 }}>
-              <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50,bottom: 40, }} />
-            </View>
-        </MapView.Marker>
-        <MapView.Marker identifier="destination" coordinate={this.state.coordinates[1]}>
-            <View style={{ width: 10, height: 10 }}>
-              <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 , bottom: 40,}} />
-            </View>
-        </MapView.Marker>
+            <MapView.Marker identifier="yourLocation" coordinate={this.state.coordinates[0]}>
+                <View style={{ width: 10, height: 10 }}>
+                  <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50,bottom: 40, }} />
+                </View>
+            </MapView.Marker>
+            <MapView.Marker identifier="destination" coordinate={this.state.coordinates[1]}>
+                <View style={{ width: 10, height: 10 }}>
+                  <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 , bottom: 40,}} />
+                </View>
+            </MapView.Marker>
 
-  				{(this.state.coordinates.length === 2) && (
-  					<MapViewDirections
-  						origin={this.state.coordinates[0]}
-  						destination={this.state.coordinates[1]}
-  						apikey={GOOGLE_MAPS_APIKEY}
-  						strokeWidth={3}
-  						strokeColor="#6FA29B"
-  						onReady={this.onReady}
-  						onError={this.onError}
-  					/>
-  				)}
+            {(this.state.coordinates.length === 2) && (
+              <MapViewDirections
+                origin={this.state.coordinates[0]}
+                destination={this.state.coordinates[1]}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeWidth={3}
+                strokeColor="#6FA29B"
+                onReady={this.onReady}
+                onError={this.onError}
+              />
+            )}
   			</MapView>
         <ScrollView 
           ref={(scrollView) => { this.scrollView = scrollView; }}
@@ -182,9 +161,10 @@ class mapPage extends Component {
         >
         {
           this.props.museum.map((item, i) => (
-            <View style={styles.view}>
-            <TouchableOpacity style={styles.Liststyle}>
+            <View key={"View_Container"+i} style={styles.view}>
+            <TouchableOpacity key={"Touchable"+i} style={styles.Liststyle} onPress={() => Actions.detailScreen(item)}>
                 <ListItem
+                  key={"List"+i}
                   roundAvatar
                   title={item.title}
                   subtitle={item.subtitle}
@@ -194,29 +174,31 @@ class mapPage extends Component {
                   titleStyle={styles.ListItemTitle}
                   rightIcon={
                       <Icon
+                      key={"Icon"+i}
                       name='ios-arrow-forward'
                       type='ionicon'
                       color='#6FA29B'
                       size={15}
-                      iconStyle={{paddingRight: 15,}}
-                      onPress={() => console.log('hello')} />
+                      iconStyle={{paddingRight: 15,}} />
                   }
                   chevronColor="#6FA29B"
                 />
-                <View style={styles.MapMuseaBox}>
-                  <View style={{flex: 1,flexDirection: 'row',}}>
+                <View key={"MuseaBox"+i} style={styles.MapMuseaBox}>
+                  <View key={"FlexViewA"+i} style={{flex: 1,flexDirection: 'row',}}>
                       <Image
+                          key={"BikeIcon"+i}
                           style={styles.distanceIcon}
                           source={require('../../../../assets/mountain.png')}
                       />
-                      <Text style={styles.distanceText}>Fiets: 20min </Text>
+                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: 20min </Text>
                   </View>
-                  <View style={{flex: 1,flexDirection: 'row',}}>
+                  <View key={"FlexViewB"+i} style={{flex: 1,flexDirection: 'row',}}>
                       <Image
+                          key={"BusIcon"+i}
                           style={styles.distanceIcon}
                           source={require('../../../../assets/bus.png')}
                       />
-                      <Text style={styles.distanceText}>Bus: Lijn 55 - 12:30u</Text>
+                      <Text key={"BusText"+i} style={styles.distanceText}>Bus: Lijn 55 - 12:30u</Text>
                   </View>
                 </View>  
             </TouchableOpacity>

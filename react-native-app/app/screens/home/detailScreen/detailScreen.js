@@ -34,6 +34,7 @@ class detailScreen extends Component {
 
         //console.log(this.props);
         this.props.dispatch(fetchExhibitionData());
+        this.props.dispatch(fetchMuseumData());
     }
 
     renderMap ({ item, index }) {
@@ -176,13 +177,6 @@ class detailScreen extends Component {
                     style={styles.HeaderImg}
                     source={{uri: this.props.photo.url}}
                 />   
-                <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
-                <View style={styles.button}>
-                    <Text style={styles.buttonText}>
-                        MUSEUM ONTDEKKEN
-                    </Text>
-                </View>
-                </TouchableOpacity>
                 <Text style={styles.DetailText}>
                 {this.props.body}
                 </Text>

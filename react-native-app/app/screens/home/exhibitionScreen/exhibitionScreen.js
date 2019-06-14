@@ -142,4 +142,4 @@ const mapStateToProps = (state,props) => ({
     exhibition: state.homeReducer.exhibition,
   });
 
-export default connect(mapStateToProps, {setStatus, logout})(detailScreen);
+export default connect(mapStateToProps)(detailScreen);
