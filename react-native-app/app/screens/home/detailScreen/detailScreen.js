@@ -191,6 +191,7 @@ class detailScreen extends Component {
                     initialNumToRender={5}
                     keyExtractor={(item, index) => index.toString()}
                 />
+                <Text style={styles.exhibitionTitle}>Tentoonstellingen</Text>
                 <FlatList
                         ref='listExhibition'
                         data={this.props.exhibition.filter(item => item.museumId === this.props._id)}

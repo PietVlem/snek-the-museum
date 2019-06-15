@@ -51,7 +51,7 @@ class exhibitionScreen extends Component {
         const list = [
 
             {
-                info: "Prijs: " + this.props.price + " euro",
+                info: "Prijs: " + this.props.price ? this.props.price + " euro" : "onbekend",
                 icon_url: require('../../../../assets/money.png'),
             },
             {
@@ -101,7 +101,6 @@ class exhibitionScreen extends Component {
                 <Text style={styles.DetailText}>
                 {this.props.info}
                 </Text>
-                
                 <FlatList
                     ref='infoRef'
                     data={list}

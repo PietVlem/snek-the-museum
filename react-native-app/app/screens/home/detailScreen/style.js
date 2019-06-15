@@ -41,7 +41,7 @@ var styles = StyleSheet.create({
     HeaderImg:{
         width: '100%', 
         height: 200,
-        
+        marginBottom: 30,
     },
     DetailText:{
         textAlign: "left",
@@ -68,6 +68,13 @@ var styles = StyleSheet.create({
     galleryTitle:{
         marginLeft: 30,
         marginTop: 10,
+        fontFamily: 'PTSansBold',
+        fontSize: 15,
+        color: "#3E4A59",
+    },
+    exhibitionTitle:{
+        marginLeft: 30,
+        marginTop: 20,
         fontFamily: 'PTSansBold',
         fontSize: 15,
         color: "#3E4A59",
@@ -122,7 +129,40 @@ var styles = StyleSheet.create({
         paddingLeft: 75,
         marginTop: 10,
         paddingBottom: 10,
-    }
+    },
+    Liststyle:{
+        marginTop: 10,
+        borderBottomWidth: 0,
+        backgroundColor: "white",
+        borderRadius: 10,
+        shadowColor: "#8386A3",
+        shadowOffset: {
+            width: 2,
+            height: 4,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 3.84,
+        elevation: 1,
+        paddingTop: 20,
+        paddingBottom: 20,
+    },
+    Listbox:{
+        paddingHorizontal: 20,
+        paddingBottom: 20,
+    },
+    subtitle:{
+        color: "#A9A9B0",
+        fontFamily: 'MontserratLight',
+        fontSize: 12,
+        fontWeight: "300",
+        paddingLeft: 10
+    },
+    ListItemTitle:{
+        color: "#303E48",
+        fontFamily: 'MontserratMedium',
+        fontSize: 15,
+        paddingLeft: 10
+    },
 });
 
 module.exports = styles;
