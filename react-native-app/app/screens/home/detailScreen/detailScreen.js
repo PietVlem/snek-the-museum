@@ -72,7 +72,7 @@ class detailScreen extends Component {
       }
       renderRow ({ item }) {
           return (
-          <TouchableOpacity onPress={() => Actions.exhibitionScreen(item)}>
+          <TouchableOpacity onPress={() => Actions.exhibitionScreen(item,{title: item.name})}>
             <ListItem
               roundAvatar
               title={item.name}
@@ -192,6 +192,7 @@ class detailScreen extends Component {
                     keyExtractor={(item, index) => index.toString()}
                 />
                 <Text style={styles.exhibitionTitle}>Tentoonstellingen</Text>
+                {this.props.exhibition.filter(item => item.museumId === this.props._id).length != 0 ? (
                 <FlatList
                         ref='listExhibition'
                         data={this.props.exhibition.filter(item => item.museumId === this.props._id)}
@@ -199,7 +200,10 @@ class detailScreen extends Component {
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        />                       
+                        /> 
+                ) : (
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen tentoonstellingen</Text>
+                  )}                             
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
                 </View>
