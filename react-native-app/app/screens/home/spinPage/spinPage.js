@@ -18,13 +18,19 @@ class spinPage extends Component {
         super(props);
     
         this.state = {
-          PickedMuseum: ''
+          PickedMuseum: '',
+          type: 'Kunst',
+          disabilities: 'Rolstoelgebruiker',
+          visited: 'Eerder bezocht'
         };
       }
 
+      componentDidMount() {
+        this.props.dispatch(fetchMuseumData());
+    }
+
     renderRow ({ item }) {
         return (
-        ( item.category.name === 'Kunst' && 
         <TouchableOpacity>
           <ListItem
             roundAvatar
@@ -47,17 +53,28 @@ class spinPage extends Component {
           />
         </TouchableOpacity>   
         )
-        )
       }
 
     pickMuseum (quotes){
         const pickedMuseum = quotes[Math.floor(Math.random() * quotes.length)];
         this.setState({ PickedMuseum: pickedMuseum})
     } 
+
+    componentDidMount() {
+        AsyncStorage.getItem('type', (errs,result) => {
+            if (!errs) {
+                if (result !== null) {
+                    this.state.userDetails=result;
+                    this.setState({});
+                }
+             }
+        })
+     }
       
 
     render() {
         const quotes = this.props.museum
+        console.log(quotes)
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
             <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>
@@ -80,7 +97,7 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id)}
+                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id && item.category.name === this.state.type)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={1}
