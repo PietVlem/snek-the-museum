@@ -8,6 +8,7 @@ import { View,Text,AsyncStorage } from 'react-native';
 import {Router, Scene, Reducer,Stack,ActionConst,Actions} from 'react-native-router-flux';
 import Feather from 'react-native-vector-icons/Feather';
 import { Icon } from 'react-native-elements'
+import {connect} from 'react-redux';
 
 import Home from './screens/home/home/home'
 import groupScreen from './screens/home/groupScreen/groupScreen'
@@ -28,6 +29,8 @@ import Welcome from './screens/auth/welcome'
 import Login from './screens/auth/login'
 import Register from './screens/auth/register'
 import Password from './screens/auth/password'
+
+import { fetchProfileData } from './actions/home';
 
 
 //Reducer for Router - See react-native-router-flux package README for more info
@@ -51,15 +54,20 @@ const getSceneStyle = (props, computedProps) => {
     };
     return style;
 };
-export default class Main extends Component {
+class Main extends Component {
 
     componentDidMount() {
-        var _this = this;
-
         //Check if token exist
         AsyncStorage.getItem('token', (err, token) => {
             if (token === null) Actions.welcome();
-            else Actions.home();
+            else{
+                AsyncStorage.getItem('userId').then((value) => {
+                    this.props.dispatch(fetchProfileData(value));
+                });
+                setTimeout(()=>{
+                    Actions.home();
+                }, 250);
+            }  
         });
     }
 
@@ -81,38 +89,45 @@ export default class Main extends Component {
                             </Scene>
                         </Stack>    
                         <Stack key="main" hideNavBar>
-                            <Scene tabs tabBarStyle={{backgroundColor: "white",borderTopColor: "white",shadowOffset:{  width: 2,  height: -3,padding: 10,},shadowColor: '#8386A3',shadowOpacity: 0.12,}} type={ActionConst.REPLACE}  showLabel={false} hideNavBar>
-                                <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'home' : 'home'} size={25} type={ActionConst.REPLACE} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
-                                    <Scene key="groupScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} component={groupScreen} initial/>
-                                    <Scene key="spinPage" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={spinPage} initial/>
-                                    <Scene key="kortingScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={kortingScreen} initial/>
-                                    <Scene key="startScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={startScreen} initial/>
-                                    <Scene key="startCheckScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={startCheckScreen} initial/>
-                                    <Scene key="questionScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={questionScreen} initial/>
-                                    <Scene key="cameraScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={cameraScreen} initial/>
-                                    <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}   component={endScreen} initial/>
-                                    <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
-                                    <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={Home} initial/>
-                                </Scene> 
-                                <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
-                                <Scene key="exhibitionScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={exhibitionScreen} initial/>
-                                    <Scene key="detailScreen" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
-                                    <Scene key="searchScreen" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={searchScreen} initial/>
-                                </Scene> 
-                                <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'map-pin' : 'map-pin'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
-                                    <Scene key="mapPage" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={mapPage} initial/>
+                                <Scene tabs tabBarStyle={{backgroundColor: "white",borderTopColor: "white",shadowOffset:{  width: 2,  height: -3,padding: 10,},shadowColor: '#8386A3',shadowOpacity: 0.12,}} type={ActionConst.REPLACE}  showLabel={false} hideNavBar>
+                                    <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'home' : 'home'} size={25} type={ActionConst.REPLACE} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                        <Scene key="groupScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} component={groupScreen} initial/>
+                                        <Scene key="spinPage" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={spinPage} initial/>
+                                        <Scene key="kortingScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={kortingScreen} initial/>
+                                        <Scene key="startScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={startScreen} initial/>
+                                        <Scene key="startCheckScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}  component={startCheckScreen} initial/>
+                                        <Scene key="questionScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={questionScreen} initial/>
+                                        <Scene key="cameraScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={cameraScreen} initial/>
+                                        <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}   component={endScreen} initial/>
+                                        <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
+                                        <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={Home} initial/>
+                                    </Scene> 
+                                    <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                    <Scene key="exhibitionScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={exhibitionScreen} initial/>
+                                        <Scene key="detailScreen" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
+                                        <Scene key="searchScreen" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={searchScreen} initial/>
+                                    </Scene> 
+                                    <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'map-pin' : 'map-pin'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                        <Scene key="mapPage" type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={mapPage} initial/>
+                                    </Scene>
+                                    <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'user' : 'user'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
+                                        <Scene key="profileScreen" hideNavBar type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={profileScreen} initial/>
+                                    </Scene>
                                 </Scene>
-                                <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'user' : 'user'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 
-                                    <Scene key="profileScreen" hideNavBar type={ActionConst.REPLACE} navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}}  component={profileScreen} initial/>
-                                </Scene>
-                            </Scene>
-                        </Stack>   
+                        </Stack>  
                     </Scene>
                 </Router>
             </View>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    profile: state.homeReducer.profile
+});
+
+
+export default connect(mapStateToProps)(Main)
 
 
 

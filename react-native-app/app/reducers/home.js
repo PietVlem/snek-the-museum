@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 
 
 const initialState = {
-  profile: [],
+  profile: null,
   exhibition: [],
   museum: [],
   categories:[],

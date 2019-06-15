@@ -55,12 +55,6 @@ class spinPage extends Component {
         </TouchableOpacity>   
         )
       }
-
-    pickMuseum (quotes){
-        const pickedMuseum = quotes[Math.floor(Math.random() * quotes.length)];
-        this.setState({ PickedMuseum: pickedMuseum})
-    } 
-
     filterMuseum() {
         AsyncStorage.getItem('type', (errs,result) => {
             if (!errs) {
@@ -80,7 +74,11 @@ class spinPage extends Component {
       
 
     render() {
-        const quotes = this.props.museum
+        const matchedMuseums = this.props.museum.filter(item => 
+            (item.category.name === this.state.type) &&
+            (this.state.disabilities ? item.disability.filter((disab) => disab.name === this.state.disabilities).length > 0 : true)
+        )
+
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
             <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>
@@ -103,7 +101,7 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id && item.category.name === this.state.type)}
+                        data={(matchedMuseums.length > 0) ? [matchedMuseums[Math.floor(Math.random() * (matchedMuseums.length-1))]] : []}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={1}
