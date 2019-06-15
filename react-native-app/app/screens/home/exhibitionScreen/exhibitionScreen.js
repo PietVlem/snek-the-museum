@@ -60,7 +60,6 @@ class exhibitionScreen extends Component {
             },
 
           ]
-          console.log(this.props)
         return (
             <View style={styles.container}>
             <ScrollView>
@@ -92,7 +91,7 @@ class exhibitionScreen extends Component {
                     style={styles.HeaderImg}
                     source={{uri: this.props.eImage[0].url}}
                 />   
-                <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => Actions.kortingScreen(this.props)} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
                         VOORSTELLING ONTDEKKEN

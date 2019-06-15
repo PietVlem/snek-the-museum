@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://fm-dyc.nickboone.react-native-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.fm-dyc.nickboone.react-native-app.exp.direct",
+  "ngrokPid": 57571,
+  "packagerPort": 19006,
+  "packagerPid": 57535,
   "devToolsPort": 19002,
   "webpackServerPort": null
 }
