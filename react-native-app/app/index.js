@@ -91,6 +91,7 @@ export default class Main extends Component {
                                     <Scene key="questionScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={questionScreen} initial/>
                                     <Scene key="cameraScreen" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={cameraScreen} initial/>
                                     <Scene key="endScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar type={ActionConst.REPLACE}   component={endScreen} initial/>
+                                    <Scene key="detailScreen" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} hideNavBar  component={detailScreen} initial/>
                                     <Scene key="home" hideNavBar navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'transparent'}} type={ActionConst.REPLACE}  component={Home} initial/>
                                 </Scene> 
                                 <Scene icon={({ focused }) => (<Feather style={{ width: 30 }} name={focused ? 'search' : 'search'} size={25} color={focused ? '#6FA29B' : '#303E48'}/>)}> 

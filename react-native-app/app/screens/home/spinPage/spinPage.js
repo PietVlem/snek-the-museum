@@ -14,26 +14,34 @@ import { fetchMuseumData } from '../../../actions/home';
 
 class spinPage extends Component {
 
+    constructor (props) {
+        super(props);
+    
+        this.state = {
+          PickedMuseum: ''
+        };
+      }
+
     renderRow ({ item }) {
         return (
         ( item.category.name === 'Kunst' && 
         <TouchableOpacity>
           <ListItem
             roundAvatar
-            title={item.name}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
+            title={item.title}
+            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
+            onPress={() => Actions.detailScreen(item)} 
             rightIcon={
                 <Icon
                 name='ios-arrow-forward'
                 type='ionicon'
                 color='#6FA29B'
                 size={15}
-                iconStyle={{paddingRight: 15,}}
-                onPress={() => Actions.detailpage()} />
+                iconStyle={{paddingRight: 15,}}/>
             }
             chevronColor="#6FA29B"
           />
@@ -42,15 +50,22 @@ class spinPage extends Component {
         )
       }
 
+    pickMuseum (quotes){
+        const pickedMuseum = quotes[Math.floor(Math.random() * quotes.length)];
+        this.setState({ PickedMuseum: pickedMuseum})
+    } 
+      
+
     render() {
+        const quotes = this.props.museum
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-            <View style={{marginLeft: 5,marginTop: 90,}}></View>
+            <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
-                            <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
-                                <TouchableOpacity style={styles.SearchBtn}>
+                            <Animatable.View animation="pulse" iterationCount={1000000000}  direction="alternate">    
+                                <TouchableOpacity onPress={() => this.pickMuseum(quotes)} style={styles.SearchBtn}>
                                     <Image
                                         style={styles.SearchIcon}
                                         source={require('../../../../assets/binoculars.png')}
@@ -65,10 +80,10 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={this.props.museum}
+                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
-                        initialNumToRender={5}
+                        initialNumToRender={1}
                         keyExtractor={(item, index) => index.toString()}/>            
             </View>
         );

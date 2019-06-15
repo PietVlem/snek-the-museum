@@ -16,7 +16,7 @@ import { ListItem,SearchBar } from 'react-native-elements'
 
 
 
-import { fetchMuseumData } from '../../../actions/home';
+import { fetchMuseumData,fetchProfileData } from '../../../actions/home';
 
 class searchScreen extends Component {
 
@@ -37,10 +37,12 @@ class searchScreen extends Component {
       };
       componentDidMount() {
         this.props.dispatch(fetchMuseumData());
+        this.props.dispatch(fetchProfileData());
       }
     
 
     renderRow ({ item }) {
+      console.log(this.props)
         return (
         item.title === "Amy Farha" ? 
         <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
@@ -85,7 +87,7 @@ class searchScreen extends Component {
             }
             chevronColor="#6FA29B"
           />
-        {item.check === true &&
+        {item.id === true &&
           <Icon
                 name='ios-checkmark'
                 type='ionicon'
@@ -128,7 +130,6 @@ class searchScreen extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                     
                         <FlatList
                         ref='listRef'
                         data={this.props.museum.filter(item => item.title.includes(this.state.value))}
@@ -145,6 +146,9 @@ class searchScreen extends Component {
 
 const mapStateToProps = (state,props) => ({
     museum: state.homeReducer.museum,
+    museumVisited: state.homeReducer.museum.filter( museumItem => {
+      return state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id );
+  })
   });
   
    export default connect(mapStateToProps)(searchScreen)
