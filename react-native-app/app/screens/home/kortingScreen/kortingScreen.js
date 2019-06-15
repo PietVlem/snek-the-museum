@@ -35,7 +35,7 @@ class kortingScreen extends Component {
                         <TouchableOpacity onPress={() => Actions.startScreen()} style={styles.btnContainer}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>
-                                     MUSEUM BETREDEN
+                                     VOORSTELLING BETREDEN
                                 </Text>
                             </View>
                         </TouchableOpacity>

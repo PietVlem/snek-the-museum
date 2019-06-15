@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView } = require('react-native');
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView,Linking } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 
@@ -35,7 +35,7 @@ class detailScreen extends Component {
 
         
         this.props.dispatch(fetchExhibitionData());
-        console.log("dit geef je mee : " + this.props._id);
+        console.log(this.props.museum);
 
     }
 
@@ -80,7 +80,7 @@ class detailScreen extends Component {
               roundAvatar
               title={item.name}
               //avatar={item.photo.url}
-              containerStyle={styles.Liststyle}
+              containerStyle={styles.ListstyleBox}
               subtitleStyle={styles.subtitle}
               titleStyle={styles.ListItemTitle}
               rightIcon={
@@ -136,10 +136,10 @@ class detailScreen extends Component {
                     museumId: this.props._id,
                 },
                 
-                /*{
-                    info: this.props.openingHours.open + this.props.openingHours.closed,
+                {
+                    info: this.props.openingHours.open  + "\n" +this.props.openingHours.closed,
                     icon_url: require('../../../../assets/calendar.png'),
-                },*/
+                },
             ]
             
         
@@ -167,14 +167,14 @@ class detailScreen extends Component {
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL('https://'+this.props.website)}} />
                         <Icon
                             containerStyle={{marginHorizontal: 5,marginTop: 3,}}
                             name='twitter'
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL(this.props.twitter)}} />
                     </View>
                     </View>
                 </View>

@@ -130,7 +130,7 @@ var styles = StyleSheet.create({
         marginTop: 10,
         paddingBottom: 10,
     },
-    Liststyle:{
+    ListstyleBox:{
         marginTop: 10,
         borderBottomWidth: 0,
         backgroundColor: "white",
