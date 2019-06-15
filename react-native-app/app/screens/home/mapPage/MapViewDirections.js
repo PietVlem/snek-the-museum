@@ -114,6 +114,35 @@ class MapViewDirections extends Component {
 			});
 	}
 
+	fetchBicycleDuration = (origin, destination, apikey) => {
+		const mode = 'bicycling';
+		const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apikey}&mode=${mode}`;
+
+		return fetch(url)
+			.then(response => response.json())
+			.then(json => {
+
+				if (json.status !== 'OK') {
+					const errorMessage = json.error_message || 'Unknown error';
+					return Promise.reject(errorMessage);
+				}
+
+				if (json.routes.length) {
+
+					const route = json.routes[0];
+
+					return Promise.resolve({
+						duration: route.legs.reduce((carry, curr) => {
+							return carry + curr.duration.value;
+						}, 0) / 60,
+					});
+
+				} else {
+					return Promise.reject();
+				}
+			});
+	}
+
 	render() {
 		if (!this.state.coordinates) {
 			return null;

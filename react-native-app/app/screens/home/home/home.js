@@ -81,7 +81,7 @@ class Home extends Component {
                         <Text style={styles.RecentMuseaTitle}>Recent bezochte musea</Text>
                         <ScrollView style={styles.Listbox}>
                             { this.props.museum.map((item, i) => (
-                                <TouchableOpacity key={i} onPress={() => Actions.detailScreen()}>
+                                <TouchableOpacity key={i} onPress={() => Actions.detailScreen(item)}>
                                 <ListItem
                                     roundAvatar
                                     title={item.title}

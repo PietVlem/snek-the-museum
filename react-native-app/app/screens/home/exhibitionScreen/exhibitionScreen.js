@@ -13,12 +13,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
-import { fetchGithubData } from '../../../actions/home';
+import { fetchExhibitionData} from '../../../actions/home';
 
 //var newArr = Object.keys(Item);
 //console.log(newArr);
 
-class detailScreen extends Component {
+class exhibitionScreen extends Component {
 
     constructor (props) {
         super(props);
@@ -33,7 +33,8 @@ class detailScreen extends Component {
     componentDidMount() {
         //var Img = this.props.photo.url;
         //alert(this.props.title);
-        console.log(this.props);
+        this.props.dispatch(fetchExhibitionData());
+        console.log(this.props.duration);
     }
 
     renderRow ({ item, index }) {
@@ -47,39 +48,19 @@ class detailScreen extends Component {
             hideChevron
           />  
         )
-      }
-
-    renderReaction ({ item }) {
-        return (
-          <View style={styles.reactionstyle}> 
-            <ListItem
-                roundAvatar
-                subtitle={item.title}
-                avatar={{uri:item.avatar_url}}
-                title={item.name}
-                containerStyle={{borderBottomWidth: 0,backgroundColor: "white",paddingLeft: 10,}}
-                titleStyle={styles.reactionName}
-                subtitleStyle={styles.reactionSubTitle}
-                rightIcon={
-                    <Text style={{marginTop: -15,marginRight: 10,fontSize:12,color:"#303E48",}}>{item.published}</Text>
-                }
-            /> 
-            <Text style={styles.reactionBody}>Dit museum was super!</Text>
-          </View>  
-        )
-    }  
+    }
 
     render() {
         const list = [
 
             {
-                info: '€5 voor volwassenen \n€2.5 per kind',
+                info: this.props.exhibition.price,
                 icon_url: require('../../../../assets/money.png'),
             },
-            /*{
+            {
                 info: this.props.exhibition.duration,
                 icon_url: require('../../../../assets/clock.png'),
-            },*/
+            },
 
           ]
 
@@ -88,7 +69,7 @@ class detailScreen extends Component {
             <ScrollView>
                 <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
                 <View style={{flex:1,flexDirection: 'row'}}>
-                    <Text style={styles.DetailTitle}>{this.props.slug}</Text>
+                    <Text style={styles.DetailTitle}>{this.props.name}</Text>
                     <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
                     <View style={{flexDirection:'row'}}>
 
@@ -108,11 +89,16 @@ class detailScreen extends Component {
                             onPress={() => console.log('hello')} />
                     </View>
                     </View>
-                </View> 
+                </View>
+                <Image
+                    resizeMode={'cover'}
+                    style={styles.HeaderImg}
+                    source={{uri: this.props.eImage[0].url}}
+                />   
                 <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
-                        MUSEUM ONTDEKKEN
+                        TENTOONSTELLING ONTDEKKEN
                     </Text>
                 </View>
                 </TouchableOpacity>
@@ -142,4 +128,4 @@ const mapStateToProps = (state,props) => ({
     exhibition: state.homeReducer.exhibition,
   });
 
-export default connect(mapStateToProps)(detailScreen);
+export default connect(mapStateToProps)(exhibitionScreen);

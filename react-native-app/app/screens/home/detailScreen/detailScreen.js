@@ -32,14 +32,14 @@ class detailScreen extends Component {
 
     componentDidMount() {
 
-        //console.log(this.props);
+        
         this.props.dispatch(fetchExhibitionData());
-        this.props.dispatch(fetchMuseumData());
+        console.log("dit geef je mee : " + this.props._id);
     }
 
     renderMap ({ item, index }) {
         if (index === 0) return (
-        <TouchableOpacity onPress={() => Actions.mapPage(item)}>
+        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)}>
         <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -125,18 +125,21 @@ class detailScreen extends Component {
     }  
 
     render() {
-        const list = [
-            {
-                info: 'Bekijk de route',
-                icon_url: require('../../../../assets/route.png'),
-            },
-            {
-                info: this.props.openingHours.open + this.props.openingHours.closed,
-                icon_url: require('../../../../assets/calendar.png'),
-            },
-        ]
-
-
+        
+            const list = [
+                {
+                    info: 'Bekijk de route',
+                    icon_url: require('../../../../assets/route.png'),
+                    museumId: this.props._id,
+                },
+                
+                /*{
+                    info: this.props.openingHours.open + this.props.openingHours.closed,
+                    icon_url: require('../../../../assets/calendar.png'),
+                },*/
+            ]
+            
+        
         const listReaction = [
             {
               name: 'Jelena',
@@ -189,16 +192,8 @@ class detailScreen extends Component {
                     keyExtractor={(item, index) => index.toString()}
                 />
                 <FlatList
-                        ref='listRef'
-                        data={this.props.data}
-                        style={styles.Listbox}
-                        renderItem={this.renderRow}
-                        initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}
-                        /> 
-                <FlatList
                         ref='listExhibition'
-                        data={this.props.exhibition.filter(item => item.museumId.includes(this.props._id))}
+                        data={this.props.exhibition.filter(item => item.museumId === this.props._id)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}

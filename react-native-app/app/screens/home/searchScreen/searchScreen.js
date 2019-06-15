@@ -41,7 +41,7 @@ class searchScreen extends Component {
     
 
     renderRow ({ item }) {
-      console.log(item);
+      //console.log(item);
         return (
         item.title === "Amy Farha" ? 
         <TouchableOpacity onPress={() => Actions.detailScreen(alert('You tapped the button!'))}>
