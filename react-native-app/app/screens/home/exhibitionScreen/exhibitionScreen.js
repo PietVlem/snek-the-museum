@@ -31,10 +31,7 @@ class exhibitionScreen extends Component {
     }
 
     componentDidMount() {
-        //var Img = this.props.photo.url;
-        //alert(this.props.title);
         this.props.dispatch(fetchExhibitionData());
-        console.log(this.props.duration);
     }
 
     renderRow ({ item, index }) {
@@ -54,22 +51,21 @@ class exhibitionScreen extends Component {
         const list = [
 
             {
-                info: this.props.price,
+                info: "Prijs: " + this.props.price ? this.props.price + " euro" : "onbekend",
                 icon_url: require('../../../../assets/money.png'),
             },
             {
-                info: this.props.duration,
+                info: "Tentoonstelling van " + this.props.duration + ' minuten',
                 icon_url: require('../../../../assets/clock.png'),
             },
 
           ]
-
         return (
             <View style={styles.container}>
             <ScrollView>
                 <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
                 <View style={{flex:1,flexDirection: 'row'}}>
-                    <Text style={styles.DetailTitle}>{this.props.name}</Text>
+                    <Text style={styles.DetailTitle}>{this.props.slug}</Text>
                     <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
                     <View style={{flexDirection:'row'}}>
 
@@ -95,7 +91,7 @@ class exhibitionScreen extends Component {
                     style={styles.HeaderImg}
                     source={{uri: this.props.eImage[0].url}}
                 />   
-                <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => Actions.kortingScreen(this.props)} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
                         VOORSTELLING ONTDEKKEN
@@ -105,7 +101,6 @@ class exhibitionScreen extends Component {
                 <Text style={styles.DetailText}>
                 {this.props.info}
                 </Text>
-                
                 <FlatList
                     ref='infoRef'
                     data={list}

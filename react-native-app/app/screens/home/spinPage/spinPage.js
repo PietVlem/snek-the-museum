@@ -19,13 +19,14 @@ class spinPage extends Component {
     
         this.state = {
           PickedMuseum: '',
-          type: 'Kunst',
-          disabilities: 'Rolstoelgebruiker',
-          visited: 'Eerder bezocht'
+          type: '',
+          disabilities: '',
+          visited: ''
         };
       }
 
       componentDidMount() {
+        this.filterMuseum();
         this.props.dispatch(fetchMuseumData());
     }
 
@@ -60,12 +61,18 @@ class spinPage extends Component {
         this.setState({ PickedMuseum: pickedMuseum})
     } 
 
-    componentDidMount() {
+    filterMuseum() {
         AsyncStorage.getItem('type', (errs,result) => {
             if (!errs) {
                 if (result !== null) {
-                    this.state.userDetails=result;
-                    this.setState({});
+                    this.setState({type: result});
+                }
+             }
+        })
+        AsyncStorage.getItem('disabilities', (errs,result) => {
+            if (!errs) {
+                if (result !== null) {
+                    this.setState({disabilities: result});
                 }
              }
         })
@@ -74,7 +81,6 @@ class spinPage extends Component {
 
     render() {
         const quotes = this.props.museum
-        console.log(quotes)
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
             <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>

@@ -77,13 +77,15 @@ class Seeder {
         }
     }
 
-    postCreate = async (title, synopsis, body) => {
+    postCreate = async (title, image, synopsis, body) => {
         const postDetail = {
             title,
+            image,
             synopsis,
             body,
             categoryId: this.getRandomCategory(),
-            blogId: '5cd580b0e3d6d3fe3744ed74'
+            blogId: '5cd580b0e3d6d3fe3744ed74',
+            museumId: this.getRandomMuseum(),
         };
         const post = new Post(postDetail);
 
@@ -283,13 +285,12 @@ class Seeder {
 
     createPosts = async () => {
         await Promise.all([
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
+            (async () => this.postCreate(faker.lorem.sentence(), faker.image.city(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
         ]);
     }
 

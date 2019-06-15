@@ -1,5 +1,85 @@
 //@import '_sass/abstracts/variables';
 
-body {
-  background: lightcoral;
+/*
+Vars
+*/
+$black: #24272B;
+$gold: #E7B164;
+
+/*
+Type
+*/
+h2{
+  text-transform: uppercase;
+  color: $gold;
+  margin-bottom: 2em;
+  padding: 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 4px solid $gold;
+  display: inline-block;
 }
+p{
+  font-size: 18px;
+  font-family: "PT Sans";
+}
+
+/*
+Header
+*/
+.header{
+  display: table;
+  width: 100%;
+  background-color: $black;
+  .logo{
+    height: 39px;
+    float: left;
+    padding: 8px;
+  }
+  h1{
+    color: white;
+    padding: 8px;
+    float: left;
+  }
+  a{
+    display: table;
+    float: right;
+  }
+  .log-in{
+    height: 18px;
+    padding: 15px;
+    padding-top: 19px;
+    color: $gold;
+  }
+}
+
+/*
+Footer
+*/
+.footer{
+  width: 100%;
+  background-color: $black;
+  p{
+    color: white;
+    text-transform: uppercase;
+    font-size: 15px;
+    text-align: center;
+    padding: 25px;
+  }
+}
+
+/*
+Components
+*/
+.container{
+  max-width: 1100px;
+  margin: auto;
+}
+
+.main{
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+/*
+Pages
+*/
