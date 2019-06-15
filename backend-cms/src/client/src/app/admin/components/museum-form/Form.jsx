@@ -31,6 +31,10 @@ const styles = {
   textFields: {
     marginBottom: 30
   },
+  processBtnUpload:{
+    maxWidth: '100%',
+    marginBottom: 30
+  }
 };
 
 class Form extends Component {
@@ -45,6 +49,15 @@ class Form extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({
+        firebaseImage: this.props.photoUrl
+      })
+    }, 2000);
+   
   }
 
   change = (name, e) => {
@@ -136,7 +149,7 @@ class Form extends Component {
         telephone,
         facebook,
         twitter,
-        mail
+        mail,
       },
       errors,
       touched,
@@ -147,6 +160,7 @@ class Form extends Component {
       categories,
       zipcodes,
       disabilities,
+      photoUrl,
       classes,
       setFieldValue
     } = this.props;
@@ -175,7 +189,8 @@ class Form extends Component {
         <div className="process">
           <h4>image uplaod</h4>
           <input type="file" className="process_btn-upload" onChange={(e) => this.uploadImage(e)} />
-          <img src={this.state.firebaseImage} alt="upload-image" className="process__image" />
+          <br/><br/>
+          <img src={this.state.firebaseImage} alt="upload-image" className={classes.processBtnUpload} />
         </div>
 
         <TextField

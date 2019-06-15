@@ -59,6 +59,7 @@ function Header(props) {
               </Grid>
             </Hidden>
             <Grid item xs />
+            {/* 
             <Grid item>
               <Typography className={classes.link} component="a" href="#">
                 Go to docs
@@ -76,6 +77,7 @@ function Header(props) {
                 <Avatar className={classes.avatar} src="/static/images/avatar/1.jpg" />
               </IconButton>
             </Grid>
+            */}
           </Grid>
         </Toolbar>
       </AppBar>

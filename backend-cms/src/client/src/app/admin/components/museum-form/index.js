@@ -85,8 +85,9 @@ class MuseumForm extends Component {
             telephone: "",
             facebook: "",
             twitter: "",
-            mail: ""
+            mail: "",
         },
+        photoUrl: ""
     };
 
     componentWillMount() {
@@ -178,7 +179,8 @@ class MuseumForm extends Component {
             if (responseJson) {
                 this.setState(prevState => ({ 
                     ...prevState, 
-                    museum: responseJson 
+                    museum: responseJson,
+                    photoUrl: responseJson.photo.url
                 }));
             }
         } catch(error) {
@@ -263,7 +265,7 @@ class MuseumForm extends Component {
                 <div className={classes.container}>
                     <Paper className={classes.paper}>
                         <Formik
-                            render={props => <Form {...props} categories={this.state.categories} zipcodes={this.state.zipcodes} disabilities={this.state.disabilities}/>}
+                            render={props => <Form {...props} photoUrl={this.state.photoUrl} categories={this.state.categories} zipcodes={this.state.zipcodes} disabilities={this.state.disabilities}/>}
                             initialValues={values}
                             validationSchema={validationSchema}
                             onSubmit={(values, actions) => this.submit(values, actions)}
