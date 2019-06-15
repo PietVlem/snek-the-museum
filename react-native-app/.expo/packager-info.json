@@ -1,9 +1,10 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://uz-2e4.nickboone.react-native-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.uz-2e4.nickboone.react-native-app.exp.direct",
-  "ngrokPid": 54525,
-  "packagerPort": 19005,
-  "packagerPid": 54495,
-  "devToolsPort": 19002
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "devToolsPort": 19002,
+  "webpackServerPort": null
 }

@@ -1,0 +1,43 @@
+/*
+Vars
+*/
+$black: #24272B;
+$gold: #E7B164;
+
+.post--small{
+    padding-left: 30px;
+    padding-bottom: 2em;
+    position: relative;
+    top: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    &:hover{
+        top: -3px;
+    }
+    a{
+        text-decoration: none;
+        .content{
+            padding: 20px;
+            h3{
+                color: $gold;
+                margin-bottom: 1em;
+            }
+            p{
+                color: black;
+            }
+            button{
+                border: none;
+                background-color: $gold;
+                padding: 10px 50px;
+                margin-top: 20px;
+                color: white;
+                text-transform: uppercase;
+                border-radius: 30px;
+                font-family: "PT Sans";
+                font-weight: 700;
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+}

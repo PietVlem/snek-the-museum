@@ -78,7 +78,7 @@ class LoginPage extends Component {
   }
 
   componentWillMount() {
-    if (localStorage.getItem('JWT') !== null) {
+    if (localStorage.getItem('snek_the_museum') !== null) {
       window.location.href = 'http://localhost:3000/admin';
     }
   }

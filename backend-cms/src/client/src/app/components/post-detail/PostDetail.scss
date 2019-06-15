@@ -1,0 +1,26 @@
+/*
+Vars
+*/
+$black: #24272B;
+$gold: #E7B164;
+
+
+.post--large{
+    .post__title{
+        margin: 1em 0;
+        color: $gold;
+    }
+    .post__synopsis{
+        margin: 1em 0;
+        font-weight: 700;
+    }
+    .post__body{
+        margin: 1em 0;
+        p{
+            margin-bottom: 1em;
+        }
+    }
+    p{
+        color: $black;
+    }
+}
