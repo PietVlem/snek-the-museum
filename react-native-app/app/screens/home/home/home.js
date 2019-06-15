@@ -20,17 +20,16 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          dataSource: [],
+            userid: '5d026831d5f8b57b46b343d2'
         };
     }
 
     componentDidMount() {
-        this.props.dispatch(fetchProfileData());
+        this.props.dispatch(fetchProfileData(this.state.userid));
         this.props.dispatch(fetchMuseumData());
     }
-    
 
-    
+
     renderRow ({ item }) {
         return (
         <TouchableOpacity onPress={() => Actions.detailScreen()}>
@@ -112,8 +111,8 @@ class Home extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    museum: state.homeReducer.museum.filter( addedItem => {
-        return state.homeReducer.profile.museumsVisitedIds.find( cartItem => cartItem === addedItem.id );
+    museum: state.homeReducer.museum.filter( museumItem => {
+        return state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id );
     })
   });
   

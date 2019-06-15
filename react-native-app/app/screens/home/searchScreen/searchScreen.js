@@ -16,7 +16,7 @@ import { ListItem,SearchBar } from 'react-native-elements'
 
 
 
-import { fetchMuseumData } from '../../../actions/home';
+import { fetchMuseumData,fetchProfileData } from '../../../actions/home';
 
 class searchScreen extends Component {
 
@@ -37,14 +37,15 @@ class searchScreen extends Component {
       };
       componentDidMount() {
         this.props.dispatch(fetchMuseumData());
+        this.props.dispatch(fetchProfileData());
       }
     
 
     renderRow ({ item }) {
-      //console.log(item);
+      console.log(this.props)
         return (
         item.title === "Amy Farha" ? 
-        <TouchableOpacity onPress={() => Actions.detailScreen(alert('You tapped the button!'))}>
+        <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
           <ListItem
             roundAvatar
             title={item.title}
@@ -86,7 +87,7 @@ class searchScreen extends Component {
             }
             chevronColor="#6FA29B"
           />
-        {item.check === true &&
+        {item.id === true &&
           <Icon
                 name='ios-checkmark'
                 type='ionicon'
@@ -100,20 +101,6 @@ class searchScreen extends Component {
       }
 
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President',
-              check: false
-            },
-            {
-              name: 'Chris Jackson',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              subtitle: 'Vice Chairman',
-              check: false
-            },
-          ] 
         return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}>
                         <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
@@ -143,7 +130,6 @@ class searchScreen extends Component {
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
                         />
-                     
                         <FlatList
                         ref='listRef'
                         data={this.props.museum.filter(item => item.title.includes(this.state.value))}
@@ -160,6 +146,9 @@ class searchScreen extends Component {
 
 const mapStateToProps = (state,props) => ({
     museum: state.homeReducer.museum,
+    museumVisited: state.homeReducer.museum.filter( museumItem => {
+      return state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id );
+  })
   });
   
    export default connect(mapStateToProps)(searchScreen)

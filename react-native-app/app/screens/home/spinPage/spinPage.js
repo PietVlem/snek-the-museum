@@ -10,36 +10,44 @@ import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+import { fetchMuseumData } from '../../../actions/home';
+
 class spinPage extends Component {
 
-    componentDidMount() {
-        var _this = this;
+    constructor (props) {
+        super(props);
+    
+        this.state = {
+          PickedMuseum: '',
+          type: 'Kunst',
+          disabilities: 'Rolstoelgebruiker',
+          visited: 'Eerder bezocht'
+        };
+      }
 
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
+      componentDidMount() {
+        this.props.dispatch(fetchMuseumData());
     }
+
     renderRow ({ item }) {
         return (
         <TouchableOpacity>
           <ListItem
             roundAvatar
-            title={item.name}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
+            title={item.title}
+            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
+            onPress={() => Actions.detailScreen(item)} 
             rightIcon={
                 <Icon
                 name='ios-arrow-forward'
                 type='ionicon'
                 color='#6FA29B'
                 size={15}
-                iconStyle={{paddingRight: 15,}}
-                onPress={() => Actions.detailpage()} />
+                iconStyle={{paddingRight: 15,}}/>
             }
             chevronColor="#6FA29B"
           />
@@ -47,22 +55,34 @@ class spinPage extends Component {
         )
       }
 
+    pickMuseum (quotes){
+        const pickedMuseum = quotes[Math.floor(Math.random() * quotes.length)];
+        this.setState({ PickedMuseum: pickedMuseum})
+    } 
+
+    componentDidMount() {
+        AsyncStorage.getItem('type', (errs,result) => {
+            if (!errs) {
+                if (result !== null) {
+                    this.state.userDetails=result;
+                    this.setState({});
+                }
+             }
+        })
+     }
+      
+
     render() {
-        const list = [
-            {
-              name: 'Amy Farha',
-              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              subtitle: 'Vice President'
-            },
-          ]
+        const quotes = this.props.museum
+        console.log(quotes)
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
-            <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
+            <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
-                            <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
-                                <TouchableOpacity style={styles.SearchBtn}>
+                            <Animatable.View animation="pulse" iterationCount={1000000000}  direction="alternate">    
+                                <TouchableOpacity onPress={() => this.pickMuseum(quotes)} style={styles.SearchBtn}>
                                     <Image
                                         style={styles.SearchIcon}
                                         source={require('../../../../assets/binoculars.png')}
@@ -77,29 +97,19 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={list}
+                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id && item.category.name === this.state.type)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
-                        initialNumToRender={5}
+                        initialNumToRender={1}
                         keyExtractor={(item, index) => index.toString()}/>            
-                    {
-                    // (this.props.loggedIn) &&
-                    // <View>
-                    //     <Text style={[styles.welcomeText]}>Welcome</Text>
-                    //     <Text style={[styles.subText]}>You are logged in.</Text>
-                    //     <Button btnText="Logout" onPress={this.props.logout}/>
-                    // </View>
-                        }
             </View>
         );
     }
 };
 
 
-function mapStateToProps(state, props) {
-    return {
-        loggedIn: state.authReducer.loggedIn
-    }
-}
+const mapStateToProps = (state,props) => ({
+    museum: state.homeReducer.museum
+});
 
-export default connect(mapStateToProps, {setStatus, logout})(spinPage);
+export default connect(mapStateToProps)(spinPage);

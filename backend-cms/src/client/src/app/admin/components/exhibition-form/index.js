@@ -27,47 +27,51 @@ import Form from "./Form";
 Validation
 */
 const validationSchema = Yup.object(
-{
-    title: Yup.string("Enter a title").required("Title is required").max(128),
-    body: Yup.string("Enter a story").required(false).min(256),
-    categoryId: Yup.string("Select a category").required(false),
-});
+    {
+        name: Yup.string("Enter a name").required("Name is required"),
+        info: Yup.string("Enter info about the exhibiton").required(false).min(128),
+        price: Yup.number("Enyter a price").required("Price is required"),
+        duration: Yup.number("Enter a duration").required("Duration is required"),
+        promocode: Yup.string("Enter a promocode").required("Promocode is required"),
+        museumId: Yup.string("Select a museum").required(false),
+    });
 
 /*
 Styling
 */
 const styles = theme => ({
- paper: {
-   marginTop: theme.spacing.unit * 8,
-   display: "flex",
-   flexDirection: "column",
-   alignItems: "center",
-   padding: `${theme.spacing.unit * 5}px ${theme.spacing.unit * 5}px ${theme
-     .spacing.unit * 5}px`
- },
- container: {
-   
- }
+    paper: {
+        marginTop: theme.spacing.unit * 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: `${theme.spacing.unit * 5}px ${theme.spacing.unit * 5}px ${theme
+            .spacing.unit * 5}px`
+    },
+    container: {
+
+    }
 });
 
 class ExhibitionForm extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
     }
-    
+
     state = {
-        categories: [],
-        museum: { name: '', image: '', info: ''},
+        museums: [],
+        exhibiton: { name: '', exhibitionImage: '', info: '', price: '', duration: '', promocode: '', museumId: '' },
     };
 
     componentWillMount() {
-        
-        if (this.props.museumId) {            
-            this.loadExhibition(this.props.museumId);
+        this.loadMuseums();
+
+        if (this.props.exhibitionId) {
+            this.loadExhibition(this.props.exhibitionId);
         }
     }
 
-    loadExhibition = async (museumId) => {
+    loadMuseums = async () => {
         try {
             const options = {
                 method: 'GET',
@@ -75,12 +79,13 @@ class ExhibitionForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/museums/${museumId}`, options);
+            const response = await fetch('/api/v1/museums', options);
+            console.log(response);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({ 
                     ...prevState, 
-                    museum: responseJson 
+                    museums: responseJson 
                 }));
             }
         } catch(error) {
@@ -88,24 +93,47 @@ class ExhibitionForm extends Component {
         }
     }
 
+    loadExhibition = async (exhibitonId) => {
+        try {
+            const options = {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            const response = await fetch(`/api/v1/exhibtions/${exhibitonId}`, options);
+            const responseJson = await response.json();
+            if (responseJson) {
+                this.setState(prevState => ({
+                    ...prevState,
+                    exhibiton: responseJson
+                }));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     submit = async (values, actions) => {
+        console.log(values);
+
         const LoggedInUser = await JSON.parse(localStorage.getItem('snek_the_museum'));
         const JWTLoggedInUser = LoggedInUser.JWT_token;
 
-        const { museumId } = this.props;
+        const { exhibitonId } = this.props;
 
-        if (museumId) {  
-            this.updateExhibition(museumId, values, JWTLoggedInUser);   
-            this.refs.notificationEdit.handleClick();       
+        if (exhibitonId) {
+            this.updateExhibition(exhibitonId, values, JWTLoggedInUser);
+            this.refs.notificationEdit.handleClick();
         } else {
             this.saveExhibition(values, JWTLoggedInUser);
             this.refs.notificationCreate.handleClick();
         }
-        
+
     }
 
-    saveExhibition = async (museumData, JWT_token) => {
-        
+    saveExhibition = async (exhibitionData, JWT_token) => {
+
         try {
             const options = {
                 method: 'POST',
@@ -114,22 +142,22 @@ class ExhibitionForm extends Component {
                     'Content-Type': 'application/json',
                     'Authorization': JWT_token,
                 },
-                body: JSON.stringify(museumData),
+                body: JSON.stringify(exhibitionData),
                 mode: 'cors',
                 cache: 'default'
             };
 
-            const response = await fetch('/api/v1/museums', options);
+            const response = await fetch('/api/v1/exhibitions', options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);
             }
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     }
 
-    updateExhibition = async (museumId, museumData, JWT_token) => {
+    updateExhibition = async (exhibitonId, exhibtionData, JWT_token) => {
         try {
             const options = {
                 method: 'PUT',
@@ -138,24 +166,24 @@ class ExhibitionForm extends Component {
                     'Content-Type': 'application/json',
                     'Authorization': JWT_token,
                 },
-                body: JSON.stringify(museumData),
+                body: JSON.stringify(exhibtionData),
                 mode: 'cors',
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/museums/${museumId}`, options);
+            const response = await fetch(`/api/v1/exhibtions/${exhibitonId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 console.log(responseJson);
             }
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     }
 
     render() {
         const { classes } = this.props;
-        const { museum:values } = this.state;
+        const { exhibiton: values } = this.state;
 
         console.log(values);
 
@@ -164,7 +192,7 @@ class ExhibitionForm extends Component {
                 <div className={classes.container}>
                     <Paper className={classes.paper}>
                         <Formik
-                            render={props => <Form {...props} categories={this.state.categories} />}
+                            render={props => <Form {...props} museums={this.state.museums} />}
                             initialValues={values}
                             validationSchema={validationSchema}
                             onSubmit={(values, actions) => this.submit(values, actions)}
@@ -172,8 +200,8 @@ class ExhibitionForm extends Component {
                         />
                     </Paper>
                 </div>
-                <Snackbardefault ref={"notificationCreate"} message={"Zipcode created!"}/>
-                <Snackbardefault ref={"notificationEdit"} message={"Zipcode edited!"}/>
+                <Snackbardefault ref={"notificationCreate"} message={"Zipcode created!"} />
+                <Snackbardefault ref={"notificationEdit"} message={"Zipcode edited!"} />
             </React.Fragment>
         );
     }

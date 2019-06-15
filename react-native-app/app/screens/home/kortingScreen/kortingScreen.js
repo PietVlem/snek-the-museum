@@ -14,17 +14,6 @@ class kortingScreen extends Component {
         text: 'http://facebook.github.io/react-native/',
     };
     
-
-    componentDidMount() {
-        var _this = this;
-
-        // //Check if token exist
-        // AsyncStorage.getItem('token', (err, token) => {
-        //     if (token === null) Actions.welcome();
-        //     else _this.props.setStatus(true)
-        // });
-    }
-
     render() {
         return (
             <View style={styles.container}>
