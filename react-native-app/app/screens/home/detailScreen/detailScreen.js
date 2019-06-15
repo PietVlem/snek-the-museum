@@ -193,7 +193,7 @@ class detailScreen extends Component {
                 />
                 <FlatList
                         ref='listExhibition'
-                        data={this.props.exhibition.filter(item => item.museumId === this.props.museum._id)}
+                        data={this.props.exhibition.filter(item => item.museumId === this.props._id)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}

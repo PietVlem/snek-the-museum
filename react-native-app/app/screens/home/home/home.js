@@ -20,42 +20,18 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            getValue: '',
             userid: '5d026831d5f8b57b46b343d2'
         };
     }
 
     componentDidMount() {
+        const dsd = AsyncStorage.getItem('userId').then((value) => this.setState({ getValue : value }))
+        console.log(dsd)
         this.props.dispatch(fetchProfileData(this.state.userid));
         this.props.dispatch(fetchMuseumData());
     }
-
-
-    renderRow ({ item }) {
-        return (
-        <TouchableOpacity onPress={() => Actions.detailScreen()}>
-          <ListItem
-            roundAvatar
-            title={item.title}
-            subtitle={item.subtitle}
-            avatar={{uri:item.avatar_url}}
-            containerStyle={styles.Liststyle}
-            subtitleStyle={styles.subtitle}
-            titleStyle={styles.ListItemTitle}
-            rightIcon={
-                <Icon
-                name='ios-arrow-forward'
-                type='ionicon'
-                color='#6FA29B'
-                size={15}
-                iconStyle={{paddingRight: 15,}}
-                onPress={() => console.log('hello')} />
-            }
-            chevronColor="#6FA29B"
-          />
-        </TouchableOpacity>   
-        )
-      }
-
+    
     render() {
         return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 80,}}>

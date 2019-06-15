@@ -31,10 +31,7 @@ class exhibitionScreen extends Component {
     }
 
     componentDidMount() {
-        //var Img = this.props.photo.url;
-        //alert(this.props.title);
         this.props.dispatch(fetchExhibitionData());
-        console.log(this.props.duration);
     }
 
     renderRow ({ item, index }) {
@@ -54,16 +51,15 @@ class exhibitionScreen extends Component {
         const list = [
 
             {
-                info: this.props.exhibition.price,
+                info: "Prijs: " + this.props.price + " euro",
                 icon_url: require('../../../../assets/money.png'),
             },
             {
-                info: this.props.exhibition.duration,
+                info: "Tentoonstelling van " + this.props.duration + ' minuten',
                 icon_url: require('../../../../assets/clock.png'),
             },
 
           ]
-
         return (
             <View style={styles.container}>
             <ScrollView>
