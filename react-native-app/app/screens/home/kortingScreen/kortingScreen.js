@@ -11,7 +11,7 @@ import styles from './style'
 class kortingScreen extends Component {
 
     state = {
-        text: 'http://facebook.github.io/react-native/',
+        text: this.props.promocode,
     };
     
     render() {
@@ -21,7 +21,7 @@ class kortingScreen extends Component {
                     <Text style={styles.discountTitle}>Kortingscode</Text>
                         <Text style={styles.discountSubTitle}>
                             Deze kortingscode is enkel toegankelijk voor 
-                            <Text style={{fontFamily: 'MontserratMedium',}}> het Design Museum</Text>
+                            <Text style={{fontFamily: 'MontserratMedium',}}> {this.props.slug}</Text>
                         </Text>
                         <View style={{alignItems: 'center',}}>
                             <View style={styles.Codeprint}>
@@ -35,7 +35,7 @@ class kortingScreen extends Component {
                         <TouchableOpacity onPress={() => Actions.startScreen()} style={styles.btnContainer}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>
-                                     MUSEUM BETREDEN
+                                     VOORSTELLING BETREDEN
                                 </Text>
                             </View>
                         </TouchableOpacity>

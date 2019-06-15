@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView } = require('react-native');
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView,Linking } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 
@@ -10,10 +10,11 @@ import {setStatus, logout} from '../../../actions/auth'; //Import your actions
 import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ListItem,Avatar } from 'react-native-elements'
+import { ListItem,Avatar} from 'react-native-elements'
 import { NavBar  } from '../../index';
 
 import { fetchExhibitionData,fetchMuseumData } from '../../../actions/home';
+import { forceUpdateHandler } from '../mapPage/mapPage';
 
 //var newArr = Object.keys(Item);
 //console.log(newArr);
@@ -22,7 +23,7 @@ class detailScreen extends Component {
 
     constructor (props) {
         super(props);
-    
+
         this.state = {
           loading: false,
           error: null,
@@ -34,12 +35,13 @@ class detailScreen extends Component {
 
         
         this.props.dispatch(fetchExhibitionData());
-        console.log("dit geef je mee : " + this.props._id);
+
     }
+
 
     renderMap ({ item, index }) {
         if (index === 0) return (
-        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)}>
+        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)&& forceUpdateHandler}>
         <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -72,12 +74,12 @@ class detailScreen extends Component {
       }
       renderRow ({ item }) {
           return (
-          <TouchableOpacity onPress={() => Actions.exhibitionScreen(item)}>
+          <TouchableOpacity onPress={() => Actions.exhibitionScreen(item,{title: item.name})}>
             <ListItem
               roundAvatar
               title={item.name}
               //avatar={item.photo.url}
-              containerStyle={styles.Liststyle}
+              containerStyle={styles.ListstyleBox}
               subtitleStyle={styles.subtitle}
               titleStyle={styles.ListItemTitle}
               rightIcon={
@@ -103,6 +105,14 @@ class detailScreen extends Component {
   
           )
         }
+        renderGallery ({ item }) {
+            return (
+                <Image
+                source={{uri: item.photo.url}}
+                style={{ width: 100, height: 100,marginTop: 20,}}
+              />
+            )
+          }    
 
     renderReaction ({ item }) {
         return (
@@ -133,10 +143,10 @@ class detailScreen extends Component {
                     museumId: this.props._id,
                 },
                 
-                /*{
-                    info: this.props.openingHours.open + this.props.openingHours.closed,
+                {
+                    info: this.props.openingHours.open  + "\n" +this.props.openingHours.closed,
                     icon_url: require('../../../../assets/calendar.png'),
-                },*/
+                },
             ]
             
         
@@ -164,14 +174,14 @@ class detailScreen extends Component {
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL('https://'+this.props.website)}} />
                         <Icon
                             containerStyle={{marginHorizontal: 5,marginTop: 3,}}
                             name='twitter'
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL(this.props.twitter)}} />
                     </View>
                     </View>
                 </View>
@@ -192,6 +202,7 @@ class detailScreen extends Component {
                     keyExtractor={(item, index) => index.toString()}
                 />
                 <Text style={styles.exhibitionTitle}>Tentoonstellingen</Text>
+                {this.props.exhibition.filter(item => item.museumId === this.props._id).length != 0 ? (
                 <FlatList
                         ref='listExhibition'
                         data={this.props.exhibition.filter(item => item.museumId === this.props._id)}
@@ -199,9 +210,25 @@ class detailScreen extends Component {
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        />                       
+                        /> 
+                ) : (
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen tentoonstellingen</Text>
+                  )}                             
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
+                {this.props.museum.filter(item => item.id === this.props._id).length != 0 ? (
+                    <FlatList
+                        horizontal
+                        ref='listExhibition'
+                        data={this.props.museum.filter(item => item.id === this.props._id)}
+                        style={styles.Listbox}
+                        renderItem={this.renderGallery}
+                        initialNumToRender={5}
+                        keyExtractor={(item, index) => index.toString()}
+                        /> 
+                ) : (
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen tentoonstellingen</Text>
+                  )}   
                 </View>
                 <View style={styles.reactionBox}>
                     <Text style={styles.reactionTitle}>Reacties (1)</Text>

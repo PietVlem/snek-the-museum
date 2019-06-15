@@ -37,11 +37,11 @@ class mapPage extends Component {
 
   constructor(props) {
     super(props);
-
     //zoek het juiste museum
     const result = this.props.museum.find(museum => (museum._id === this.props.data));
     const latitude = Number(result.latitude);
     const longitude = Number(result.longitude);
+
     //console.log("dit het resultaat : " + JSON.stringify(result));
     //console.log("dit de latitude : " + latitude);
     //console.log("dit de longitude : " + longitude);
@@ -68,6 +68,7 @@ class mapPage extends Component {
       },
       
     };
+
     this.mapView = null;
     //check coordinaten
     console.log("dit zijn de coords : " + this.state.coordinates[0])
@@ -105,6 +106,9 @@ class mapPage extends Component {
   componentDidMount() {
 
     this.props.dispatch(fetchMuseumData());
+
+    
+    
     //getLocation(this.props.data)
 
     
@@ -118,6 +122,26 @@ class mapPage extends Component {
        (error) => this.setState({ error: error.message }),
        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );*/
+
+   }
+
+   forceUpdateHandler(){
+    
+    console.log("Force Update!!!!!!");
+    this.forceUpdate();
+    
+  }
+
+   componentDidUpdate() {
+
+    /*this.setState( (state) => {
+      let newState = JSON.parse(JSON.stringify(state));
+      newState.coordinates[1].latitude = latitude;
+      newState.coordinates[1].longitude = longitude;
+      return ({
+        coordinates: newState.coordinates});
+      });*/
+    
 
    }
 

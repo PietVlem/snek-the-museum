@@ -65,7 +65,7 @@ class exhibitionScreen extends Component {
             <ScrollView>
                 <View style={{marginTop: 30,marginLeft: 15,marginBottom: 10,}}><NavBar/></View>
                 <View style={{flex:1,flexDirection: 'row'}}>
-                    <Text style={styles.DetailTitle}>{this.props.name}</Text>
+                    <Text style={styles.DetailTitle}>{this.props.slug}</Text>
                     <View style={{flex:1,alignItems: 'flex-end',marginRight: 30,}}>
                     <View style={{flexDirection:'row'}}>
 
@@ -91,7 +91,7 @@ class exhibitionScreen extends Component {
                     style={styles.HeaderImg}
                     source={{uri: this.props.eImage[0].url}}
                 />   
-                <TouchableOpacity onPress={() => Actions.kortingScreen()} style={styles.btnContainer}>
+                <TouchableOpacity onPress={() => Actions.kortingScreen(this.props)} style={styles.btnContainer}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>
                         VOORSTELLING ONTDEKKEN
