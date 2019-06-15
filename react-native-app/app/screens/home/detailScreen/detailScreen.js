@@ -14,6 +14,7 @@ import { ListItem,Avatar } from 'react-native-elements'
 import { NavBar  } from '../../index';
 
 import { fetchExhibitionData,fetchMuseumData } from '../../../actions/home';
+import { forceUpdateHandler } from '../mapPage/mapPage';
 
 //var newArr = Object.keys(Item);
 //console.log(newArr);
@@ -22,7 +23,7 @@ class detailScreen extends Component {
 
     constructor (props) {
         super(props);
-    
+
         this.state = {
           loading: false,
           error: null,
@@ -35,11 +36,13 @@ class detailScreen extends Component {
         
         this.props.dispatch(fetchExhibitionData());
         console.log("dit geef je mee : " + this.props._id);
+
     }
+
 
     renderMap ({ item, index }) {
         if (index === 0) return (
-        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)}>
+        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)&& forceUpdateHandler}>
         <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}
@@ -193,7 +196,7 @@ class detailScreen extends Component {
                 />
                 <FlatList
                         ref='listExhibition'
-                        data={this.props.exhibition.filter(item => item.museumId === this.props.museum._id)}
+                        data={this.props.exhibition.filter(item => item.museumId === this.props._id)}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={5}

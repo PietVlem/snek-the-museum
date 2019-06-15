@@ -54,11 +54,11 @@ class exhibitionScreen extends Component {
         const list = [
 
             {
-                info: this.props.exhibition.price,
+                info: this.props.price,
                 icon_url: require('../../../../assets/money.png'),
             },
             {
-                info: this.props.exhibition.duration,
+                info: this.props.duration,
                 icon_url: require('../../../../assets/clock.png'),
             },
 
