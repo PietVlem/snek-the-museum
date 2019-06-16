@@ -32,19 +32,34 @@ class profileScreen extends Component {
       }
 
     render() {
+        const profilePicture = '';
+        if (this.props.profile.profilePicture != null){
+            const profilePicture = this.props.profile.profilePicture;
+        }else{
+            const profilePicture = 'https://bestresources.com.au/wp-content/uploads/2017/05/avatar-icon-1.png';
+        }
         return (
             <ScrollView style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}> 
              <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
+                {this.props.profile.profilePicture != null ?
+                <Avatar
+                    containerStyle={{alignSelf: 'center',marginBottom: 20,}}
+                    rounded
+                    large
+                    source={profilePicture}
+                />
+                :
                 <Avatar
                     containerStyle={{alignSelf: 'center',marginBottom: 20,}}
                     rounded
                     large
                     source={{
                         uri:
-                        'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                    }}
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFqLwXLSt7nY_iW0vRguTgVIH1gjwuhx28PjI_Dc964oTRx0No',
+                      }}
                 />
-                <Text style={styles.profileName}>John Doe</Text>
+                }
+                <Text style={styles.profileName}>{this.props.profile.name}</Text>
                 <TouchableOpacity onPress={() => Actions.detailScreen()}>
                     <ListItem
                         title={'Bewerken profiel'}
@@ -127,7 +142,8 @@ class profileScreen extends Component {
 const mapStateToProps = (state,props) => ({
     museum: state.homeReducer.museum.filter( addedItem => {
         return state.homeReducer.profile.museumsVisitedIds.find( cartItem => cartItem === addedItem.id );
-    })
+    }),
+    profile: state.homeReducer.profile
 });
   
 export default connect(mapStateToProps)(profileScreen);

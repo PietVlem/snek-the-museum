@@ -249,7 +249,7 @@ class mapPage extends Component {
               this.setState({ durations: durations });
             }),
             console.log("end! : "),
-            console.log("dit is de state"+ JSON.stringify(this.state.durations)),
+            console.log("dit is de state"+ this.state.durations.rows),
             
             
 
