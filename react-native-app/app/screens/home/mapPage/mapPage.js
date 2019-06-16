@@ -11,6 +11,7 @@ import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 import { Constants, MapView } from 'expo';
+import axios from 'axios';
 
 import MapViewDirections from './MapViewDirections';
 import fetchBicycleDuration from './MapViewDirections';
@@ -38,11 +39,38 @@ class mapPage extends Component {
   constructor(props) {
     super(props);
     //zoek het juiste museum
+    //fallback
+    if(this.props.data == null){
+      
+      console.log("GEEN DATA !");
+      this.state = {
+        coordinates: [
+          {
+            latitude: 51.087064,
+            longitude: 3.670115,
+          },
+          {
+            latitude: 51.05,
+            longitude: 3.7167,
+          },
+        ],
+        region: {
+          latitude: 51.087064,
+          longitude: 3.670115,
+          latitudeDelta: 0.0041,
+          longitudeDelta: 0.0021
+        }
+      }
+    }else{
+    
     const result = this.props.museum.find(museum => (museum._id === this.props.data));
     const latitude = Number(result.latitude);
     const longitude = Number(result.longitude);
 
-    //console.log("dit het resultaat : " + JSON.stringify(result));
+
+    console.log("dit het resultaat!!!!! : " + latitude);
+    console.log("dit de data!!!!! : " + this.props.data);
+    
     //console.log("dit de latitude : " + latitude);
     //console.log("dit de longitude : " + longitude);
 
@@ -71,7 +99,8 @@ class mapPage extends Component {
 
     this.mapView = null;
     //check coordinaten
-    console.log("dit zijn de coords : " + this.state.coordinates[0])
+    console.log("dit zijn de coords : " + this.state.coordinates[0]);
+    }
   }
 
   getLocation(id) {
@@ -81,7 +110,7 @@ class mapPage extends Component {
 
 
     console.log("dit het resultaat : " + result);
-    console.log("dit het resultaat : " + result.langtitude);
+    console.log("dit het resultaat : " + result.latitude);
 	
 	}
 
@@ -102,6 +131,19 @@ class mapPage extends Component {
     //Alert.alert(errorMessage);
     console.log("dit is de error functie : " + errorMessage);
   }
+
+  fetchBicycleDuration = (originlat,originlong, destinationlat, destinationlong) => {
+		// get location of base
+		axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originlat},${originlong}&destinations=${destinationlat},${destinationlong}&mode=bicycling&key=AIzaSyC4B7FfR6nV1P2YDuqvuyxWyspxUCtuem8`)
+		.then( response => {
+
+			  var bicycleDuration= response.data.rows[0].elements[0].duration.text
+		  	console.log('inside : ' + bicycleDuration);
+		  	return bicycleDuration;
+
+		})
+
+	}
 
   componentDidMount() {
 
@@ -132,19 +174,6 @@ class mapPage extends Component {
     
   }
 
-   componentDidUpdate() {
-
-    /*this.setState( (state) => {
-      let newState = JSON.parse(JSON.stringify(state));
-      newState.coordinates[1].latitude = latitude;
-      newState.coordinates[1].longitude = longitude;
-      return ({
-        coordinates: newState.coordinates});
-      });*/
-    
-
-   }
-
     static navigationOptions = {
         header: null,
     };  
@@ -167,12 +196,12 @@ class mapPage extends Component {
   			>
             <MapView.Marker identifier="yourLocation" coordinate={this.state.coordinates[0]}>
                 <View style={{ width: 10, height: 10 }}>
-                  <Image source={require('../../../../assets/myLocation.png')} style={{ width: 50, height: 50,bottom: 40, }} />
+                  <Image source={require('../../../../assets/myLocation.png')} style={{ width: 30, height: 30,bottom: 20, }} />
                 </View>
             </MapView.Marker>
             <MapView.Marker identifier="destination" coordinate={this.state.coordinates[1]}>
                 <View style={{ width: 10, height: 10 }}>
-                  <Image source={require('../../../../assets/destination.png')} style={{ width: 50, height: 50 , bottom: 40,}} />
+                  <Image source={require('../../../../assets/destination.png')} style={{ width: 30, height: 30 , bottom: 20,}} />
                 </View>
             </MapView.Marker>
 
@@ -212,13 +241,9 @@ class mapPage extends Component {
           this.props.museum.map((item, i) => (
             
             //variable om mee te geven met fetchBicycleDuration
-            destination = [
-                {
-                  latitude : item.latitude,
-                  longitude: item.longitude,
-                }
-            ],
-            //console.log("origin " + this.state.coordinates[0] + "destination " + destination),
+            this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude),
+            console.log("end!"),
+            
 
             <View key={"View_Container"+i} style={styles.view}>
             <TouchableOpacity key={"Touchable"+i} style={styles.Liststyle} 
@@ -265,7 +290,7 @@ class mapPage extends Component {
                           style={styles.distanceIcon}
                           source={require('../../../../assets/mountain.png')}
                       />
-                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {fetchBicycleDuration(this.state.coordinates[0], destination, GOOGLE_MAPS_APIKEY)} </Text>
+                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {} </Text>
                   </View>
                   <View key={"FlexViewB"+i} style={{flex: 1,flexDirection: 'row',}}>
                       <Image

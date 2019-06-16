@@ -42,7 +42,7 @@ class detailScreen extends Component {
 
     renderMap ({ item, index }) {
         if (index === 0) return (
-        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId)&& forceUpdateHandler}>
+        <TouchableOpacity onPress={() => Actions.mapPage(item.museumId) /*&& forceUpdateHandler*/}>
         <ListItem
             avatar={<Image style={{ width: 25, height: 25 }} source={item.icon_url} />}
             title={item.info}

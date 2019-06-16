@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 // import MapView from 'react-native-maps';
 import { MapView } from 'expo';
@@ -114,33 +115,19 @@ class MapViewDirections extends Component {
 			});
 	}
 
-	fetchBicycleDuration = (origin, destination, apikey) => {
-		const mode = 'bicycling';
-		const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apikey}&mode=${mode}`;
 
-		return fetch(url)
-			.then(response => response.json())
-			.then(json => {
+	fetchBicycleDuration = (originlat,originlong, destinationlat, destinationlong) => {
+		// get location of base
+		axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originlat},${originlong}&destinations=${destinationlat},${destinationlong}&mode=bicycling&key=AIzaSyC4B7FfR6nV1P2YDuqvuyxWyspxUCtuem8`)
+		.then( response => {
 
-				if (json.status !== 'OK') {
-					const errorMessage = json.error_message || 'Unknown error';
-					return Promise.reject(errorMessage);
-				}
+			this.setState({ bicycleDuration: response.data.rows[0].elements[0].duration.text});
+		  	console.log('inside : ' + bicycleDuration);
+		  	return response.data.rows[0].elements[0].duration.text;
 
-				if (json.routes.length) {
+		}),
+		console.log('outside : ')
 
-					const route = json.routes[0];
-
-					return Promise.resolve({
-						duration: route.legs.reduce((carry, curr) => {
-							return carry + curr.duration.value;
-						}, 0) / 60,
-					});
-
-				} else {
-					return Promise.reject();
-				}
-			});
 	}
 
 	render() {
