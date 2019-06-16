@@ -37,6 +37,7 @@ export const fetchDisabilities = (data) => {
   }
 };
 
+
 export const fetchMuseumData = () => {
   return (dispatch) => {
     return axios.get("http://127.0.0.1:8080/api/v1/museums")
@@ -98,4 +99,5 @@ export const fetchDisabilitiesData = () => {
       });
   };
 };
+
 

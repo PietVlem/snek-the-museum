@@ -138,9 +138,7 @@ class mapPage extends Component {
 		.then( response => {
 
 			  var bicycleDuration= response.data.rows[0].elements[0].duration.text
-		  	console.log('inside : ' + bicycleDuration);
 		  	return bicycleDuration;
-
 		})
 
 	}
@@ -179,7 +177,6 @@ class mapPage extends Component {
     };  
     
     render() {
-
       return (
         <View
           style={styles.container}
@@ -241,8 +238,7 @@ class mapPage extends Component {
           this.props.museum.map((item, i) => (
             
             //variable om mee te geven met fetchBicycleDuration
-            this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude),
-            console.log("end!"),
+            console.log(this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude)),
             
 
             <View key={"View_Container"+i} style={styles.view}>
@@ -267,7 +263,7 @@ class mapPage extends Component {
                   key={"List"+i}
                   roundAvatar
                   title={item.title}
-                  subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                  subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
                   avatar={item.photo.url}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
                   subtitleStyle={styles.subtitle}

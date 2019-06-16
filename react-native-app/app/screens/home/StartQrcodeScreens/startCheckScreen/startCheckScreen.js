@@ -48,8 +48,8 @@ class startCheckScreen extends Component {
                             borderColor='#8D959D'
                             />
                             <Text style={styles.subTitle}>
-                                Om vraag 1 te starten, gelieve een foto
-                                van de Qr-code te nemen.
+                                Om vraag 1 te starten, gelieve op de verrekijker
+                                te duwen.
                             </Text>
                             <Animatable.View animation="pulse" iterationCount={1000000000} direction="alternate">    
                             <TouchableOpacity onPress={() => Actions.questionScreen()}>

@@ -109,13 +109,18 @@ class spinPage extends Component {
                             source={require('../../../../assets/logo.png')}
                         />
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
+                    {(matchedMuseums.length > 0) ?
                         <FlatList
                         ref='listRef'
                         data={(matchedMuseums.length > 0) ? [matchedMuseums[Math.floor(Math.random() * (matchedMuseums.length-1))]] : []}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={1}
-                        keyExtractor={(item, index) => index.toString()}/>            
+                        keyExtractor={(item, index) => index.toString()}/>  
+                        :
+                        <Text style={{marginLeft: 30,marginTop: 20,color:'lightgrey'}}>geen museum gevonden</Text>
+ 
+                    }          
             </View>
         );
     }
