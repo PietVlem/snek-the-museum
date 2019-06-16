@@ -53,11 +53,13 @@ class Form extends Component {
 
   componentDidMount(){
     setTimeout(() => {
-      this.setState({
-        firebaseImage: this.props.photoUrl
-      })
-    }, 2000);
-   
+      if(this.props.photoUrl !== ""){
+        this.setState({
+          firebaseImage: this.props.photoUrl,
+          checkedValues: this.props.values.disabilityIds
+        })
+      }
+    }, 2000);  
   }
 
   change = (name, e) => {

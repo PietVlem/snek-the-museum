@@ -61,6 +61,7 @@ class ExhibitionForm extends Component {
     state = {
         museums: [],
         exhibiton: { name: '', exhibitionImage: '', info: '', price: '', duration: '', promocode: '', museumId: '' },
+        photoUrl: ""
     };
 
     componentWillMount() {
@@ -85,7 +86,8 @@ class ExhibitionForm extends Component {
             if (responseJson) {
                 this.setState(prevState => ({ 
                     ...prevState, 
-                    museums: responseJson 
+                    museums: responseJson,
+                    
                 }));
             }
         } catch(error) {
@@ -101,13 +103,15 @@ class ExhibitionForm extends Component {
                 cache: 'default'
             };
 
-            const response = await fetch(`/api/v1/exhibtions/${exhibitonId}`, options);
+            const response = await fetch(`/api/v1/exhibitions/${exhibitonId}`, options);
             const responseJson = await response.json();
             if (responseJson) {
                 this.setState(prevState => ({
                     ...prevState,
-                    exhibiton: responseJson
+                    exhibiton: responseJson,
+                    photoUrl: responseJson.eImage[0].url
                 }));
+                console.log(responseJson.eImage[0].url);
             }
         } catch (error) {
             console.log(error);
@@ -192,7 +196,7 @@ class ExhibitionForm extends Component {
                 <div className={classes.container}>
                     <Paper className={classes.paper}>
                         <Formik
-                            render={props => <Form {...props} museums={this.state.museums} />}
+                            render={props => <Form {...props} photoUrl={this.state.photoUrl} museums={this.state.museums} />}
                             initialValues={values}
                             validationSchema={validationSchema}
                             onSubmit={(values, actions) => this.submit(values, actions)}

@@ -33,6 +33,10 @@ const styles = {
     minWidth: 350,
     marginBottom: 30
   },
+  processBtnUpload:{
+    maxWidth: '100%',
+    marginBottom: 30
+  }
 };
 
 class Form extends Component {
@@ -45,6 +49,17 @@ class Form extends Component {
   }
   static propTypes = {
     classes: PropTypes.object.isRequired,
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      console.log(this.props.photoUrl)
+      if(this.props.photoUrl !== ""){
+        this.setState({
+          firebaseImage: this.props.photoUrl
+        })
+      }
+    }, 2000);  
   }
 
   change = (name, e) => {
@@ -115,6 +130,7 @@ class Form extends Component {
       isValid,
       setFieldTouched,
       museums,
+      photoUrl,
       classes
     } = this.props;
 
@@ -141,7 +157,9 @@ class Form extends Component {
         <div className={classes.process}>
           <h4>Exhibition-image</h4>
           <input type="file" className="process_btn-upload" onChange={(e) => this.uploadImage(e)} />
-          <img src={this.state.firebaseImage} alt="upload-image" className="process__image" />
+          <br/><br/>
+          <img src={this.state.firebaseImage} alt="upload-image" className={classes.processBtnUpload} />
+          <br/><br/>
         </div>
 
         <TextField
