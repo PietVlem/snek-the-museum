@@ -246,10 +246,9 @@ class mapPage extends Component {
             //this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude,i),
             fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude,i)
             .then(durations => {
-              this.setState({ durations: durations });
+              console.log(durations.rows[0].elements[0].duration.text)
+              this.setState({ durations: durations.rows[0].elements[0].duration.text});
             }),
-            console.log("end! : "),
-            console.log("dit is de state"+ this.state.durations.rows),
             
             
 
@@ -298,7 +297,7 @@ class mapPage extends Component {
                           style={styles.distanceIcon}
                           source={require('../../../../assets/mountain.png')}
                       />
-                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {} </Text>
+                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {this.state.durations} </Text>
                   </View>
                   <View key={"FlexViewB"+i} style={{flex: 1,flexDirection: 'row',}}>
                       <Image
