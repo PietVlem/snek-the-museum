@@ -174,7 +174,7 @@ class detailScreen extends Component {
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={ ()=>{ Linking.openURL('https://'+this.props.website)}} />
+                            onPress={ ()=>{ Linking.openURL(this.props.facebook)}} />
                         <Icon
                             containerStyle={{marginHorizontal: 5,marginTop: 3,}}
                             name='twitter'

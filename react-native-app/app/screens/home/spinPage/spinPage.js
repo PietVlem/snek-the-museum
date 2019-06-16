@@ -36,12 +36,15 @@ class spinPage extends Component {
           <ListItem
             roundAvatar
             title={item.title}
-            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
             avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
-            onPress={() => Actions.detailScreen(item)} 
+            onPress={() => 
+                {AsyncStorage.setItem('spinnedMuseum', JSON.stringify(item));
+                Actions.detailScreen(item)}
+            } 
             rightIcon={
                 <Icon
                 name='ios-arrow-forward'
@@ -67,6 +70,13 @@ class spinPage extends Component {
             if (!errs) {
                 if (result !== null) {
                     this.setState({disabilities: result});
+                }
+             }
+        })
+        AsyncStorage.getItem('visited', (errs,result) => {
+            if (!errs) {
+                if (result !== null) {
+                    this.setState({visited: result});
                 }
              }
         })
@@ -113,7 +123,7 @@ class spinPage extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    museum: state.homeReducer.museum
+        museum: state.homeReducer.museum
 });
 
 export default connect(mapStateToProps)(spinPage);

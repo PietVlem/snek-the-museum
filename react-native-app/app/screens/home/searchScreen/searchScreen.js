@@ -26,8 +26,10 @@ class searchScreen extends Component {
         this.state = {
           loading: false,
           error: null,
-          value: ''
+          value: '',
+          username: '',
         };
+        this.loadCredentials();
       }
 
       searchFilterFunction = text => {
@@ -36,41 +38,28 @@ class searchScreen extends Component {
         });  
       };
       componentDidMount() {
-        this.props.dispatch(fetchMuseumData());
-        this.props.dispatch(fetchProfileData());
+          this.props.dispatch(fetchMuseumData());
+          this.props.dispatch(fetchProfileData());
       }
+
+      async loadCredentials() {
+        try {
+            const username = await AsyncStorage.getItem('spinnedMuseum');
+            this.setState({username: JSON.parse(username)});
+        }
+        catch (error) {
+            // Manage error handling
+        }
+    }
     
 
     renderRow ({ item }) {
         return (
-        item.title === "Amy Farha" ? 
         <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
           <ListItem
             roundAvatar
             title={item.title}
             subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
-            avatar={item.photo.url}
-            containerStyle={styles.ListstyleSelected}
-            subtitleStyle={styles.subtitleSelected}
-            titleStyle={styles.ListItemTitleSelected}
-            rightIcon={
-                <Icon
-                name='ios-arrow-forward'
-                type='ionicon'
-                color='white'
-                size={15}
-                iconStyle={{paddingRight: 15,}}
-                onPress={() => console.log('hello')} />
-            }
-            chevronColor="#6FA29B"
-          />
-        </TouchableOpacity>  
-        :
-        <TouchableOpacity onPress={() => Actions.detailScreen(item)}>
-          <ListItem
-            roundAvatar
-            title={item.title}
-            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
             avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
@@ -99,8 +88,10 @@ class searchScreen extends Component {
         )
       }
 
-    render() {
-        return (
+    render() {  
+
+      const list = this.state.username
+      return (
             <View style={{flex: 1,backgroundColor: "#FFF",marginTop: 10,}}>
                         <View style={{marginLeft: 5,marginTop: 50,}}><NavBar/></View>
                         <View style={styles.SearchIconBox}>
@@ -124,7 +115,30 @@ class searchScreen extends Component {
                             onChangeText={text => this.searchFilterFunction(text)}
                             searchIcon={{ size: 24 }}
                             />
-                        </View>   
+                        </View> 
+                        <View>
+                          <TouchableOpacity style={{marginHorizontal: 20,marginBottom: 10,}} onPress={() => Actions.detailScreen(list)}>
+                          <ListItem
+                            roundAvatar
+                            title={list.title}
+                            subtitle={'Gepickt museum'}
+                            //avatar={list.photo.url}
+                            containerStyle={styles.ListstyleSelected}
+                            subtitleStyle={styles.subtitleSelected}
+                            titleStyle={styles.ListItemTitleSelected}
+                            rightIcon={
+                                <Icon
+                                name='ios-arrow-forward'
+                                type='ionicon'
+                                color='#FFF'
+                                size={15}
+                                iconStyle={{paddingRight: 15,}}
+                                onPress={() => console.log('hello')} />
+                            }
+                            chevronColor="#6FA29B"
+                          />
+                        </TouchableOpacity>
+                      </View>  
                         <Image
                             style={styles.SnakeLayout}
                             source={require('../../../../assets/logo.png')}
@@ -136,7 +150,7 @@ class searchScreen extends Component {
                         renderItem={this.renderRow}
                         initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        />            
+                        /> 
             </View>
         );
     }
@@ -145,9 +159,6 @@ class searchScreen extends Component {
 
 const mapStateToProps = (state,props) => ({
     museum: state.homeReducer.museum,
-    museumVisited: state.homeReducer.museum.filter( museumItem => {
-      return state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id );
-  })
   });
   
    export default connect(mapStateToProps)(searchScreen)
