@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://fm-dyc.nickboone.react-native-app.exp.direct",
   "packagerNgrokUrl": "https://packager.fm-dyc.nickboone.react-native-app.exp.direct",
-  "ngrokPid": 62250,
+  "ngrokPid": 64807,
   "devToolsPort": 19002,
   "packagerPort": 19005,
-  "packagerPid": 62218
+  "packagerPid": 64778
 }

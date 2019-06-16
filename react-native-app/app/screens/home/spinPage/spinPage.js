@@ -85,14 +85,14 @@ class spinPage extends Component {
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
-                            <Animatable.View animation="pulse" iterationCount={1000000000}  direction="alternate">    
-                                <TouchableOpacity onPress={() => this.pickMuseum(quotes)} style={styles.SearchBtn}>
+                            <View>    
+                                <TouchableOpacity style={styles.SearchBtn}>
                                     <Image
                                         style={styles.SearchIcon}
                                         source={require('../../../../assets/binoculars.png')}
                                     /> 
                                 </TouchableOpacity> 
-                            </Animatable.View> 
+                            </View> 
                         </View>   
                         <Image
                             style={styles.SnakeLayout}

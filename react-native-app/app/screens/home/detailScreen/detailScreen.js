@@ -109,7 +109,7 @@ class detailScreen extends Component {
             return (
                 <Image
                 source={{uri: item.photo.url}}
-                style={{ width: 100, height: 100,marginTop: 20,}}
+                style={{ width: 100, height: 100,marginTop: 20,marginLeft: 10,}}
               />
             )
           }    
@@ -227,7 +227,7 @@ class detailScreen extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         /> 
                 ) : (
-                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen tentoonstellingen</Text>
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen foto's</Text>
                   )}   
                 </View>
                 <View style={styles.reactionBox}>
