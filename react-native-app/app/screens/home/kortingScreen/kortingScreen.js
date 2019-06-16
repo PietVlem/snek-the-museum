@@ -17,7 +17,7 @@ class kortingScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{marginLeft: 20,marginTop: 50,}}><NavBar/></View>
+                <View style={{marginLeft: 20,marginTop: 50,}}></View>
                     <Text style={styles.discountTitle}>Kortingscode</Text>
                         <Text style={styles.discountSubTitle}>
                             Deze kortingscode is enkel toegankelijk voor 

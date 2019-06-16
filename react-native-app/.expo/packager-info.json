@@ -1,10 +1,10 @@
 {
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://fm-dyc.anonymous.react-native-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.fm-dyc.anonymous.react-native-app.exp.direct",
-  "ngrokPid": 679,
+  "expoServerNgrokUrl": "https://fm-dyc.nickboone.react-native-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.fm-dyc.nickboone.react-native-app.exp.direct",
+  "ngrokPid": 76274,
   "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 659,
+  "packagerPort": 19005,
+  "packagerPid": 76241,
   "webpackServerPort": null
 }

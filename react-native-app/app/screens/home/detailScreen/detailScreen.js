@@ -231,22 +231,18 @@ class detailScreen extends Component {
                   )}   
                 </View>
                 <View style={styles.reactionBox}>
-                    <Text style={styles.reactionTitle}>Reacties (1)</Text>
+                <Text style={styles.reactionTitle}>Reacties</Text>
+                    {this.props.museum.reactions != null ? (
                     <FlatList
                     ref='listRef'
-                    data={listReaction}
+                    data={this.props.museum.reactions}
                     style={styles.reactionBoxList}
                     renderItem={this.renderReaction}
                     initialNumToRender={5}
                     keyExtractor={(item, index) => index.toString()}/> 
-
-                    <TouchableOpacity onPress={() => Actions.spinPage()} style={styles.btnContainer}>
-                        <View style={styles.button}>
-                            <Text style={styles.buttonText}>
-                                REACTIE PLAATSEN
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                ) : (
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,fontSize:16}}>Geen reacties</Text>
+                  )} 
                 </View>
             </ScrollView>
             </View>

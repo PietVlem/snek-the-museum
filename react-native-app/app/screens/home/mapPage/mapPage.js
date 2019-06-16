@@ -182,7 +182,6 @@ class mapPage extends Component {
     };  
     
     render() {
-
       return (
         <View
           style={styles.container}
@@ -276,7 +275,7 @@ class mapPage extends Component {
                   key={"List"+i}
                   roundAvatar
                   title={item.title}
-                  subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                  subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
                   avatar={item.photo.url}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
                   subtitleStyle={styles.subtitle}
