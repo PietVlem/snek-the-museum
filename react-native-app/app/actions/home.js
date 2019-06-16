@@ -66,6 +66,7 @@ export const fetchProfileData = (userId) => {
     return axios.get('http://127.0.0.1:8080/api/v1/users/'+ userId)
       .then(response => {
         dispatch(fetchProfile(response.data))
+        return response;
       })
       .catch(error => {
         throw(error);

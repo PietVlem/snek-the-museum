@@ -87,7 +87,7 @@ class profileScreen extends Component {
                         <ListItem
                             roundAvatar
                             title={item.title}
-                            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                            subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
                             avatar={item.photo.url}
                             containerStyle={styles.Liststyle}
                             subtitleStyle={styles.subtitle}

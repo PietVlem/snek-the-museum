@@ -34,6 +34,16 @@ class exhibitionScreen extends Component {
         this.props.dispatch(fetchExhibitionData());
     }
 
+    renderGallery ({ item }) {
+
+        return (
+            <Image
+            source={{uri: item.eImage[0].url}}
+            style={{ width: 100, height: 100,marginTop: 20,marginLeft: 30,}}
+          />
+        )
+      }  
+
     renderRow ({ item, index }) {
         return (
           <ListItem
@@ -111,6 +121,19 @@ class exhibitionScreen extends Component {
                 />
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s van de tentoonstelling</Text>
+                    {this.props.exhibition.filter(item => item.id === this.props._id).length != 0 ? (
+                        <FlatList
+                            horizontal
+                            ref='listExhibition'
+                            data={this.props.exhibition.filter(item => item.id === this.props._id)}
+                            style={styles.Listbox}
+                            renderItem={this.renderGallery}
+                            initialNumToRender={5}
+                            keyExtractor={(item, index) => index.toString()}
+                            /> 
+                    ) : (
+                        <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen foto's</Text>
+                      )}  
                 </View>
             </ScrollView>
             </View>

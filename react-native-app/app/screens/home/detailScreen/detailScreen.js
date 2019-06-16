@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView } = require('react-native');
+var { View, Text, AsyncStorage,Image,TouchableOpacity,FlatList,ScrollView,Linking } = require('react-native');
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux';
 
@@ -10,7 +10,7 @@ import {setStatus, logout} from '../../../actions/auth'; //Import your actions
 import {Button} from '../../index'; //Import your Button
 import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ListItem,Avatar } from 'react-native-elements'
+import { ListItem,Avatar} from 'react-native-elements'
 import { NavBar  } from '../../index';
 
 import { fetchExhibitionData,fetchMuseumData } from '../../../actions/home';
@@ -35,7 +35,6 @@ class detailScreen extends Component {
 
         
         this.props.dispatch(fetchExhibitionData());
-        console.log("dit geef je mee : " + this.props._id);
 
     }
 
@@ -80,7 +79,7 @@ class detailScreen extends Component {
               roundAvatar
               title={item.name}
               //avatar={item.photo.url}
-              containerStyle={styles.Liststyle}
+              containerStyle={styles.ListstyleBox}
               subtitleStyle={styles.subtitle}
               titleStyle={styles.ListItemTitle}
               rightIcon={
@@ -106,6 +105,14 @@ class detailScreen extends Component {
   
           )
         }
+        renderGallery ({ item }) {
+            return (
+                <Image
+                source={{uri: item.photo.url}}
+                style={{ width: 100, height: 100,marginTop: 20,marginLeft: 10,}}
+              />
+            )
+          }    
 
     renderReaction ({ item }) {
         return (
@@ -136,10 +143,10 @@ class detailScreen extends Component {
                     museumId: this.props._id,
                 },
                 
-                /*{
-                    info: this.props.openingHours.open + this.props.openingHours.closed,
+                {
+                    info: this.props.openingHours.open  + "\n" +this.props.openingHours.closed,
                     icon_url: require('../../../../assets/calendar.png'),
-                },*/
+                },
             ]
             
         
@@ -167,14 +174,14 @@ class detailScreen extends Component {
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL(this.props.facebook)}} />
                         <Icon
                             containerStyle={{marginHorizontal: 5,marginTop: 3,}}
                             name='twitter'
                             type='font-awesome'
                             color='#B4B9BE'
                             size={20}
-                            onPress={() => console.log('hello')} />
+                            onPress={ ()=>{ Linking.openURL(this.props.twitter)}} />
                     </View>
                     </View>
                 </View>
@@ -209,6 +216,19 @@ class detailScreen extends Component {
                   )}                             
                 <View style={styles.galleryBox}>
                     <Text style={styles.galleryTitle}>Foto’s uit het museum</Text>
+                {this.props.museum.filter(item => item.id === this.props._id).length != 0 ? (
+                    <FlatList
+                        horizontal
+                        ref='listExhibition'
+                        data={this.props.museum.filter(item => item.id === this.props._id)}
+                        style={styles.Listbox}
+                        renderItem={this.renderGallery}
+                        initialNumToRender={5}
+                        keyExtractor={(item, index) => index.toString()}
+                        /> 
+                ) : (
+                    <Text style={{paddingLeft: 30,color: 'lightgrey',marginTop: 20,}}>Geen foto's</Text>
+                  )}   
                 </View>
                 <View style={styles.reactionBox}>
                     <Text style={styles.reactionTitle}>Reacties (1)</Text>

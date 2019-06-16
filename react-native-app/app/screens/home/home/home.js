@@ -14,21 +14,14 @@ import styles from './style' //Import your styles
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 
-import { fetchProfileData,fetchMuseumData } from '../../../actions/home';
+import { fetchMuseumData } from '../../../actions/home';
 class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            getValue: '',
-            userid: '5d026831d5f8b57b46b343d2'
-        };
     }
 
     componentDidMount() {
-        const dsd = AsyncStorage.getItem('userId').then((value) => this.setState({ getValue : value }))
-        console.log(dsd)
-        this.props.dispatch(fetchProfileData(this.state.userid));
         this.props.dispatch(fetchMuseumData());
     }
     
@@ -60,7 +53,7 @@ class Home extends Component {
                                 <ListItem
                                     roundAvatar
                                     title={item.title}
-                                    subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                                    subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
                                     avatar={item.photo.url}
                                     containerStyle={styles.Liststyle}
                                     subtitleStyle={styles.subtitle}
@@ -88,7 +81,7 @@ class Home extends Component {
 
 const mapStateToProps = (state,props) => ({
     museum: state.homeReducer.museum.filter( museumItem => {
-        return state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id );
+        return state.homeReducer.profile ? state.homeReducer.profile.museumsVisitedIds.find( Visited => Visited === museumItem.id ) : [];
     })
   });
   

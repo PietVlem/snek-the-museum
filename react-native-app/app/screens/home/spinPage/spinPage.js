@@ -36,12 +36,15 @@ class spinPage extends Component {
           <ListItem
             roundAvatar
             title={item.title}
-            subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+            subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
             avatar={item.photo.url}
             containerStyle={styles.Liststyle}
             subtitleStyle={styles.subtitle}
             titleStyle={styles.ListItemTitle}
-            onPress={() => Actions.detailScreen(item)} 
+            onPress={() => 
+                {AsyncStorage.setItem('spinnedMuseum', JSON.stringify(item));
+                Actions.detailScreen(item)}
+            } 
             rightIcon={
                 <Icon
                 name='ios-arrow-forward'
@@ -55,12 +58,6 @@ class spinPage extends Component {
         </TouchableOpacity>   
         )
       }
-
-    pickMuseum (quotes){
-        const pickedMuseum = quotes[Math.floor(Math.random() * quotes.length)];
-        this.setState({ PickedMuseum: pickedMuseum})
-    } 
-
     filterMuseum() {
         AsyncStorage.getItem('type', (errs,result) => {
             if (!errs) {
@@ -76,25 +73,36 @@ class spinPage extends Component {
                 }
              }
         })
+        AsyncStorage.getItem('visited', (errs,result) => {
+            if (!errs) {
+                if (result !== null) {
+                    this.setState({visited: result});
+                }
+             }
+        })
      }
       
 
     render() {
-        const quotes = this.props.museum
+        const matchedMuseums = this.props.museum.filter(item => 
+            (item.category.name === this.state.type) &&
+            (this.state.disabilities ? item.disability.filter((disab) => disab.name === this.state.disabilities).length > 0 : true)
+        )
+
         return (
             <View style={{flex: 1,backgroundColor: "#FFF"}}>
             <View style={{marginLeft: 5,marginTop: 40,}}><NavBar /></View>
             <Text style={styles.PushTitle}>Het grote moment</Text> 
             <Text style={styles.Subtitle}>Kom hier je volgende Museum avontuur te weten!</Text>
                         <View style={styles.SearchIconBox}>
-                            <Animatable.View animation="pulse" iterationCount={1000000000}  direction="alternate">    
-                                <TouchableOpacity onPress={() => this.pickMuseum(quotes)} style={styles.SearchBtn}>
+                            <View>    
+                                <TouchableOpacity style={styles.SearchBtn}>
                                     <Image
                                         style={styles.SearchIcon}
                                         source={require('../../../../assets/binoculars.png')}
                                     /> 
                                 </TouchableOpacity> 
-                            </Animatable.View> 
+                            </View> 
                         </View>   
                         <Image
                             style={styles.SnakeLayout}
@@ -103,7 +111,7 @@ class spinPage extends Component {
                     <Text style={styles.PushTitle}>Je resultaat: </Text> 
                         <FlatList
                         ref='listRef'
-                        data={this.props.museum.filter(item => item.id === this.state.PickedMuseum.id && item.category.name === this.state.type)}
+                        data={(matchedMuseums.length > 0) ? [matchedMuseums[Math.floor(Math.random() * (matchedMuseums.length-1))]] : []}
                         style={styles.Listbox}
                         renderItem={this.renderRow}
                         initialNumToRender={1}
@@ -115,7 +123,7 @@ class spinPage extends Component {
 
 
 const mapStateToProps = (state,props) => ({
-    museum: state.homeReducer.museum
+        museum: state.homeReducer.museum
 });
 
 export default connect(mapStateToProps)(spinPage);

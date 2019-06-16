@@ -107,6 +107,11 @@ var styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginTop: 20,
     },
+    ListboxPicked:{
+        paddingHorizontal: 20,
+        marginTop: 20,
+        paddingBottom: 40,
+    },
     subtitle:{
         color: "#A9A9B0",
         fontFamily: 'MontserratLight',

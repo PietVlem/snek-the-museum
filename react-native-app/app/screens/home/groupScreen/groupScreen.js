@@ -163,11 +163,11 @@ class groupScreen extends Component {
                         items={[
                             {
                                 label: 'Eerder bezocht',
-                                value: 'design',
+                                value: '1',
                             },
                             {
                                 label: 'Niet eerder bezocht',
-                                value: 'child',
+                                value: '0',
                             },
                         ]}
                         onValueChange={(value) => {
@@ -182,6 +182,8 @@ class groupScreen extends Component {
                         }}
                     />
                 </View>
+                <View>
+                { this.state.type != '' &&
                 <TouchableOpacity onPress={() => this.filter()} style={styles.btnContainer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>
@@ -189,6 +191,8 @@ class groupScreen extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
+                }
+                </View>
             </ScrollView>
         );
     }
