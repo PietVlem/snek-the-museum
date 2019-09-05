@@ -14,7 +14,7 @@ import { Constants, MapView } from 'expo';
 import axios from 'axios';
 
 import MapViewDirections from './MapViewDirections';
-import fetchBicycleDuration from './MapViewDirections';
+//import fetchBicycleDuration from './MapViewDirections';
 const { width, height } = Dimensions.get('window');
 
 import { fetchMuseumData } from '../../../actions/home';
@@ -33,6 +33,23 @@ const images = [
   
 
   const deviceWidth = Dimensions.get('window').width
+
+  function fetchBicycleDuration (originlat,originlong, destinationlat, destinationlong, i) {
+		// get location of base
+		/*axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originlat},${originlong}&destinations=${destinationlat},${destinationlong}&mode=bicycling&key=AIzaSyC4B7FfR6nV1P2YDuqvuyxWyspxUCtuem8`)
+		.then( response => {
+
+        var bicycleDuration= response.data.rows[0].elements[0].duration.text;
+        this.setState({ durations: [bicycleDuration] })
+		  	console.log('inside : ' + bicycleDuration);
+		  	return bicycleDuration;
+
+    })*/
+    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originlat},${originlong}&destinations=${destinationlat},${destinationlong}&mode=bicycling&key=AIzaSyC4B7FfR6nV1P2YDuqvuyxWyspxUCtuem8`)
+      .then(response => response.json())
+
+	}
+
 
 class mapPage extends Component {  
 
@@ -88,6 +105,7 @@ class mapPage extends Component {
           longitude: longitude,
         },
       ],
+      durations: ['', '', '', '' ],
       region: {
         latitude: 51.087064,
         longitude: 3.670115,
@@ -132,25 +150,10 @@ class mapPage extends Component {
     console.log("dit is de error functie : " + errorMessage);
   }
 
-  fetchBicycleDuration = (originlat,originlong, destinationlat, destinationlong) => {
-		// get location of base
-		axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originlat},${originlong}&destinations=${destinationlat},${destinationlong}&mode=bicycling&key=AIzaSyC4B7FfR6nV1P2YDuqvuyxWyspxUCtuem8`)
-		.then( response => {
-
-			  var bicycleDuration= response.data.rows[0].elements[0].duration.text
-		  	console.log('inside : ' + bicycleDuration);
-		  	return bicycleDuration;
-
-		})
-
-	}
-
   componentDidMount() {
 
     this.props.dispatch(fetchMuseumData());
 
-    
-    
     //getLocation(this.props.data)
 
     
@@ -179,7 +182,6 @@ class mapPage extends Component {
     };  
     
     render() {
-
       return (
         <View
           style={styles.container}
@@ -241,8 +243,13 @@ class mapPage extends Component {
           this.props.museum.map((item, i) => (
             
             //variable om mee te geven met fetchBicycleDuration
-            this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude),
-            console.log("end!"),
+            //this.fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude,i),
+            fetchBicycleDuration(this.state.coordinates[0].latitude,this.state.coordinates[0].longitude,item.latitude,item.longitude,i)
+            .then(durations => {
+              console.log(durations.rows[0].elements[0].duration.text)
+              this.setState({ durations: durations.rows[0].elements[0].duration.text});
+            }),
+            
             
 
             <View key={"View_Container"+i} style={styles.view}>
@@ -267,7 +274,7 @@ class mapPage extends Component {
                   key={"List"+i}
                   roundAvatar
                   title={item.title}
-                  subtitle={item.zipcode.city + ", " + item.zipcode.code + " " + item.zipcode.country}
+                  subtitle={item.streetAndNumber + ", " + item.zipcode.code + " " + item.zipcode.city}
                   avatar={item.photo.url}
                   containerStyle={{borderBottomWidth: 0,borderRadius: 10,}}
                   subtitleStyle={styles.subtitle}
@@ -290,7 +297,7 @@ class mapPage extends Component {
                           style={styles.distanceIcon}
                           source={require('../../../../assets/mountain.png')}
                       />
-                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {} </Text>
+                      <Text key={"BikeText"+i} style={styles.distanceText}>Fiets: {this.state.durations} </Text>
                   </View>
                   <View key={"FlexViewB"+i} style={{flex: 1,flexDirection: 'row',}}>
                       <Image
@@ -309,6 +316,7 @@ class mapPage extends Component {
         </View>
       )
     }
+
 
   
   
